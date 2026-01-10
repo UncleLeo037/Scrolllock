@@ -3,17 +3,22 @@ extends Node3D
 var lobby_id : int = 0
 var peer : SteamMultiplayerPeer
 @export var player_scene : PackedScene
-@onready var menu : Control = $Menu
 var is_host : bool = false
 var is_joining : bool = false
 
+@onready var menu : Control = $Menu
 @onready var btn_host : Button = $Menu/Host
 @onready var btn_join : Button = $Menu/Join
 @onready var txt_input : LineEdit = $Menu/Prompt
 
+@onready var pause : Control = $Pause
+@onready var btn_exit : Button = $Pause/Exit
+@onready var btn_copy : Button = $Pause/Copy
+@onready var display_id = $Pause/ID
+
 func _ready():
-	if !Steam.steamInitEx():
-		print("Steam initialised: ", Steam.steamInitEx(480, true))
+	if !Steam.steamInit():
+		print("Steam initialised: ", Steam.steamInit(480, true))
 	Steam.initRelayNetworkAccess()
 	Steam.lobby_created.connect(_on_lobby_created)
 	Steam.lobby_joined.connect(_on_lobby_joined)
@@ -21,10 +26,10 @@ func _ready():
 func _unhandled_input(event : InputEvent) -> void:
 	if event.is_action_pressed("escape") and not menu.is_visible_in_tree():
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		$Exit.show()
+		pause.show()
 	if event is InputEventMouseButton and not menu.is_visible_in_tree():
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-		$Exit.hide()
+		pause.hide()
 
 func host_lobby():
 	Steam.createLobby(Steam.LobbyType.LOBBY_TYPE_PUBLIC, 16)
@@ -33,6 +38,7 @@ func host_lobby():
 func _on_lobby_created(result : int, lobby_id : int):
 	if result == Steam.Result.RESULT_OK:
 		self.lobby_id = lobby_id
+		display_id.text = str(lobby_id)
 		
 		peer = SteamMultiplayerPeer.new()
 		peer.server_relay = true
@@ -48,7 +54,7 @@ func _on_lobby_created(result : int, lobby_id : int):
 func join_lobby(lobby_id : int):
 	is_joining = true
 	Steam.joinLobby(lobby_id)
-
+	
 func _on_lobby_joined(lobby_id : int, permissions : int, locked : bool, response : int):
 	if !is_joining:
 		return
@@ -86,8 +92,12 @@ func _on_join_pressed() -> void:
 
 
 func _on_exit_pressed() -> void:
-	$Exit.hide()
+	pause.hide()
 	menu.show()
 	if is_host:
 		peer.close()
 	get_tree().reload_current_scene()
+
+
+func _on_copy_pressed() -> void:
+	DisplayServer.clipboard_set(str(lobby_id))

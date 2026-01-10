@@ -17,6 +17,14 @@ func _ready():
 	Steam.lobby_created.connect(_on_lobby_created)
 	Steam.lobby_joined.connect(_on_lobby_joined)
 
+func _unhandled_input(event : InputEvent) -> void:
+	if event.is_action_pressed("escape") and not menu.is_visible_in_tree():
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		$Exit.show()
+	if event is InputEventMouseButton and not menu.is_visible_in_tree():
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		$Exit.hide()
+
 func host_lobby():
 	Steam.createLobby(Steam.LobbyType.LOBBY_TYPE_PUBLIC, 16)
 	is_host = true
@@ -74,3 +82,7 @@ func _on_prompt_text_changed(new_text: String) -> void:
 
 func _on_join_pressed() -> void:
 	join_lobby(txt_input.text.to_int())
+
+
+func _on_exit_pressed() -> void:
+	get_tree().reload_current_scene()

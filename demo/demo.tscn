@@ -84,6 +84,15 @@ placeholder_text = "Lobby ID"
 _spawnable_scenes = PackedStringArray("uid://1d33ako3c375")
 spawn_path = NodePath("..")
 
+[node name="Exit" type="Button" parent="."]
+visible = false
+offset_left = 22.0
+offset_top = 26.0
+offset_right = 100.0
+offset_bottom = 79.0
+text = "Exit"
+
 [connection signal="pressed" from="Menu/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Menu/Join" to="." method="_on_join_pressed"]
 [connection signal="text_changed" from="Menu/Prompt" to="." method="_on_prompt_text_changed"]
+[connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]

@@ -42,6 +42,9 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_released("crouch"):
 		camera.position.y = 0.6;
 	
+	if Input.is_action_pressed("menu"):
+		camera.position.y = 0.3;
+	
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir := Input.get_vector("left", "right", "forward", "backward");

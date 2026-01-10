@@ -32,7 +32,7 @@ func _unhandled_input(event : InputEvent) -> void:
 		pause.hide()
 
 func host_lobby():
-	Steam.createLobby(Steam.LobbyType.LOBBY_TYPE_PUBLIC, 16)
+	Steam.createLobby(Steam.LobbyType.LOBBY_TYPE_FRIENDS_ONLY, 16)
 	is_host = true
 
 func _on_lobby_created(result : int, lobby_id : int):
@@ -52,6 +52,8 @@ func _on_lobby_created(result : int, lobby_id : int):
 		menu.hide()
 
 func join_lobby(lobby_id : int):
+	if not Steam.isLobby(lobby_id):
+		return
 	is_joining = true
 	Steam.joinLobby(lobby_id)
 	
@@ -60,6 +62,7 @@ func _on_lobby_joined(lobby_id : int, permissions : int, locked : bool, response
 		return
 	
 	self.lobby_id = lobby_id
+	display_id.text = str(lobby_id)
 	peer = SteamMultiplayerPeer.new()
 	peer.server_relay = true
 	peer.create_client(Steam.getLobbyOwner(lobby_id))
@@ -93,8 +96,7 @@ func _on_join_pressed() -> void:
 
 
 func _on_exit_pressed() -> void:
-	if is_host:
-		peer.close()
+	peer.close()
 	get_tree().reload_current_scene()
 
 

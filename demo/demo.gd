@@ -12,6 +12,7 @@ var is_joining : bool = false
 @onready var txt_input : LineEdit = $Menu/Prompt
 
 func _ready():
+	#make a parent main scene that initialises steam and then loads the rest in
 	print("Steam initialised: ", Steam.steamInit(480, true))
 	Steam.initRelayNetworkAccess()
 	Steam.lobby_created.connect(_on_lobby_created)

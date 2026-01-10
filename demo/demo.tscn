@@ -57,26 +57,26 @@ anchors_preset = 0
 
 [node name="Host" type="Button" parent="Menu"]
 layout_mode = 0
-offset_left = 489.0
+offset_left = 450.0
 offset_top = 192.0
-offset_right = 644.0
+offset_right = 695.0
 offset_bottom = 264.0
 text = "Host"
 
 [node name="Join" type="Button" parent="Menu"]
 layout_mode = 0
-offset_left = 488.0
+offset_left = 448.0
 offset_top = 287.0
-offset_right = 646.0
+offset_right = 695.0
 offset_bottom = 362.0
 disabled = true
 text = "Join"
 
 [node name="Prompt" type="LineEdit" parent="Menu"]
 layout_mode = 0
-offset_left = 491.0
+offset_left = 435.0
 offset_top = 395.0
-offset_right = 640.0
+offset_right = 714.0
 offset_bottom = 435.0
 placeholder_text = "Lobby ID"
 
@@ -92,6 +92,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Exit" type="Button" parent="Pause"]
+layout_mode = 0
 offset_left = 22.0
 offset_top = 26.0
 offset_right = 100.0

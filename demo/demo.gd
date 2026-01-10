@@ -46,10 +46,10 @@ func _on_lobby_created(result : int, lobby_id : int):
 		multiplayer.multiplayer_peer = peer
 		multiplayer.peer_connected.connect(_add_player)
 		multiplayer.peer_disconnected.connect(_remove_player)
-		menu.hide()
 		_add_player()
 		
 		print("Lobby created, join code: ", lobby_id)
+		menu.hide()
 
 func join_lobby(lobby_id : int):
 	is_joining = true
@@ -66,6 +66,7 @@ func _on_lobby_joined(lobby_id : int, permissions : int, locked : bool, response
 	multiplayer.multiplayer_peer = peer
 	
 	is_joining = false
+	menu.hide()
 
 func _add_player(id : int = 1):
 	var player = player_scene.instantiate()
@@ -92,8 +93,6 @@ func _on_join_pressed() -> void:
 
 
 func _on_exit_pressed() -> void:
-	pause.hide()
-	menu.show()
 	if is_host:
 		peer.close()
 	get_tree().reload_current_scene()

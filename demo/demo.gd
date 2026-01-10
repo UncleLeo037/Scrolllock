@@ -12,8 +12,8 @@ var is_joining : bool = false
 @onready var txt_input : LineEdit = $Menu/Prompt
 
 func _ready():
-	#make a parent main scene that initialises steam and then loads the rest in
-	print("Steam initialised: ", Steam.steamInit(480, true))
+	if !Steam.steamInitEx():
+		print("Steam initialised: ", Steam.steamInitEx(480, true))
 	Steam.initRelayNetworkAccess()
 	Steam.lobby_created.connect(_on_lobby_created)
 	Steam.lobby_joined.connect(_on_lobby_joined)
@@ -40,7 +40,7 @@ func _on_lobby_created(result : int, lobby_id : int):
 		multiplayer.multiplayer_peer = peer
 		multiplayer.peer_connected.connect(_add_player)
 		multiplayer.peer_disconnected.connect(_remove_player)
-		menu.visible = false
+		menu.hide()
 		_add_player()
 		
 		print("Lobby created, join code: ", lobby_id)
@@ -86,4 +86,8 @@ func _on_join_pressed() -> void:
 
 
 func _on_exit_pressed() -> void:
+	$Exit.hide()
+	menu.show()
+	if is_host:
+		peer.close()
 	get_tree().reload_current_scene()

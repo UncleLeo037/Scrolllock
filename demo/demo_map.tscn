@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://vbahjmxesqjd"]
+
+[ext_resource type="Texture2D" uid="uid://d2ebtbsr6gytm" path="res://assets/AllSkyFree_Sky_EpicGloriousPink_Equirect.png" id="1_adjcj"]
+[ext_resource type="Texture2D" uid="uid://cgorxyj7smnwb" path="res://assets/dev_tile.png" id="2_gro11"]
+[ext_resource type="PackedScene" uid="uid://blbj1cwbxhlum" path="res://spell/orb.tscn" id="3_gro11"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_aro00"]
+panorama = ExtResource("1_adjcj")
+
+[sub_resource type="Sky" id="Sky_o2dya"]
+sky_material = SubResource("PanoramaSkyMaterial_aro00")
+
+[sub_resource type="Environment" id="Environment_x4mtj"]
+background_mode = 2
+sky = SubResource("Sky_o2dya")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sfhoj"]
+albedo_color = Color(1, 0, 1, 1)
+albedo_texture = ExtResource("2_gro11")
+uv1_triplanar = true
+texture_filter = 0
+
+[node name="DemoMap" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_x4mtj")
+
+[node name="Island" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -12, 0)
+use_collision = true
+size = Vector3(20, 20, 20)
+material = SubResource("StandardMaterial3D_sfhoj")
+
+[node name="platfrom" type="CSGBox3D" parent="Island"]
+use_collision = true
+size = Vector3(30, 1, 30)
+material = SubResource("StandardMaterial3D_sfhoj")
+
+[node name="Xwalk" type="CSGBox3D" parent="Island"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0177, 9.5, -8.89207)
+use_collision = true
+size = Vector3(3, 1, 3)
+material = SubResource("StandardMaterial3D_sfhoj")
+
+[node name="Xramp" type="CSGBox3D" parent="Island/Xwalk"]
+transform = Transform3D(1, 0, 0, 0, 0.876634, -0.481157, 0, 0.481157, 0.876634, -1.01766, -4.7186, 9.99989)
+use_collision = true
+size = Vector3(5, 1, 20)
+material = SubResource("StandardMaterial3D_sfhoj")
+
+[node name="Orb" parent="." instance=ExtResource("3_gro11")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.057242393, -0.7254319, 5.247861)

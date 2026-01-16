@@ -17,8 +17,7 @@ var is_joining : bool = false
 @onready var display_id = $Pause/ID
 
 func _ready():
-	if !Steam.steamInit():
-		print("Steam initialised: ", Steam.steamInit(480, true))
+	Steam.steamInitEx(480, true)
 	Steam.initRelayNetworkAccess()
 	Steam.lobby_created.connect(_on_lobby_created)
 	Steam.lobby_joined.connect(_on_lobby_joined)
@@ -97,6 +96,7 @@ func _on_join_pressed() -> void:
 
 func _on_exit_pressed() -> void:
 	peer.close()
+	Steam.steamShutdown()
 	get_tree().reload_current_scene()
 
 

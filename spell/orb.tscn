@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://blbj1cwbxhlum"]
+
+[ext_resource type="Script" uid="uid://cfp7ey2mvj8o5" path="res://spell/orb.gd" id="1_rkr40"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_6eahp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6eahp"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(1, 1, 1, 0.2)
+
+[sub_resource type="SphereMesh" id="SphereMesh_6eahp"]
+material = SubResource("StandardMaterial3D_6eahp")
+
+[node name="Orb" type="Node3D"]
+script = ExtResource("1_rkr40")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+collision_layer = 0
+collision_mask = 2
+gravity = -9.8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_6eahp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D"]
+mesh = SubResource("SphereMesh_6eahp")
+skeleton = NodePath("../..")

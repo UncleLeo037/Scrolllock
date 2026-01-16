@@ -9,6 +9,9 @@ public partial class player : CharacterBody3D
 	
 	private Camera3D _camera;
 	private CharacterBody3D _body;
+	private AnimationPlayer _anime;
+	private GpuParticles3D _flash;
+	private Node3D _model;
 	
 	public override void _EnterTree()
 	{
@@ -17,10 +20,15 @@ public partial class player : CharacterBody3D
 	
 	public override void _Ready()
 	{
+		if (!IsMultiplayerAuthority()) return;
+		
 		_camera = GetNode<Camera3D>("Camera3D");
 		_body = GetNode<CharacterBody3D>(".");
+		_anime = GetNode<AnimationPlayer>("AnimationPlayer");
+		_flash = _camera.GetNode<Node3D>("Pistol").GetNode<GpuParticles3D>("Flash");
+		_model = GetNode<Node3D>("Model");
 		
-		if (!IsMultiplayerAuthority()) return;
+		_model.Hide();
 		
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		_camera.Current = true;
@@ -40,6 +48,11 @@ public partial class player : CharacterBody3D
 				_camera.Rotation.Y,
 				_camera.Rotation.Z
 			);
+		}
+		
+		if (Input.IsActionJustPressed("shoot") && _anime.CurrentAnimation != "Shoot")
+		{
+			Rpc(MethodName.PlayShoot);
 		}
 	}
 
@@ -107,6 +120,37 @@ public partial class player : CharacterBody3D
 			_body.Position = new Vector3(0, 20, 0);
 		}
 		
+		if (_anime.CurrentAnimation == "Shoot")
+		{
+			//do nothing
+		}
+		else if (direction.Length() > 0 && IsOnFloor())
+		{
+			_anime.Play("move");
+		}
+		else
+		{
+			_anime.Play("idle");
+		}
+		
 		MoveAndSlide();
 	}
+	
+	[Rpc(CallLocal = true)]
+	public void PlayShoot()
+	{
+		_anime.Stop();
+		_anime.Play("Shoot");
+		_flash.Restart();
+		_flash.Emitting = true;
+	}
+	
+	//[Signal]
+	//private delegate _on_animation_player_animation_finished()
+	//{
+		//if (_anime.CurrentAnimation != "Shoot")
+		//{
+			//_anime.Play("idle");
+		//}
+	//}
 }

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class player : CharacterBody3D
+public partial class Player : CharacterBody3D
 {
 	private const float SPEED = 5.0f;
 	private const float JUMP_VELOCITY = 4.5f;
@@ -12,6 +12,9 @@ public partial class player : CharacterBody3D
 	private AnimationPlayer _anime;
 	private GpuParticles3D _flash;
 	private Node3D _model;
+	
+	public bool hasGravity;
+	public float slide;
 	
 	public override void _EnterTree()
 	{
@@ -27,6 +30,7 @@ public partial class player : CharacterBody3D
 		_anime = GetNode<AnimationPlayer>("AnimationPlayer");
 		_flash = _camera.GetNode<Node3D>("Pistol").GetNode<GpuParticles3D>("Flash");
 		_model = GetNode<Node3D>("Model");
+		hasGravity = true;
 		
 		_model.Hide();
 		
@@ -52,7 +56,7 @@ public partial class player : CharacterBody3D
 		
 		if (Input.IsActionJustPressed("shoot") && _anime.CurrentAnimation != "Shoot")
 		{
-			Rpc(MethodName.PlayShoot);
+			Rpc("PlayShoot");
 		}
 	}
 
@@ -63,27 +67,48 @@ public partial class player : CharacterBody3D
 		float deltaFloat = (float)delta;
 		
 		// Add gravity
-		if (!IsOnFloor())
+		if (!IsOnFloor() && (hasGravity == true))
 		{
 			Velocity += GetGravity() * deltaFloat;
 		}
 		
-		// Handle jump
-		if (Input.IsActionJustPressed("jump") && IsOnFloor())
+		if (hasGravity)
 		{
-			Velocity = new Vector3(Velocity.X, JUMP_VELOCITY, Velocity.Z);
+			slide = 1f;
+			// Handle jump
+			if (Input.IsActionJustPressed("jump") && IsOnFloor())
+			{
+				Velocity = new Vector3(Velocity.X, JUMP_VELOCITY, Velocity.Z);
+			}
+		
+			// Handle crouch
+			if (Input.IsActionPressed("crouch"))
+			{
+				_camera.Position = new Vector3(_camera.Position.X, 0.3f, _camera.Position.Z);
+			}
+		
+			if (Input.IsActionJustReleased("crouch"))
+			{
+				_camera.Position = new Vector3(_camera.Position.X, 0.6f, _camera.Position.Z);
+			}
+		}
+		else
+		{
+			slide = 0.15f;
+			if (Input.IsActionPressed("jump"))
+			{
+				Velocity = new Vector3(Velocity.X, SPEED, Velocity.Z);
+			}
+			else if (Input.IsActionPressed("crouch"))
+			{
+				Velocity = new Vector3(Velocity.X, -SPEED, Velocity.Z);
+			}
+			else
+			{
+				Velocity = new Vector3(Velocity.X, Mathf.MoveToward(Velocity.Y, 0, slide*1.2f), Velocity.Z);
+			}
 		}
 		
-		// Handle crouch
-		if (Input.IsActionPressed("crouch"))
-		{
-			_camera.Position = new Vector3(_camera.Position.X, 0.3f, _camera.Position.Z);
-		}
-		
-		if (Input.IsActionJustReleased("crouch"))
-		{
-			_camera.Position = new Vector3(_camera.Position.X, 0.6f, _camera.Position.Z);
-		}
 		
 		// Get input direction
 		Vector2 inputDir = Input.GetVector("left", "right", "forward", "backward");
@@ -108,9 +133,9 @@ public partial class player : CharacterBody3D
 		else
 		{
 			Velocity = new Vector3(
-				Mathf.MoveToward(Velocity.X, 0, totalSpeed),
+				Mathf.MoveToward(Velocity.X, 0, slide),
 				Velocity.Y,
-				Mathf.MoveToward(Velocity.Z, 0, totalSpeed)
+				Mathf.MoveToward(Velocity.Z, 0, slide)
 			);
 		}
 		

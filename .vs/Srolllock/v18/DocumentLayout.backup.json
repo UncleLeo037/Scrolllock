@@ -18,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Bookmark",
@@ -57,6 +57,10 @@
               "Name": "ST:16:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Orb.cs",
@@ -64,7 +68,7 @@
               "RelativeDocumentMoniker": "spell\\Orb.cs",
               "ToolTip": "F:\\Godot Games\\scrolllock\\spell\\Orb.cs",
               "RelativeToolTip": "spell\\Orb.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-28T11:55:55.314Z",
               "EditorCaption": ""

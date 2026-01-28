@@ -120,7 +120,7 @@ public partial class Player : CharacterBody3D
 		float totalSpeed = SPEED + speedMod;
 		if (inputDir.Y < 0 && Input.IsActionPressed("sprint"))
 		{
-			totalSpeed += 3.0f;
+			totalSpeed += 3.0f + speedMod;
 		}
 
 		// Apply movement if direction exists and mouse is captured
@@ -180,7 +180,9 @@ public partial class Player : CharacterBody3D
 	//_anime.Play("idle");
 	//}
 	//}
+	
 
+	// Will be expanded so spells can make more adjustments
 	public void Modify(float speed = 0.0f, bool value = true)
 	{
 		speedMod = speed;

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://lsg6e6yn63dn" path="res://player/Player.cs" id="1_rkbax"]
 [ext_resource type="PackedScene" uid="uid://qia3h2wkrg6i" path="res://player/skeleton.glb" id="2_btcbx"]
-[ext_resource type="Texture2D" uid="uid://r2p0h14kyxq" path="res://assets/bandage-texture.jpg" id="2_qjkh3"]
+[ext_resource type="Texture2D" uid="uid://8fvgatus65mt" path="res://assets/bandage-texture.jpg" id="2_qjkh3"]
 [ext_resource type="PackedScene" uid="uid://c3ch7qjgypvqk" path="res://assets/pistol.glb" id="3_g1dw6"]
 [ext_resource type="Texture2D" uid="uid://dmv5o2fxkytwv" path="res://assets/star_06.png" id="4_yw30f"]
 

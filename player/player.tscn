@@ -1,11 +1,23 @@
-[gd_scene load_steps=17 format=3 uid="uid://1d33ako3c375"]
+[gd_scene load_steps=20 format=3 uid="uid://1d33ako3c375"]
 
 [ext_resource type="Script" uid="uid://lsg6e6yn63dn" path="res://player/Player.cs" id="1_rkbax"]
 [ext_resource type="PackedScene" uid="uid://qia3h2wkrg6i" path="res://player/skeleton.glb" id="2_btcbx"]
+[ext_resource type="Texture2D" uid="uid://r2p0h14kyxq" path="res://assets/bandage-texture.jpg" id="2_qjkh3"]
 [ext_resource type="PackedScene" uid="uid://c3ch7qjgypvqk" path="res://assets/pistol.glb" id="3_g1dw6"]
 [ext_resource type="Texture2D" uid="uid://dmv5o2fxkytwv" path="res://assets/star_06.png" id="4_yw30f"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gwnis"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g6k8r"]
+albedo_texture = ExtResource("2_qjkh3")
+uv1_scale = Vector3(1.5, 1.5, 1.5)
+uv1_triplanar = true
+uv1_triplanar_sharpness = 150.0
+uv2_triplanar_sharpness = 0.14865099
+texture_filter = 0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_boad6"]
+material = SubResource("StandardMaterial3D_g6k8r")
 
 [sub_resource type="Gradient" id="Gradient_qjkh3"]
 offsets = PackedFloat32Array(0, 0.254545)
@@ -157,8 +169,12 @@ script = ExtResource("1_rkbax")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_gwnis")
 
+[node name="TestModel" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_boad6")
+
 [node name="Model" parent="." instance=ExtResource("2_btcbx")]
 transform = Transform3D(-0.4, 0, -3.49691e-08, 0, 0.4, 0, 3.49691e-08, 0, -0.4, 0, 0, 0)
+visible = false
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)

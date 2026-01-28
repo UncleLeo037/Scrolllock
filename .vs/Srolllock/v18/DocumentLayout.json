@@ -1,9 +1,13 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Leo\\Personal\\github\\Scrolllock\\",
+  "WorkspaceRootPath": "F:\\Godot Games\\scrolllock\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A7C21875-6B5B-4AAB-8F2D-9E382D2BCC5D}|Srolllock.csproj|c:\\users\\leo\\personal\\github\\scrolllock\\player\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A7C21875-6B5B-4AAB-8F2D-9E382D2BCC5D}|Srolllock.csproj|f:\\godot games\\scrolllock\\spell\\orb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A7C21875-6B5B-4AAB-8F2D-9E382D2BCC5D}|Srolllock.csproj|solutionrelative:spell\\orb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A7C21875-6B5B-4AAB-8F2D-9E382D2BCC5D}|Srolllock.csproj|f:\\godot games\\scrolllock\\player\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A7C21875-6B5B-4AAB-8F2D-9E382D2BCC5D}|Srolllock.csproj|solutionrelative:player\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -14,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Bookmark",
@@ -53,14 +57,31 @@
               "Name": "ST:16:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Orb.cs",
+              "DocumentMoniker": "F:\\Godot Games\\scrolllock\\spell\\Orb.cs",
+              "RelativeDocumentMoniker": "spell\\Orb.cs",
+              "ToolTip": "F:\\Godot Games\\scrolllock\\spell\\Orb.cs",
+              "RelativeToolTip": "spell\\Orb.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-28T11:55:55.314Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Player.cs",
-              "DocumentMoniker": "C:\\Users\\Leo\\Personal\\github\\Scrolllock\\player\\Player.cs",
+              "DocumentMoniker": "F:\\Godot Games\\scrolllock\\player\\Player.cs",
               "RelativeDocumentMoniker": "player\\Player.cs",
-              "ToolTip": "C:\\Users\\Leo\\Personal\\github\\Scrolllock\\player\\Player.cs",
+              "ToolTip": "F:\\Godot Games\\scrolllock\\player\\Player.cs",
               "RelativeToolTip": "player\\Player.cs",
-              "ViewState": "AgIAAC4AAAAAAAAAAAAAADkAAAASAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-23T17:41:42.001Z",
               "EditorCaption": ""

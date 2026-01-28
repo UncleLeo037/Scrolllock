@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://blbj1cwbxhlum"]
 
-[ext_resource type="Script" uid="uid://cfp7ey2mvj8o5" path="res://spell/orb.gd" id="1_rkr40"]
+[ext_resource type="Script" uid="uid://dfj2e2ef2vjuq" path="res://spell/Orb.cs" id="1_rkr40"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_6eahp"]
 

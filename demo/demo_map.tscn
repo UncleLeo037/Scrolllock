@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://vbahjmxesqjd"]
+[gd_scene load_steps=8 format=3 uid="uid://vbahjmxesqjd"]
 
 [ext_resource type="Texture2D" uid="uid://d2ebtbsr6gytm" path="res://assets/AllSkyFree_Sky_EpicGloriousPink_Equirect.png" id="1_adjcj"]
+[ext_resource type="Script" uid="uid://0jrr0fajw44u" path="res://demo/DemoMap.cs" id="1_gro11"]
 [ext_resource type="Texture2D" uid="uid://cgorxyj7smnwb" path="res://assets/dev_tile.png" id="2_gro11"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_aro00"]
@@ -20,6 +21,7 @@ uv1_triplanar = true
 texture_filter = 0
 
 [node name="DemoMap" type="Node3D"]
+script = ExtResource("1_gro11")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_x4mtj")

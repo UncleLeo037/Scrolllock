@@ -11,6 +11,7 @@ public partial class Orb : Node3D
 	{
 		//Scale = new Vector3(0, 0, 0);
 		//hit = GetNode<Area3D>("Area3D").GetNode<CollisionShape3D>("CollisionShape3D");
+		this.Scale = new Vector3(7, 7, 7);
 		//spawn in with radius of 0
 	}
 

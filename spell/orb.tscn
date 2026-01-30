@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://blbj1cwbxhlum"]
 
-[ext_resource type="Script" uid="uid://dfj2e2ef2vjuq" path="res://spell/Orb.cs" id="1_rkr40"]
+[ext_resource type="Script" uid="uid://dfj2e2ef2vjuq" path="res://spell/Orb.cs" id="1_ek8sl"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_6eahp"]
 
@@ -13,10 +13,9 @@ albedo_color = Color(1, 1, 1, 0.2)
 material = SubResource("StandardMaterial3D_6eahp")
 
 [node name="Orb" type="Node3D"]
-script = ExtResource("1_rkr40")
+script = ExtResource("1_ek8sl")
 
 [node name="Area3D" type="Area3D" parent="."]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 collision_layer = 0
 collision_mask = 2
 gravity_point_center = Vector3(0, 0, 0)

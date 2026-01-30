@@ -15,13 +15,12 @@ public partial class DemoMap : Node3D
 	{
 	}
 
-	public static void SpawnSpell(PackedScene spell, Vector3 point)
+	public static async void SpawnSpell(Node spell, Vector3 point)
 	{
-		self.AddChild(spell.Instantiate());
-		Orb orb = self.GetNode<Orb>("Orb");
-		string newName = "Orb_" + Guid.NewGuid().ToString();
-		orb.Name = newName;
-		Orb temp = self.GetNode<Orb>(newName);
-		temp.SetPosition(point);
+		string temp = spell.Name;
+		self.AddChild(spell);
+		Orb orb = self.GetNode<Orb>(temp);
+		orb.SetPosition(point);
+		orb.Name = "old";
 	}
 }

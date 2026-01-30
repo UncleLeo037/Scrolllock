@@ -60,14 +60,15 @@ public partial class Player : CharacterBody3D
 
 		if (Input.IsActionJustPressed("shoot") && _anime.CurrentAnimation != "Shoot")
 		{
+			Rpc("PlayShoot");
 			if (_bullet.IsColliding())
 			{
 				PackedScene _spell = GD.Load<PackedScene>("res://spell/Orb.tscn");
 				Vector3 point = _bullet.GetCollisionPoint();
-				DemoMap.SpawnSpell(_spell, point);
+				Node node = _spell.Instantiate();
+				node.Name = this.Name;
+				DemoMap.SpawnSpell(node, point);
 			}
-
-			Rpc("PlayShoot");
 		}
 	}
 
@@ -89,7 +90,7 @@ public partial class Player : CharacterBody3D
 			// Handle jump
 			if (Input.IsActionJustPressed("jump") && IsOnFloor())
 			{
-				Velocity = new Vector3(Velocity.X, JUMP_VELOCITY, Velocity.Z);
+				Velocity = new Vector3(Velocity.X, Velocity.Y+JUMP_VELOCITY, Velocity.Z);
 			}
 
 			// Handle crouch

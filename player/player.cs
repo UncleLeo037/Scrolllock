@@ -12,6 +12,8 @@ public partial class Player : CharacterBody3D
 	private AnimationPlayer _anime;
 	private GpuParticles3D _flash;
 	private Node3D _model;
+	private RayCast3D _bullet;
+	private PackedScene _spell;
 
 	private bool hasGravity;
 	private float speedMod;
@@ -31,6 +33,8 @@ public partial class Player : CharacterBody3D
 		_anime = GetNode<AnimationPlayer>("AnimationPlayer");
 		_flash = _camera.GetNode<Node3D>("Pistol").GetNode<GpuParticles3D>("Flash");
 		_model = GetNode<Node3D>("Model");
+		_bullet = _camera.GetNode<RayCast3D>("RayCast3D");
+		_spell = GD.Load<PackedScene>("res://spell/Orb.tscn");
 		hasGravity = true;
 		speedMod = 0.0f;
 
@@ -58,6 +62,14 @@ public partial class Player : CharacterBody3D
 
 		if (Input.IsActionJustPressed("shoot") && _anime.CurrentAnimation != "Shoot")
 		{
+			if (_bullet.IsColliding())
+			{
+				Vector3 point = _bullet.GetCollisionPoint();
+				AddChild(_spell.Instantiate());
+				Orb orb = GetNode<Orb>("Orb");
+				orb.SetPosition(point);
+			}
+
 			Rpc("PlayShoot");
 		}
 	}

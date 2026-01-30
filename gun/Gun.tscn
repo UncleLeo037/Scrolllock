@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://d4dvmkmte40qw"]
+
+[ext_resource type="Script" uid="uid://c1pvoe06iwu07" path="res://gun/Gun.cs" id="1_tb38n"]
+[ext_resource type="PackedScene" uid="uid://c3ch7qjgypvqk" path="res://assets/pistol.glb" id="2_fwkct"]
+
+[node name="Gun" type="Node3D"]
+script = ExtResource("1_tb38n")
+
+[node name="pistol" parent="." instance=ExtResource("2_fwkct")]
+transform = Transform3D(0.03, 0, 0, 0, 0.03, 0, 0, 0, 0.03, 0, 0, 0)
+visible = false
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, -20)

@@ -193,6 +193,9 @@ local_coords = true
 process_material = SubResource("ParticleProcessMaterial_g1dw6")
 draw_pass_1 = SubResource("PlaneMesh_qjkh3")
 
+[node name="RayCast3D" type="RayCast3D" parent="Camera3D"]
+target_position = Vector3(0, 0, -20)
+
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_rkbax")
 

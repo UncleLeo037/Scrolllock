@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Drawing;
 
 public partial class Player : CharacterBody3D
 {
@@ -14,9 +16,12 @@ public partial class Player : CharacterBody3D
 	private Node3D _model;
 	private RayCast3D _bullet;
 
+	private PackedScene _spell;
+
 	private bool hasGravity;
 	private float speedMod;
 	private float slide;
+	private List<string> effects = new List<string>();
 
 	public override void _EnterTree()
 	{
@@ -33,8 +38,12 @@ public partial class Player : CharacterBody3D
 		_flash = _camera.GetNode<Node3D>("Pistol").GetNode<GpuParticles3D>("Flash");
 		_model = GetNode<Node3D>("Model");
 		_bullet = _camera.GetNode<RayCast3D>("RayCast3D");
+
+		_spell = (GD.Load<PackedScene>("res://spell/Orb.tscn"));
+
 		hasGravity = true;
 		speedMod = 0.0f;
+		slide = 0.1f;
 
 		_model.Hide();
 
@@ -63,11 +72,13 @@ public partial class Player : CharacterBody3D
 			Rpc("PlayShoot");
 			if (_bullet.IsColliding())
 			{
-				PackedScene _spell = GD.Load<PackedScene>("res://spell/Orb.tscn");
+				//move this to spell equipe method
+				Node spell = _spell.Instantiate();
+				spell.Name = this.Name;
+				spell.EditorDescription = "noGravity";
+				
 				Vector3 point = _bullet.GetCollisionPoint();
-				Node node = _spell.Instantiate();
-				node.Name = this.Name;
-				DemoMap.SpawnSpell(node, point);
+				DemoMap.SpawnSpell(spell, point);
 			}
 		}
 	}
@@ -86,11 +97,10 @@ public partial class Player : CharacterBody3D
 
 		if (hasGravity)
 		{
-			slide = 0.1f;
 			// Handle jump
 			if (Input.IsActionJustPressed("jump") && IsOnFloor())
 			{
-				Velocity = new Vector3(Velocity.X, Velocity.Y+JUMP_VELOCITY, Velocity.Z);
+				Velocity = new Vector3(Velocity.X, Velocity.Y + JUMP_VELOCITY, Velocity.Z);
 			}
 
 			// Handle crouch
@@ -106,7 +116,6 @@ public partial class Player : CharacterBody3D
 		}
 		else
 		{
-			slide = 0.02f;
 			if (Input.IsActionPressed("jump"))
 			{
 				Velocity = new Vector3(Velocity.X, SPEED + speedMod, Velocity.Z);
@@ -190,12 +199,35 @@ public partial class Player : CharacterBody3D
 	//_anime.Play("idle");
 	//}
 	//}
-	
+
 
 	// Will be expanded so spells can make more adjustments
-	public void Modify(float speed = 0.0f, bool value = true)
+	public void Modify()
 	{
-		speedMod = speed;
-		hasGravity = value;
+
+		hasGravity = true;
+		speedMod = 0.0f;
+		slide = 0.1f;
+		foreach (string effect in effects)
+		{
+			if (effect == "noGravity")
+			{
+				hasGravity = false;
+				speedMod = -3.0f;
+				slide = 0.02f;
+			}
+		}
+	}
+
+	public void AddEffect(string effect)
+	{
+		effects.Add(effect);
+		Modify();
+	}
+
+	public void RemoveEffect(string effect)
+	{
+		effects.Remove(effect);
+		Modify();
 	}
 }

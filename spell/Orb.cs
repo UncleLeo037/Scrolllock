@@ -15,11 +15,6 @@ public partial class Orb : Node3D
 		//spawn in with radius of 0
 	}
 
-	public override void _PhysicsProcess(double delta)
-	{
-		//over time expand till radius is equal to max radius
-	}
-
 	public void _on_area_3d_body_entered(Node3D body)
 	{
 		AreaOfEffect(body);
@@ -30,18 +25,12 @@ public partial class Orb : Node3D
 		EndOfEffect(body);
 	}
 
-	public void SetPosition(Vector3 position)
-	{
-		GlobalPosition = position;
-	}
-
 	//the below methods will be overridden in child classes
 	private void AreaOfEffect(Node3D body)
 	{
-		//need to add code for modifying other objects later
 		if (body is Player player)
 		{
-			player.Modify(-3.0f, false);
+			player.AddEffect(this.EditorDescription);
 		}
 	}
 
@@ -49,7 +38,7 @@ public partial class Orb : Node3D
 	{
 		if (body is Player player)
 		{
-			player.Modify();
+			player.RemoveEffect(this.EditorDescription);
 		}
 	}
 }

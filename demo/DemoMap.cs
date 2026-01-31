@@ -20,7 +20,7 @@ public partial class DemoMap : Node3D
 		string temp = spell.Name;
 		self.AddChild(spell);
 		Orb orb = self.GetNode<Orb>(temp);
-		orb.SetPosition(point);
+		orb.GlobalPosition = point;
 		orb.Name = "old";
 	}
 }

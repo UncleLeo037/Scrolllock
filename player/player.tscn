@@ -1,10 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://1d33ako3c375"]
+[gd_scene load_steps=21 format=3 uid="uid://1d33ako3c375"]
 
 [ext_resource type="Script" uid="uid://lsg6e6yn63dn" path="res://player/Player.cs" id="1_rkbax"]
 [ext_resource type="PackedScene" uid="uid://qia3h2wkrg6i" path="res://player/skeleton.glb" id="2_btcbx"]
 [ext_resource type="Texture2D" uid="uid://8fvgatus65mt" path="res://assets/bandage-texture.jpg" id="2_qjkh3"]
 [ext_resource type="PackedScene" uid="uid://c3ch7qjgypvqk" path="res://assets/pistol.glb" id="3_g1dw6"]
 [ext_resource type="Texture2D" uid="uid://dmv5o2fxkytwv" path="res://assets/star_06.png" id="4_yw30f"]
+[ext_resource type="Texture2D" uid="uid://c6md4rybga6we" path="res://assets/crosshair.png" id="6_aqcbf"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gwnis"]
 
@@ -195,6 +196,22 @@ draw_pass_1 = SubResource("PlaneMesh_qjkh3")
 
 [node name="RayCast3D" type="RayCast3D" parent="Camera3D"]
 target_position = Vector3(0, 0, -20)
+
+[node name="TextureRect" type="TextureRect" parent="Camera3D"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -7.5
+offset_top = -7.5
+offset_right = 7.5
+offset_bottom = 7.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_aqcbf")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_rkbax")

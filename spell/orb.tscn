@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://blbj1cwbxhlum"]
+[gd_scene load_steps=7 format=3 uid="uid://blbj1cwbxhlum"]
 
 [ext_resource type="Script" uid="uid://dfj2e2ef2vjuq" path="res://spell/Orb.cs" id="1_ek8sl"]
 
@@ -12,6 +12,11 @@ albedo_color = Color(1, 1, 1, 0.2)
 [sub_resource type="SphereMesh" id="SphereMesh_6eahp"]
 material = SubResource("StandardMaterial3D_6eahp")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_ek8sl"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ek8sl"]
+height = 1.0
+
 [node name="Orb" type="Node3D"]
 script = ExtResource("1_ek8sl")
 
@@ -22,12 +27,21 @@ gravity_point_center = Vector3(0, 0, 0)
 gravity_direction = Vector3(0, 0, 0)
 gravity = 0.0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="CollisionSphere3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("SphereShape3D_6eahp")
+disabled = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D/CollisionSphere3D"]
 mesh = SubResource("SphereMesh_6eahp")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
+
+[node name="CollisionCube3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_ek8sl")
+disabled = true
+
+[node name="CollisionTube3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CylinderShape3D_ek8sl")
+disabled = true
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

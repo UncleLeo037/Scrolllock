@@ -21,6 +21,7 @@ public partial class Player : CharacterBody3D
 	private bool hasGravity;
 	private float speedMod;
 	private float slide;
+	private string equipedSpell = "instant";
 	private List<string> effects = new List<string>();
 
 	public override void _EnterTree()
@@ -67,6 +68,15 @@ public partial class Player : CharacterBody3D
 			);
 		}
 
+		if (Input.IsActionJustPressed("one"))
+		{
+			equipedSpell = "gravity";
+		}
+		if (Input.IsActionJustPressed("two"))
+		{
+			equipedSpell = "instant";
+		}
+
 		if (Input.IsActionJustPressed("shoot") && _anime.CurrentAnimation != "Shoot")
 		{
 			Rpc("PlayShoot");
@@ -75,8 +85,8 @@ public partial class Player : CharacterBody3D
 				//move this to spell equipe method
 				Node spell = _spell.Instantiate();
 				spell.Name = this.Name;
-				spell.EditorDescription = "noGravity";
-				
+				spell.EditorDescription = equipedSpell;
+
 				Vector3 point = _bullet.GetCollisionPoint();
 				DemoMap.SpawnSpell(spell, point);
 			}
@@ -141,7 +151,6 @@ public partial class Player : CharacterBody3D
 		{
 			totalSpeed += 3.0f + speedMod;
 		}
-
 		// Apply movement if direction exists and mouse is captured
 		if (direction.Length() > 0 && Input.MouseMode == Input.MouseModeEnum.Captured)
 		{
@@ -153,11 +162,14 @@ public partial class Player : CharacterBody3D
 		}
 		else
 		{
-			Velocity = new Vector3(
-				Mathf.MoveToward(Velocity.X, 0, slide * Math.Abs(Velocity.X)),
-				Velocity.Y,
-				Mathf.MoveToward(Velocity.Z, 0, slide * Math.Abs(Velocity.Z))
-			);
+			if (IsOnFloor() || !hasGravity)
+			{
+				Velocity = new Vector3(
+					Mathf.MoveToward(Velocity.X, 0, slide * Math.Abs(Velocity.X)),
+					Velocity.Y,
+					Mathf.MoveToward(Velocity.Z, 0, slide * Math.Abs(Velocity.Z))
+				);
+			}
 		}
 
 		// Quick fall recovery
@@ -210,7 +222,7 @@ public partial class Player : CharacterBody3D
 		slide = 0.1f;
 		foreach (string effect in effects)
 		{
-			if (effect == "noGravity")
+			if (effect == "gravity")
 			{
 				hasGravity = false;
 				speedMod = -3.0f;

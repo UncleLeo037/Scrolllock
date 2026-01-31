@@ -15,12 +15,14 @@ public partial class DemoMap : Node3D
 	{
 	}
 
-	public static async void SpawnSpell(Node spell, Vector3 point)
+	public static async void SpawnSpell(Node spell, Vector3 point, float size = 0.0f)
 	{
 		string temp = spell.Name;
 		self.AddChild(spell);
 		Orb orb = self.GetNode<Orb>(temp);
 		orb.GlobalPosition = point;
+		//add in scale
+		//orb.Scale += new Vector3(size, size, size);
 		orb.Name = "old";
 	}
 }

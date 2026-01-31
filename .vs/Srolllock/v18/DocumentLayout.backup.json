@@ -72,7 +72,7 @@
               "RelativeDocumentMoniker": "spell\\Spell.cs",
               "ToolTip": "F:\\Godot Games\\scrolllock\\spell\\Spell.cs",
               "RelativeToolTip": "spell\\Spell.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABQAAABkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-31T13:31:47.733Z",
               "EditorCaption": ""
@@ -85,7 +85,7 @@
               "RelativeDocumentMoniker": "spell\\Orb.cs",
               "ToolTip": "F:\\Godot Games\\scrolllock\\spell\\Orb.cs",
               "RelativeToolTip": "spell\\Orb.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAowDUAAAAuAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-28T11:55:55.314Z",
               "EditorCaption": ""
@@ -98,7 +98,7 @@
               "RelativeDocumentMoniker": "player\\Player.cs",
               "ToolTip": "F:\\Godot Games\\scrolllock\\player\\Player.cs",
               "RelativeToolTip": "player\\Player.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAowEwAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEwAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-31T09:25:05.373Z",
               "EditorCaption": ""
@@ -113,8 +113,7 @@
               "RelativeToolTip": "demo\\DemoMap.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-30T18:52:41.281Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-30T18:52:41.281Z"
             }
           ]
         }

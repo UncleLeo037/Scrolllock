@@ -18,6 +18,11 @@ namespace Srolllock.spell
                 _ => throw new ArgumentException("Invalid spell type"),
             };
         }
+        public static readonly Dictionary<string, Spell> SpellLookup = new Dictionary<string, Spell>
+        {
+            { "force", new ForceSpell() },
+            { "gravity", new GravitySpell() }
+        };
     }
 
     public abstract class Spell
@@ -37,12 +42,6 @@ namespace Srolllock.spell
         public abstract void OnEnter(Node3D body, Node3D spell);
 
         public abstract void OnExit(Node3D body, Node3D spell);
-
-        //public static readonly Dictionary<string, Spell> SpellLookup = new Dictionary<string, Spell>
-        //{
-        //    { "force", new Spell { lifetime = 0.1, size = 6.0f, shape = "Sphere" } },
-        //    { "gravity", new Spell { lifetime = 10.0, size = 6.0f, shape = "Sphere" } }
-        //};
     }
 
     class ForceSpell : Spell

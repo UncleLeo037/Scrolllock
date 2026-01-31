@@ -13,7 +13,8 @@ public partial class Orb : Node3D
 		area.BodyEntered += _on_area_3d_body_entered;
 		area.BodyExited += _on_area_3d_body_exited;
 
-		s = SpellFactory.CreateSpell(this.EditorDescription);
+		//s = SpellFactory.CreateSpell(this.EditorDescription);
+		s = SpellFactory.SpellLookup[this.EditorDescription];
 
 		this.Scale = s.size;
 

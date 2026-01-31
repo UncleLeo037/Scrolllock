@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "F:\\Godot Games\\scrolllock\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A7C21875-6B5B-4AAB-8F2D-9E382D2BCC5D}|Srolllock.csproj|f:\\godot games\\scrolllock\\spell\\spell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A7C21875-6B5B-4AAB-8F2D-9E382D2BCC5D}|Srolllock.csproj|solutionrelative:spell\\spell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A7C21875-6B5B-4AAB-8F2D-9E382D2BCC5D}|Srolllock.csproj|f:\\godot games\\scrolllock\\spell\\orb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A7C21875-6B5B-4AAB-8F2D-9E382D2BCC5D}|Srolllock.csproj|solutionrelative:spell\\orb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -13,10 +17,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A7C21875-6B5B-4AAB-8F2D-9E382D2BCC5D}|Srolllock.csproj|f:\\godot games\\scrolllock\\demo\\demomap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A7C21875-6B5B-4AAB-8F2D-9E382D2BCC5D}|Srolllock.csproj|solutionrelative:demo\\demomap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A7C21875-6B5B-4AAB-8F2D-9E382D2BCC5D}|Srolllock.csproj|f:\\godot games\\scrolllock\\.editorconfig||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{A7C21875-6B5B-4AAB-8F2D-9E382D2BCC5D}|Srolllock.csproj|solutionrelative:.editorconfig||{3B902123-F8A7-4915-9F01-361F908088D0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 11,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -66,38 +66,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": ".editorconfig",
-              "DocumentMoniker": "F:\\Godot Games\\scrolllock\\.editorconfig",
-              "RelativeDocumentMoniker": ".editorconfig",
-              "ToolTip": "F:\\Godot Games\\scrolllock\\.editorconfig",
-              "RelativeToolTip": ".editorconfig",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2026-01-31T09:35:08.836Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Player.cs",
-              "DocumentMoniker": "F:\\Godot Games\\scrolllock\\player\\Player.cs",
-              "RelativeDocumentMoniker": "player\\Player.cs",
-              "ToolTip": "F:\\Godot Games\\scrolllock\\player\\Player.cs",
-              "RelativeToolTip": "player\\Player.cs",
-              "ViewState": "AgIAAEEAAAAAAAAAAAAwwBcAAAAnAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "Spell.cs",
+              "DocumentMoniker": "F:\\Godot Games\\scrolllock\\spell\\Spell.cs",
+              "RelativeDocumentMoniker": "spell\\Spell.cs",
+              "ToolTip": "F:\\Godot Games\\scrolllock\\spell\\Spell.cs",
+              "RelativeToolTip": "spell\\Spell.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADUAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-31T09:25:05.373Z",
+              "WhenOpened": "2026-01-31T13:31:47.733Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Orb.cs",
               "DocumentMoniker": "F:\\Godot Games\\scrolllock\\spell\\Orb.cs",
               "RelativeDocumentMoniker": "spell\\Orb.cs",
               "ToolTip": "F:\\Godot Games\\scrolllock\\spell\\Orb.cs",
               "RelativeToolTip": "spell\\Orb.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABkAAAACAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-28T11:55:55.314Z",
               "EditorCaption": ""
@@ -105,6 +93,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "Player.cs",
+              "DocumentMoniker": "F:\\Godot Games\\scrolllock\\player\\Player.cs",
+              "RelativeDocumentMoniker": "player\\Player.cs",
+              "ToolTip": "F:\\Godot Games\\scrolllock\\player\\Player.cs",
+              "RelativeToolTip": "player\\Player.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAQwEwAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-31T09:25:05.373Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "DemoMap.cs",
               "DocumentMoniker": "F:\\Godot Games\\scrolllock\\demo\\DemoMap.cs",
               "RelativeDocumentMoniker": "demo\\DemoMap.cs",

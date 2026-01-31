@@ -21,7 +21,7 @@ public partial class Player : CharacterBody3D
 	private bool hasGravity;
 	private float speedMod;
 	private float slide;
-	private string equipedSpell = "instant";
+	private string equipedSpell = "force";
 	private List<string> effects = new List<string>();
 
 	public override void _EnterTree()
@@ -74,7 +74,7 @@ public partial class Player : CharacterBody3D
 		}
 		if (Input.IsActionJustPressed("two"))
 		{
-			equipedSpell = "instant";
+			equipedSpell = "force";
 		}
 
 		if (Input.IsActionJustPressed("shoot") && _anime.CurrentAnimation != "Shoot")

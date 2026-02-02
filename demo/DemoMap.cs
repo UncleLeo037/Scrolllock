@@ -19,10 +19,8 @@ public partial class DemoMap : Node3D
 	{
 		string temp = spell.Name;
 		self.AddChild(spell);
-		Orb orb = self.GetNode<Orb>(temp);
-		orb.GlobalPosition = point;
-		//add in scale
-		//orb.Scale += new Vector3(size, size, size);
-		orb.Name = "old";
+		Node3D node = self.GetNode<Node3D>(temp);
+		node.GlobalPosition = point;
+		node.Name = "old";
 	}
 }

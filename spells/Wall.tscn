@@ -1,17 +1,27 @@
-[gd_scene load_steps=3 format=3 uid="uid://bm0koh7hlq7fm"]
+[gd_scene format=3 uid="uid://bm0koh7hlq7fm"]
+
+[ext_resource type="Script" uid="uid://fvhx6sywxwjb" path="res://spells/Wall.cs" id="1_gp71g"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cmj47"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cmj47"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(0, 1, 1, 0.19607843)
+
 [sub_resource type="BoxMesh" id="BoxMesh_cmj47"]
+material = SubResource("StandardMaterial3D_cmj47")
 
-[node name="Wall" type="Node3D"]
+[node name="Wall" type="Node3D" unique_id=1584310642]
+script = ExtResource("1_gp71g")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1779947895]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 0.5, 0, 0, 0)
+collision_layer = 2
+collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=147632374]
 shape = SubResource("BoxShape3D_cmj47")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=2081565460]
 mesh = SubResource("BoxMesh_cmj47")
-skeleton = NodePath("../..")

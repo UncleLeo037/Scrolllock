@@ -15,13 +15,12 @@ public partial class DemoMap : Node3D
 	{
 	}
 
-	public static async void SpawnSpell(Node spell, Vector3 point, Vector3 rotate)
+	public static async void SpawnSpell(Node spell, Vector3 position, Vector3 rotation)
 	{
-		string temp = spell.Name;
 		self.AddChild(spell);
-		Node3D node = self.GetNode<Node3D>(temp);
-		node.GlobalPosition = point;
-		node.Rotation = rotate;
+		Node3D node = self.GetNode<Node3D>((string)spell.Name);
+		node.GlobalPosition = position;
+		node.Rotation = rotation;
 		node.Name = "old";
 	}
 }

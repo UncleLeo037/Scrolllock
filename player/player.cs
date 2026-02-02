@@ -86,7 +86,7 @@ public partial class Player : CharacterBody3D
 				//spellNode.EditorDescription = equipedSpell; can possibly use this later to pass in additional info
 
 				Vector3 point = _bullet.GetCollisionPoint();
-				DemoMap.SpawnSpell(spellNode, point, this.Rotation);
+				DemoMap.SpawnSpell(spellNode, point, new Vector3(_camera.Rotation.X, this.Rotation.Y, 0));
 				//equipedSpell = string.Empty;
 			}
 		}

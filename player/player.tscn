@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://1d33ako3c375"]
+[gd_scene format=3 uid="uid://1d33ako3c375"]
 
 [ext_resource type="Script" uid="uid://lsg6e6yn63dn" path="res://player/Player.cs" id="1_rkbax"]
 [ext_resource type="PackedScene" uid="uid://qia3h2wkrg6i" path="res://player/skeleton.glb" id="2_btcbx"]
@@ -163,28 +163,29 @@ _data = {
 &"move": SubResource("Animation_qjkh3")
 }
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" unique_id=1074384815]
 collision_layer = 2
+collision_mask = 3
 script = ExtResource("1_rkbax")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=661437906]
 shape = SubResource("CapsuleShape3D_gwnis")
 
-[node name="TestModel" type="MeshInstance3D" parent="."]
+[node name="TestModel" type="MeshInstance3D" parent="." unique_id=1746710478]
 mesh = SubResource("CapsuleMesh_boad6")
 
-[node name="Model" parent="." instance=ExtResource("2_btcbx")]
+[node name="Model" parent="." unique_id=31974567 instance=ExtResource("2_btcbx")]
 transform = Transform3D(-0.4, 0, -3.49691e-08, 0, 0.4, 0, 3.49691e-08, 0, -0.4, 0, 0, 0)
 visible = false
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1084597021]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 near = 0.3
 
-[node name="Pistol" parent="Camera3D" instance=ExtResource("3_g1dw6")]
+[node name="Pistol" parent="Camera3D" unique_id=306680723 instance=ExtResource("3_g1dw6")]
 transform = Transform3D(-1.085997e-07, 0, 0.03, 0, 0.03, 0, -0.03, 0, -1.085997e-07, 0.412205, -0.297931, -0.566835)
 
-[node name="Flash" type="GPUParticles3D" parent="Camera3D/Pistol"]
+[node name="Flash" type="GPUParticles3D" parent="Camera3D/Pistol" unique_id=1011981387]
 transform = Transform3D(1, 0, 3.90799e-14, 0, 1, 0, -3.90799e-14, 0, 1, 10.0679, 1.63744, 0)
 emitting = false
 amount = 1
@@ -194,10 +195,10 @@ local_coords = true
 process_material = SubResource("ParticleProcessMaterial_g1dw6")
 draw_pass_1 = SubResource("PlaneMesh_qjkh3")
 
-[node name="RayCast3D" type="RayCast3D" parent="Camera3D"]
+[node name="RayCast3D" type="RayCast3D" parent="Camera3D" unique_id=1879086249]
 target_position = Vector3(0, 0, -20)
 
-[node name="TextureRect" type="TextureRect" parent="Camera3D"]
+[node name="TextureRect" type="TextureRect" parent="Camera3D" unique_id=205007231]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -213,13 +214,11 @@ texture = ExtResource("6_aqcbf")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1668601166]
 replication_config = SubResource("SceneReplicationConfig_rkbax")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_g6k8r")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=152515741]
+libraries/ = SubResource("AnimationLibrary_g6k8r")
 playback_default_blend_time = 0.05
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

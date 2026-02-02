@@ -12,6 +12,11 @@ albedo_color = Color(1, 1, 1, 0.2)
 [sub_resource type="SphereMesh" id="SphereMesh_14w60"]
 material = SubResource("StandardMaterial3D_6eahp")
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_3nrh1"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
 [node name="Force" type="Node3D" unique_id=159027205]
 script = ExtResource("1_1xy7k")
 
@@ -26,3 +31,6 @@ shape = SubResource("SphereShape3D_1xy7k")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D" unique_id=748133247]
 mesh = SubResource("SphereMesh_14w60")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=701569815]
+replication_config = SubResource("SceneReplicationConfig_3nrh1")

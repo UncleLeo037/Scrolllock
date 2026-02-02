@@ -80,13 +80,10 @@ public partial class Player : CharacterBody3D
 			if (_bullet.IsColliding())
 			{
 				if (equipedSpell == string.Empty) return;
-				PackedScene spellScene = GD.Load<PackedScene>($"res://spells/{equipedSpell}");
-				Node spellNode = spellScene.Instantiate();
-				spellNode.Name = this.Name;
-				//spellNode.EditorDescription = equipedSpell; can possibly use this later to pass in additional info
 
 				Vector3 point = _bullet.GetCollisionPoint();
-				DemoMap.SpawnSpell(spellNode, point, new Vector3(_camera.Rotation.X, this.Rotation.Y, 0));
+				DemoMap.CastSpell(this.Name, equipedSpell, point, new Vector3(_camera.Rotation.X, this.Rotation.Y, 0));
+
 				//equipedSpell = string.Empty;
 			}
 		}

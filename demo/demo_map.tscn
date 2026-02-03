@@ -27,6 +27,7 @@ environment = SubResource("Environment_x4mtj")
 [node name="Island" type="CSGBox3D" parent="." unique_id=1983115982]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -12, 0)
 use_collision = true
+collision_mask = 0
 size = Vector3(20, 20, 20)
 material = SubResource("StandardMaterial3D_sfhoj")
 

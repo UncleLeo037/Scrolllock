@@ -73,6 +73,10 @@ public partial class Player : CharacterBody3D
 		{
 			equipedSpell = "Wall";
 		}
+		if (Input.IsActionJustPressed("three"))
+		{
+			equipedSpell = "Tornado";
+		}
 
 		if (Input.IsActionJustPressed("shoot") && _anime.CurrentAnimation != "Shoot")
 		{

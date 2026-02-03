@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://fvhx6sywxwjb" path="res://spells/Wall.cs" id="1_gp71g"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cmj47"]
+size = Vector3(5, 5, 0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cmj47"]
 transparency = 1
@@ -11,6 +12,7 @@ albedo_color = Color(0, 1, 1, 0.19607843)
 
 [sub_resource type="BoxMesh" id="BoxMesh_cmj47"]
 material = SubResource("StandardMaterial3D_cmj47")
+size = Vector3(5, 5, 0.5)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gp71g"]
 properties/0/path = NodePath(".:position")
@@ -24,15 +26,15 @@ properties/1/replication_mode = 1
 script = ExtResource("1_gp71g")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1779947895]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 0.5, 0, 0, 0)
-collision_layer = 4
-collision_mask = 4
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=147632374]
 shape = SubResource("BoxShape3D_cmj47")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=2081565460]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D" unique_id=2081565460]
 mesh = SubResource("BoxMesh_cmj47")
+skeleton = NodePath("../..")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=634319188]
 replication_config = SubResource("SceneReplicationConfig_gp71g")

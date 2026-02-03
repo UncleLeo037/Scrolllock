@@ -16,9 +16,6 @@ public partial class Player : CharacterBody3D
 	private Node3D _model;
 	private RayCast3D _bullet;
 
-	private bool hasGravity;
-	private float speedMod;
-	private float slide;
 	private string equipedSpell = string.Empty;
 	private List<string> effects = new List<string>();
 
@@ -38,10 +35,6 @@ public partial class Player : CharacterBody3D
 		_flash = _camera.GetNode<Node3D>("Pistol").GetNode<GpuParticles3D>("Flash");
 		_model = GetNode<Node3D>("Model");
 		_bullet = _camera.GetNode<RayCast3D>("RayCast3D");
-
-		hasGravity = true;
-		speedMod = 0.0f;
-		slide = 0.1f;
 
 		_model.Hide();
 
@@ -100,44 +93,25 @@ public partial class Player : CharacterBody3D
 		float deltaFloat = (float)delta;
 
 		// Add gravity
-		if (!IsOnFloor() && (hasGravity == true))
+		if (!IsOnFloor())
 		{
 			Velocity += GetGravity() * deltaFloat;
 		}
 
-		if (hasGravity)
+		if (Input.IsActionJustPressed("jump") && IsOnFloor())
 		{
-			// Handle jump
-			if (Input.IsActionJustPressed("jump") && IsOnFloor())
-			{
-				Velocity = new Vector3(Velocity.X, Velocity.Y + JUMP_VELOCITY, Velocity.Z);
-			}
-
-			// Handle crouch
-			if (Input.IsActionPressed("crouch"))
-			{
-				_camera.Position = new Vector3(_camera.Position.X, 0.3f, _camera.Position.Z);
-			}
-
-			if (Input.IsActionJustReleased("crouch"))
-			{
-				_camera.Position = new Vector3(_camera.Position.X, 0.6f, _camera.Position.Z);
-			}
+			Velocity = new Vector3(Velocity.X, Velocity.Y + JUMP_VELOCITY, Velocity.Z);
 		}
-		else
+
+		// Handle crouch
+		if (Input.IsActionPressed("crouch"))
 		{
-			if (Input.IsActionPressed("jump"))
-			{
-				Velocity = new Vector3(Velocity.X, SPEED + speedMod, Velocity.Z);
-			}
-			else if (Input.IsActionPressed("crouch"))
-			{
-				Velocity = new Vector3(Velocity.X, -SPEED - speedMod, Velocity.Z);
-			}
-			else
-			{
-				Velocity = new Vector3(Velocity.X, Mathf.MoveToward(Velocity.Y, 0, slide * Math.Abs(Velocity.Y)), Velocity.Z);
-			}
+			_camera.Position = new Vector3(_camera.Position.X, 0.3f, _camera.Position.Z);
+		}
+
+		if (Input.IsActionJustReleased("crouch"))
+		{
+			_camera.Position = new Vector3(_camera.Position.X, 0.6f, _camera.Position.Z);
 		}
 
 		// Get input direction
@@ -145,28 +119,37 @@ public partial class Player : CharacterBody3D
 		Vector3 direction = (_body.Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
 
 		// Calculate speed (sprint adds speed when moving forward)
-		float totalSpeed = SPEED + speedMod;
+		float totalSpeed = SPEED;
 		if (inputDir.Y < 0 && Input.IsActionPressed("sprint"))
 		{
-			totalSpeed += 3.0f + speedMod;
+			totalSpeed += 3.0f;
 		}
 		// Apply movement if direction exists and mouse is captured
 		if (direction.Length() > 0 && Input.MouseMode == Input.MouseModeEnum.Captured)
 		{
-			Velocity = new Vector3(
+			Vector3 targetVelocity = new Vector3(
 				direction.X * totalSpeed,
 				Velocity.Y,
 				direction.Z * totalSpeed
 			);
+
+			if (IsOnFloor())
+			{
+				Velocity = targetVelocity;
+			}
+			else
+			{
+				Velocity = Velocity.MoveToward(targetVelocity, 15f * (float)delta);
+			}
 		}
 		else
 		{
-			if (IsOnFloor() || !hasGravity)
+			if (IsOnFloor())
 			{
 				Velocity = new Vector3(
-					Mathf.MoveToward(Velocity.X, 0, slide * Math.Abs(Velocity.X)),
+					Mathf.MoveToward(Velocity.X, 0, Math.Abs(Velocity.X) * 0.1f),
 					Velocity.Y,
-					Mathf.MoveToward(Velocity.Z, 0, slide * Math.Abs(Velocity.Z))
+					Mathf.MoveToward(Velocity.Z, 0, Math.Abs(Velocity.Z) * 0.1f)
 				);
 			}
 		}
@@ -210,35 +193,4 @@ public partial class Player : CharacterBody3D
 	//_anime.Play("idle");
 	//}
 	//}
-
-
-	// Will be expanded so spells can make more adjustments
-	public void Modify()
-	{
-
-		hasGravity = true;
-		speedMod = 0.0f;
-		slide = 0.1f;
-		foreach (string effect in effects)
-		{
-			if (effect == "gravity")
-			{
-				hasGravity = false;
-				speedMod = -3.0f;
-				slide = 0.02f;
-			}
-		}
-	}
-
-	public void AddEffect(string effect)
-	{
-		effects.Add(effect);
-		Modify();
-	}
-
-	public void RemoveEffect(string effect)
-	{
-		effects.Remove(effect);
-		Modify();
-	}
 }

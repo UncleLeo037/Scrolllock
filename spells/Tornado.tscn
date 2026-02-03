@@ -27,3 +27,8 @@ shape = SubResource("CylinderShape3D_unqjo")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D" unique_id=72525547]
 transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("CylinderMesh_unqjo")
+
+[node name="Center" type="Node3D" parent="." unique_id=1812774506]
+
+[node name="Pull" type="Node3D" parent="Center" unique_id=1292041438]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 5, 0)

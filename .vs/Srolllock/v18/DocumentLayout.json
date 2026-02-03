@@ -80,7 +80,7 @@
               "RelativeDocumentMoniker": "spells\\Tornado.cs",
               "ToolTip": "F:\\Godot Games\\scrolllock\\spells\\Tornado.cs",
               "RelativeToolTip": "spells\\Tornado.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAADAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABUAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-03T07:33:32.019Z",
               "EditorCaption": ""
@@ -95,7 +95,8 @@
               "RelativeToolTip": "demo\\SpellSpawner.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-03T06:27:38.067Z"
+              "WhenOpened": "2026-02-03T06:27:38.067Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -141,9 +142,10 @@
               "RelativeDocumentMoniker": "player\\Player.cs",
               "ToolTip": "F:\\Godot Games\\scrolllock\\player\\Player.cs",
               "RelativeToolTip": "player\\Player.cs",
-              "ViewState": "AgIAADgAAAAAAAAAAAAwwEwAAAACAAAAAAAAAA==",
+              "ViewState": "AgIAAIwAAAAAAAAAAAAIwKYAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-31T09:25:05.373Z"
+              "WhenOpened": "2026-01-31T09:25:05.373Z",
+              "EditorCaption": ""
             }
           ]
         }

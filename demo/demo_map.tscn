@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://vbahjmxesqjd"]
+[gd_scene format=3 uid="uid://vbahjmxesqjd"]
 
 [ext_resource type="Texture2D" uid="uid://d2ebtbsr6gytm" path="res://assets/AllSkyFree_Sky_EpicGloriousPink_Equirect.png" id="1_adjcj"]
-[ext_resource type="Script" uid="uid://0jrr0fajw44u" path="res://demo/DemoMap.cs" id="1_gro11"]
 [ext_resource type="Texture2D" uid="uid://cgorxyj7smnwb" path="res://assets/dev_tile.png" id="2_gro11"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_aro00"]
@@ -20,30 +19,29 @@ albedo_texture = ExtResource("2_gro11")
 uv1_triplanar = true
 texture_filter = 0
 
-[node name="DemoMap" type="Node3D"]
-script = ExtResource("1_gro11")
+[node name="DemoMap" type="Node3D" unique_id=1021776607]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1894891525]
 environment = SubResource("Environment_x4mtj")
 
-[node name="Island" type="CSGBox3D" parent="."]
+[node name="Island" type="CSGBox3D" parent="." unique_id=1983115982]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -12, 0)
 use_collision = true
 size = Vector3(20, 20, 20)
 material = SubResource("StandardMaterial3D_sfhoj")
 
-[node name="platfrom" type="CSGBox3D" parent="Island"]
+[node name="platfrom" type="CSGBox3D" parent="Island" unique_id=1725747324]
 use_collision = true
 size = Vector3(30, 1, 30)
 material = SubResource("StandardMaterial3D_sfhoj")
 
-[node name="Xwalk" type="CSGBox3D" parent="Island"]
+[node name="Xwalk" type="CSGBox3D" parent="Island" unique_id=1054664388]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0177, 9.5, -8.89207)
 use_collision = true
 size = Vector3(3, 1, 3)
 material = SubResource("StandardMaterial3D_sfhoj")
 
-[node name="Xramp" type="CSGBox3D" parent="Island/Xwalk"]
+[node name="Xramp" type="CSGBox3D" parent="Island/Xwalk" unique_id=320421333]
 transform = Transform3D(1, 0, 0, 0, 0.876634, -0.481157, 0, 0.481157, 0.876634, -1.01766, -4.7186, 9.99989)
 use_collision = true
 size = Vector3(5, 1, 20)

@@ -67,11 +67,11 @@ public partial class Player : CharacterBody3D
 
 		if (Input.IsActionJustPressed("one"))
 		{
-			equipedSpell = "Force.tscn";
+			equipedSpell = "Force";
 		}
 		if (Input.IsActionJustPressed("two"))
 		{
-			equipedSpell = "Wall.tscn";
+			equipedSpell = "Wall";
 		}
 
 		if (Input.IsActionJustPressed("shoot") && _anime.CurrentAnimation != "Shoot")
@@ -82,7 +82,7 @@ public partial class Player : CharacterBody3D
 				if (equipedSpell == string.Empty) return;
 
 				Vector3 point = _bullet.GetCollisionPoint();
-				DemoMap.CastSpell(this.Name, equipedSpell, point, new Vector3(_camera.Rotation.X, this.Rotation.Y, 0));
+				SpellSpawner.CastSpell(this.Name, equipedSpell, point, new Vector3(_camera.Rotation.X, this.Rotation.Y, 0));
 
 				//equipedSpell = string.Empty;
 			}

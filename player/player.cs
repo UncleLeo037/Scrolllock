@@ -97,10 +97,12 @@ public partial class Player : CharacterBody3D
 		{
 			Velocity += GetGravity() * deltaFloat;
 		}
-
-		if (Input.IsActionJustPressed("jump") && IsOnFloor())
+		else
 		{
-			Velocity = new Vector3(Velocity.X, Velocity.Y + JUMP_VELOCITY, Velocity.Z);
+			if (Input.IsActionJustPressed("jump"))
+			{
+				Velocity = new Vector3(Velocity.X, Velocity.Y + JUMP_VELOCITY, Velocity.Z);
+			}
 		}
 
 		// Handle crouch
@@ -117,7 +119,7 @@ public partial class Player : CharacterBody3D
 		// Get input direction
 		Vector2 inputDir = Input.GetVector("left", "right", "forward", "backward");
 		Vector3 direction = (_body.Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
-
+		
 		// Calculate speed (sprint adds speed when moving forward)
 		float totalSpeed = SPEED;
 		if (inputDir.Y < 0 && Input.IsActionPressed("sprint"))

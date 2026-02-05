@@ -1,0 +1,130 @@
+[gd_scene format=3 uid="uid://vbahjmxesqjd"]
+
+[ext_resource type="Material" uid="uid://dvm7wt64lkc04" path="res://assets/PanelTexture.tres" id="2_dbuku"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4vbhc"]
+
+[sub_resource type="Sky" id="Sky_fhrwt"]
+sky_material = SubResource("ProceduralSkyMaterial_4vbhc")
+
+[sub_resource type="Environment" id="Environment_4f08a"]
+background_mode = 2
+sky = SubResource("Sky_fhrwt")
+fog_enabled = true
+fog_light_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4vbhc"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fhrwt"]
+material = SubResource("StandardMaterial3D_4vbhc")
+flip_faces = true
+size = Vector3(100, 999, 999)
+
+[sub_resource type="TextMesh" id="TextMesh_dbuku"]
+text = "Y"
+font_size = 127
+uppercase = true
+pixel_size = 0.5
+depth = 7.0
+
+[node name="DemoMap" type="Node3D" unique_id=1021776607]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1894891525]
+environment = SubResource("Environment_4f08a")
+
+[node name="Darkness" type="MeshInstance3D" parent="." unique_id=1976087585]
+mesh = SubResource("BoxMesh_fhrwt")
+metadata/_edit_lock_ = true
+
+[node name="GreatAvenue" type="CSGBox3D" parent="." unique_id=637337867]
+calculate_tangents = false
+use_collision = true
+flip_faces = true
+size = Vector3(20, 1000, 1000)
+material = ExtResource("2_dbuku")
+metadata/_edit_lock_ = true
+
+[node name="LeftChambers" type="CSGCombiner3D" parent="GreatAvenue" unique_id=607593142]
+calculate_tangents = false
+metadata/_edit_lock_ = true
+
+[node name="Stairwell" type="CSGBox3D" parent="GreatAvenue/LeftChambers" unique_id=1583783077]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 8)
+use_collision = true
+flip_faces = true
+size = Vector3(10, 20, 10)
+material = ExtResource("2_dbuku")
+metadata/_edit_lock_ = true
+
+[node name="LowerDoor" type="CSGBox3D" parent="GreatAvenue/LeftChambers" unique_id=205308656]
+transform = Transform3D(0.86626965, -0.49957675, 0, 0.49957675, 0.86626965, 0, 0, 0, 1, 10.634, -8.698, 11.34)
+flip_faces = true
+size = Vector3(4, 3, 3)
+material = ExtResource("2_dbuku")
+metadata/_edit_lock_ = true
+
+[node name="UpperFloor" type="CSGBox3D" parent="GreatAvenue/LeftChambers" unique_id=2079018100]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 7.5, -5)
+flip_faces = true
+size = Vector3(10, 5, 20)
+material = ExtResource("2_dbuku")
+metadata/_edit_lock_ = true
+
+[node name="UpperDoor" type="CSGBox3D" parent="GreatAvenue/LeftChambers" unique_id=636568625]
+transform = Transform3D(0.8660254, -0.5, 0, 0.5, 0.8660254, 0, 0, 0, 1, 13.645932, 4, -11.371)
+flip_faces = true
+size = Vector3(13.21, 3.5, 3)
+material = ExtResource("2_dbuku")
+metadata/_edit_lock_ = true
+
+[node name="Window" type="CSGBox3D" parent="GreatAvenue/LeftChambers" unique_id=1224357901]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 7, 0)
+flip_faces = true
+size = Vector3(1, 4, 16)
+material = ExtResource("2_dbuku")
+metadata/_edit_lock_ = true
+
+[node name="Bridges" type="CSGCombiner3D" parent="." unique_id=1189600488]
+material_override = ExtResource("2_dbuku")
+calculate_tangents = false
+use_collision = true
+metadata/_edit_lock_ = true
+
+[node name="Tower" type="CSGMesh3D" parent="Bridges" unique_id=1343466526]
+transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, -30, 0)
+use_collision = true
+mesh = SubResource("TextMesh_dbuku")
+metadata/_edit_lock_ = true
+
+[node name="UpBeam" type="CSGBox3D" parent="Bridges" unique_id=1734220236]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.11, -11.4)
+use_collision = true
+size = Vector3(20, 2, 3)
+metadata/_edit_lock_ = true
+
+[node name="UpRamp" type="CSGBox3D" parent="Bridges" unique_id=7045562]
+transform = Transform3D(1, 0, 0, 0, 0.76604444, -0.6427876, 0, 0.6427876, 0.76604444, 0, -4.1, -6.69)
+use_collision = true
+size = Vector3(3, 2, 10)
+metadata/_edit_lock_ = true
+
+[node name="DownRamp" type="CSGBox3D" parent="Bridges" unique_id=1719380226]
+transform = Transform3D(1, 0, 0, 0, 0.76604444, -0.6427876, 0, 0.6427876, 0.76604444, 0, -9.48, 6.7)
+use_collision = true
+size = Vector3(3, 2, 10)
+metadata/_edit_lock_ = true
+
+[node name="DownBeam" type="CSGBox3D" parent="Bridges" unique_id=266692673]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -12.3, 11.34)
+use_collision = true
+size = Vector3(20, 3, 3)
+metadata/_edit_lock_ = true
+
+[node name="Platform" type="CSGBox3D" parent="." unique_id=1922085364]
+transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 19.372, -2, 11.299)
+use_collision = true
+size = Vector3(10, 1, 5)
+material = ExtResource("2_dbuku")
+metadata/_edit_lock_ = true

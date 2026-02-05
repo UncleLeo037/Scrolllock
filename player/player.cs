@@ -101,7 +101,7 @@ public partial class Player : CharacterBody3D
 		{
 			if (Input.IsActionJustPressed("jump"))
 			{
-				Velocity = new Vector3(Velocity.X, Velocity.Y + JUMP_VELOCITY, Velocity.Z);
+				Velocity = new Vector3(Velocity.X, JUMP_VELOCITY, Velocity.Z);
 			}
 		}
 
@@ -157,7 +157,7 @@ public partial class Player : CharacterBody3D
 		}
 
 		// Quick fall recovery
-		if (_body.Position.Y < -50)
+		if (_body.Position.Y < -100)
 		{
 			_body.Position = new Vector3(0, 20, 0);
 		}

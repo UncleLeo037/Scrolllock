@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://djou8esfr14cu"]
+
+[ext_resource type="PackedScene" uid="uid://c3ch7qjgypvqk" path="res://assets/pistol.glb" id="1_046a8"]
+
+[node name="Pistol" unique_id=1277415309 instance=ExtResource("1_046a8")]
+transform = Transform3D(-1.3113416e-09, 0, 0.03, 0, 0.03, 0, -0.03, 0, -1.3113416e-09, 0.4, -0.3, -0.5)

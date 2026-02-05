@@ -1,8 +1,9 @@
 using Godot;
+using Srolllock.spells;
 using System;
 using System.Threading;
 
-public partial class Force : Node3D
+public partial class Force : Spell
 {
 	private double lifetime = 0.1;
 	public override void _Ready()

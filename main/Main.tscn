@@ -76,7 +76,7 @@ offset_right = 307.0
 offset_bottom = 197.0
 
 [node name="DemoMap" parent="." unique_id=752502970 instance=ExtResource("3_gg8xm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -50, 9, 0)
 
 [connection signal="pressed" from="Menu/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Menu/Join" to="." method="_on_join_pressed"]

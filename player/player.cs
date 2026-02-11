@@ -159,7 +159,7 @@ public partial class Player : CharacterBody3D
 		// Quick fall recovery
 		if (_body.Position.Y < -100)
 		{
-			_body.Position = new Vector3(0, 20, 0);
+			_body.Position = new Vector3(0, 0, 0);
 		}
 
 		if (_anime.CurrentAnimation == "Shoot")

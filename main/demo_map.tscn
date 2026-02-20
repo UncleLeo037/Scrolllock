@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://vbahjmxesqjd"]
 
-[ext_resource type="Material" uid="uid://dvm7wt64lkc04" path="res://assets/PanelTexture.tres" id="2_dbuku"]
+[ext_resource type="Material" uid="uid://dvm7wt64lkc04" path="res://assets/textures/PanelTexture.tres" id="2_dbuku"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4vbhc"]
 

@@ -11,7 +11,7 @@ public partial class Player : CharacterBody3D
 
 	private Camera3D _camera;
 	private CharacterBody3D _body;
-	private AnimationPlayer _anime;
+	//private AnimationPlayer _anime;
 	private GpuParticles3D _flash;
 	private Node3D _model;
 	private RayCast3D _bullet;
@@ -31,7 +31,7 @@ public partial class Player : CharacterBody3D
 
 		_camera = GetNode<Camera3D>("Camera3D");
 		_body = GetNode<CharacterBody3D>(".");
-		_anime = GetNode<AnimationPlayer>("AnimationPlayer");
+		//_anime = GetNode<AnimationPlayer>("AnimationPlayer");
 		_flash = _camera.GetNode<Node3D>("Pistol").GetNode<GpuParticles3D>("Flash");
 		_model = GetNode<Node3D>("Model");
 		_bullet = _camera.GetNode<RayCast3D>("RayCast3D");
@@ -71,7 +71,7 @@ public partial class Player : CharacterBody3D
 			equipedSpell = "Tornado";
 		}
 
-		if (Input.IsActionJustPressed("shoot") && _anime.CurrentAnimation != "Shoot")
+		if (Input.IsActionJustPressed("shoot")/* && _anime.CurrentAnimation != "Shoot"*/)
 		{
 			Rpc("PlayShoot");
 			if (_bullet.IsColliding())
@@ -162,18 +162,18 @@ public partial class Player : CharacterBody3D
 			_body.Position = new Vector3(0, 0, 0);
 		}
 
-		if (_anime.CurrentAnimation == "Shoot")
-		{
-			//do nothing
-		}
-		else if (direction.Length() > 0 && IsOnFloor())
-		{
-			_anime.Play("move");
-		}
-		else
-		{
-			_anime.Play("idle");
-		}
+		//if (_anime.CurrentAnimation == "Shoot")
+		//{
+		//	//do nothing
+		//}
+		//else if (direction.Length() > 0 && IsOnFloor())
+		//{
+		//	_anime.Play("move");
+		//}
+		//else
+		//{
+		//	_anime.Play("idle");
+		//}
 
 		MoveAndSlide();
 	}
@@ -181,10 +181,10 @@ public partial class Player : CharacterBody3D
 	[Rpc(CallLocal = true)]
 	public void PlayShoot()
 	{
-		_anime.Stop();
-		_anime.Play("Shoot");
-		_flash.Restart();
-		_flash.Emitting = true;
+		//_anime.Stop();
+		//_anime.Play("Shoot");
+		//_flash.Restart();
+		//_flash.Emitting = true;
 	}
 
 	//[Signal]

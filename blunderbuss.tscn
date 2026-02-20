@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://qmvcpftyptve"]
+
+[ext_resource type="PackedScene" uid="uid://cabqte5kwuidl" path="res://assets/guns/blunderbuss.glb" id="1_ehfjf"]
+
+[node name="blunderbuss" unique_id=2116126593 instance=ExtResource("1_ehfjf")]

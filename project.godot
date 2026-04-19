@@ -17,7 +17,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 config/name="Scrolllock"
 run/main_scene="uid://ck6smt7oulkc"
 config/features=PackedStringArray("4.6", "C#", "Forward Plus")
-config/icon="uid://drxkld00jxs4j"
+config/icon="uid://c775j5xrcxkcn"
 
 [dotnet]
 

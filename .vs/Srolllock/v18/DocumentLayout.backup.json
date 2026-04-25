@@ -42,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 16,
+          "SelectedChildIndex": 17,
           "Children": [
             {
               "$type": "Bookmark",
@@ -81,6 +81,10 @@
               "Name": "ST:16:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{c6f34f0d-7ae5-4f3a-be61-fe0c21ae9eb8}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "Spell.cs",
@@ -90,8 +94,7 @@
               "RelativeToolTip": "spells\\Spell.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-18T17:55:39.073Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-18T17:55:39.073Z"
             },
             {
               "$type": "Document",
@@ -163,8 +166,7 @@
               "RelativeToolTip": "spells\\Force.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-02T16:09:42.628Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-02T16:09:42.628Z"
             },
             {
               "$type": "Document",

@@ -1,7 +1,9 @@
 using Godot;
+using Srolllock.spells;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Reflection;
 
 public partial class Player : CharacterBody3D
 {
@@ -13,9 +15,9 @@ public partial class Player : CharacterBody3D
 	private CharacterBody3D _body;
 	//private AnimationPlayer _anime;
 
-	private RayCast3D _bullet;
+	private Gun _gun;
+	private Dictionary<string, object> _equipment;
 
-	private string equipedSpell = string.Empty;
 	private List<string> effects = new List<string>();
 
 	public override void _EnterTree()
@@ -33,7 +35,24 @@ public partial class Player : CharacterBody3D
 		//_anime = GetNode<AnimationPlayer>("AnimationPlayer");
 		//add ref to player animation player to Gun so gun can trigger player animations when shooting
 		//_flash = _camera.GetNode<Node3D>("Gun").GetNode<GpuParticles3D>("Flash");
-		_bullet = _camera.GetNode<Node3D>("Gun").GetNode<RayCast3D>("RayCast3D");
+		_gun = _camera.GetNode<Gun>("Gun");
+		_gun.Name = this.Name;
+
+		_equipment = new Dictionary<string, object>()
+		{
+			{"Key1", new Force()},
+			{"Key2", new Wall()},
+			{"Key3", new Tornado()},
+			{"Key4", null},
+			{"Key5", null},
+			{"Key6", null},
+			{"Key7", null},
+			{"Key8", null},
+			{"Key9", null},
+			{"Key0", null},
+			{"Equal", null},
+			{"Minus", null}
+		};
 
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		_camera.Current = true;
@@ -42,6 +61,19 @@ public partial class Player : CharacterBody3D
 	public override void _UnhandledInput(InputEvent @event)
 	{
 		if (!IsMultiplayerAuthority()) return;
+
+		if (@event is InputEventKey keyEvent && keyEvent.Pressed && !keyEvent.Echo)
+		{
+			if (_equipment.TryGetValue(keyEvent.KeyLabel.ToString(), out object temp))
+			{
+				var item = temp.GetType();
+				GD.Print(item.Name);
+				if (item.BaseType.Name == "Spell")
+				{
+					_gun.equipedSpell = item.Name;
+				}
+			}
+		}
 
 		if (@event is InputEventMouseMotion mouseMotion &&
 			Input.MouseMode == Input.MouseModeEnum.Captured)
@@ -55,32 +87,10 @@ public partial class Player : CharacterBody3D
 			);
 		}
 
-		if (Input.IsActionJustPressed("one"))
-		{
-			equipedSpell = "Force";
-		}
-		if (Input.IsActionJustPressed("two"))
-		{
-			equipedSpell = "Wall";
-		}
-		if (Input.IsActionJustPressed("three"))
-		{
-			equipedSpell = "Tornado";
-		}
-
 		if (Input.IsActionJustPressed("shoot")/* && _anime.CurrentAnimation != "Shoot"*/)
 		{
 			Rpc("PlayShoot");
-
-			if (_bullet.IsColliding())
-			{
-				if (equipedSpell == string.Empty) return;
-
-				Vector3 point = _bullet.GetCollisionPoint();
-				SpellSpawner.CastSpell(this.Name, equipedSpell, point, new Vector3(_camera.Rotation.X, this.Rotation.Y, 0));
-
-				//equipedSpell = string.Empty;
-			}
+			_gun.Shoot();
 		}
 	}
 

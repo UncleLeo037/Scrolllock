@@ -1,4 +1,5 @@
 using Godot;
+using Srolllock.spells;
 using System;
 using System.Collections.Generic;
 
@@ -33,7 +34,7 @@ public partial class SpellSpawner : Node3D
 		Node spell = spellScene.Instantiate();
 		spell.Name = playerName;
 		AddChild(spell);
-		Node3D node = GetNode<Node3D>((string)spell.Name);
+		Spell node = GetNode<Spell>((string)spell.Name);
 		node.GlobalPosition = position;
 		node.Rotation = rotation;
 		node.Name = "old";

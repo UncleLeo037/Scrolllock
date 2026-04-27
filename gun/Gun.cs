@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Gun : Equipment
+public partial class Gun : Node3D
 {
 	private PackedScene gunModel;
 	private RayCast3D _rayCast;
@@ -24,20 +24,5 @@ public partial class Gun : Equipment
 
 			equipedSpell = string.Empty;
 		}
-	}
-
-	//these need to be RPC
-	public override void Equip()
-	{
-		//will need to call un-equip for currently equiped gun if there is one
-		//will need to set self as active gun for player
-		//will need to show gun model
-		throw new NotImplementedException();
-	}
-
-	public override void Unequip()
-	{
-		//will need to hide gun model
-		throw new NotImplementedException();
 	}
 }

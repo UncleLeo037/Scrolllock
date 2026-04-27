@@ -16,7 +16,7 @@ public partial class Player : CharacterBody3D
 	//private AnimationPlayer _anime;
 
 	private Gun _gun;
-	private Dictionary<string, object> _equipment;
+	private Dictionary<Key, object> _equipment;
 
 	private List<string> effects = new List<string>();
 
@@ -38,20 +38,20 @@ public partial class Player : CharacterBody3D
 		_gun = _camera.GetNode<Gun>("Gun");
 		_gun.Name = this.Name;
 
-		_equipment = new Dictionary<string, object>()
+		_equipment = new Dictionary<Key, object>()
 		{
-			{"Key1", new Force()},
-			{"Key2", new Wall()},
-			{"Key3", new Tornado()},
-			{"Key4", null},
-			{"Key5", null},
-			{"Key6", null},
-			{"Key7", null},
-			{"Key8", null},
-			{"Key9", null},
-			{"Key0", null},
-			{"Equal", null},
-			{"Minus", null}
+			{Key.Key1, new Force()},
+			{Key.Key2, new Wall()},
+			{Key.Key3, new Tornado()}
+			//{Key.Key4, null}
+			// {"Key5", null},
+			// {"Key6", null},
+			// {"Key7", null},
+			// {"Key8", null},
+			// {"Key9", null},
+			// {"Key0", null},
+			// {"Equal", null},
+			// {"Minus", null}
 		};
 
 		Input.MouseMode = Input.MouseModeEnum.Captured;
@@ -64,13 +64,19 @@ public partial class Player : CharacterBody3D
 
 		if (@event is InputEventKey keyEvent && keyEvent.Pressed && !keyEvent.Echo)
 		{
-			if (_equipment.TryGetValue(keyEvent.KeyLabel.ToString(), out object temp))
+			GD.Print(keyEvent);
+
+			if (_equipment.TryGetValue(keyEvent.PhysicalKeycode, out object item))
 			{
-				var item = temp.GetType();
-				GD.Print(item.Name);
-				if (item.BaseType.Name == "Spell")
+				switch (item)
 				{
-					_gun.equipedSpell = item.Name;
+					case Spell spell:
+						_gun.equipedSpell = spell.GetType().Name;
+						break;
+					case Gun gun:
+						//need to change this to rpc method call so other players see changed gun
+						_gun = gun;
+						break;
 				}
 			}
 		}

@@ -2,6 +2,8 @@ using Godot;
 using Srolllock.spells;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Dynamic;
 
 public partial class SpellSpawner : Node3D
 {
@@ -12,14 +14,20 @@ public partial class SpellSpawner : Node3D
 	{
 		self = this;
 
-		//adjust this to be based on equiped spells
-		//will need to account for spells of all players in game
-		spellDictionary = new Dictionary<string, PackedScene>()
+		SetSpells();
+	}
+
+	public void SetSpells()
+	{
+		//this string list would be grabbed from a save file
+		string[] inventory = {"Force", "Wall", "Tornade"};
+
+		spellDictionary = new Dictionary<string, PackedScene>();
+
+		foreach (string spell in inventory)
 		{
-			{"Force", GD.Load<PackedScene>("res://spells/Force.tscn")},
-			{"Wall", GD.Load<PackedScene>("res://spells/Wall.tscn")},
-			{"Tornado", GD.Load<PackedScene>("res://spells/Tornado.tscn")}
-		};
+			spellDictionary.Add(spell, GD.Load<PackedScene>($"res://spells/{spell}.tscn"));
+		}
 	}
 
 	public static void CastSpell(string playerName, string spellName, Vector3 position, Vector3 rotation)

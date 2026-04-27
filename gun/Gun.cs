@@ -3,6 +3,14 @@ using System;
 
 public partial class Gun : Equipment
 {
+	private PackedScene gunModel;
+
+	public override void _Ready()
+	{
+		base._Ready();
+	}
+
+	//these need to be RPC
 	public override void Equip()
 	{
 		//will need to call un-equip for currently equiped gun if there is one

@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://b4aiu1dradtl3"]
+
+[ext_resource type="Script" uid="uid://brl6gbt4n2os6" path="res://gun/Gun.cs" id="1_7ovni"]
+[ext_resource type="PackedScene" uid="uid://die6s5wrp68j4" path="res://assets/guns/pistol.glb" id="1_ftjex"]
+
+[node name="DemoGun" type="Node3D" unique_id=102001726]
+script = ExtResource("1_7ovni")
+
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=530002889]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+target_position = Vector3(100, 0, 0)
+
+[node name="GunSpawner" type="Node3D" parent="." unique_id=774322424]
+transform = Transform3D(-1.3113416e-09, 0, 0.03, 0, 0.03, 0, -0.03, 0, -1.3113416e-09, 0.5, -0.3, -0.5)
+
+[node name="pistol" parent="GunSpawner" unique_id=599545632 instance=ExtResource("1_ftjex")]

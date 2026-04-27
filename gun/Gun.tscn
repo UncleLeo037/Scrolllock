@@ -1,9 +1,0 @@
-[gd_scene format=3 uid="uid://mn4sig0jht8y"]
-
-[ext_resource type="Script" uid="uid://brl6gbt4n2os6" path="res://gun/Gun.cs" id="1_p2vh8"]
-[ext_resource type="PackedScene" uid="uid://djou8esfr14cu" path="res://gun/Pistol.tscn" id="2_tb38n"]
-
-[node name="Gun" type="Node3D" unique_id=524586184]
-script = ExtResource("1_p2vh8")
-
-[node name="Pistols" parent="." unique_id=1411006747 instance=ExtResource("2_tb38n")]

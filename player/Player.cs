@@ -5,197 +5,194 @@ using System.Drawing;
 
 public partial class Player : CharacterBody3D
 {
-    private const float SPEED = 5.0f;
-    private const float JUMP_VELOCITY = 4.5f;
-    private const float SENSITIVITY = 0.08f;
+	private const float SPEED = 5.0f;
+	private const float JUMP_VELOCITY = 4.5f;
+	private const float SENSITIVITY = 0.08f;
 
-    private Camera3D _camera;
-    private CharacterBody3D _body;
-    //private AnimationPlayer _anime;
-    private GpuParticles3D _flash;
-    private Node3D _model;
-    private RayCast3D _bullet;
+	private Camera3D _camera;
+	private CharacterBody3D _body;
+	//private AnimationPlayer _anime;
 
-    private string equipedSpell = string.Empty;
-    private List<string> effects = new List<string>();
+	private RayCast3D _bullet;
 
-    public override void _EnterTree()
-    {
-        SetMultiplayerAuthority(Name.ToString().ToInt());
-    }
+	private string equipedSpell = string.Empty;
+	private List<string> effects = new List<string>();
 
-    public override void _Ready()
-    {
-        GD.Print(this.Name);
-        if (!IsMultiplayerAuthority()) return;
+	public override void _EnterTree()
+	{
+		SetMultiplayerAuthority(Name.ToString().ToInt());
+	}
 
-        _camera = GetNode<Camera3D>("Camera3D");
-        _body = GetNode<CharacterBody3D>(".");
-        //_anime = GetNode<AnimationPlayer>("AnimationPlayer");
-        //add ref to player animation player to Gun so gun can trigger player animations when shooting
-        _flash = _camera.GetNode<Node3D>("Pistol").GetNode<GpuParticles3D>("Flash");
-        _model = GetNode<Node3D>("Model");
-        _bullet = _camera.GetNode<RayCast3D>("RayCast3D");
+	public override void _Ready()
+	{
+		GD.Print(this.Name);
+		if (!IsMultiplayerAuthority()) return;
 
-        _model.Hide();
+		_camera = GetNode<Camera3D>("Camera3D");
+		_body = GetNode<CharacterBody3D>(".");
+		//_anime = GetNode<AnimationPlayer>("AnimationPlayer");
+		//add ref to player animation player to Gun so gun can trigger player animations when shooting
+		//_flash = _camera.GetNode<Node3D>("Gun").GetNode<GpuParticles3D>("Flash");
+		_bullet = _camera.GetNode<Node3D>("Gun").GetNode<RayCast3D>("RayCast3D");
 
-        Input.MouseMode = Input.MouseModeEnum.Captured;
-        _camera.Current = true;
-    }
+		Input.MouseMode = Input.MouseModeEnum.Captured;
+		_camera.Current = true;
+	}
 
-    public override void _UnhandledInput(InputEvent @event)
-    {
-        if (!IsMultiplayerAuthority()) return;
+	public override void _UnhandledInput(InputEvent @event)
+	{
+		if (!IsMultiplayerAuthority()) return;
 
-        if (@event is InputEventMouseMotion mouseMotion &&
-            Input.MouseMode == Input.MouseModeEnum.Captured)
-        {
-            _body.RotateY(Mathf.DegToRad(-mouseMotion.Relative.X * SENSITIVITY));
-            _camera.RotateX(Mathf.DegToRad(-mouseMotion.Relative.Y * SENSITIVITY));
-            _camera.Rotation = new Vector3(
-                Mathf.Clamp(_camera.Rotation.X, Mathf.DegToRad(-90), Mathf.DegToRad(90)),
-                _camera.Rotation.Y,
-                _camera.Rotation.Z
-            );
-        }
+		if (@event is InputEventMouseMotion mouseMotion &&
+			Input.MouseMode == Input.MouseModeEnum.Captured)
+		{
+			_body.RotateY(Mathf.DegToRad(-mouseMotion.Relative.X * SENSITIVITY));
+			_camera.RotateX(Mathf.DegToRad(-mouseMotion.Relative.Y * SENSITIVITY));
+			_camera.Rotation = new Vector3(
+				Mathf.Clamp(_camera.Rotation.X, Mathf.DegToRad(-90), Mathf.DegToRad(90)),
+				_camera.Rotation.Y,
+				_camera.Rotation.Z
+			);
+		}
 
-        if (Input.IsActionJustPressed("one"))
-        {
-            equipedSpell = "Force";
-        }
-        if (Input.IsActionJustPressed("two"))
-        {
-            equipedSpell = "Wall";
-        }
-        if (Input.IsActionJustPressed("three"))
-        {
-            equipedSpell = "Tornado";
-        }
+		if (Input.IsActionJustPressed("one"))
+		{
+			equipedSpell = "Force";
+		}
+		if (Input.IsActionJustPressed("two"))
+		{
+			equipedSpell = "Wall";
+		}
+		if (Input.IsActionJustPressed("three"))
+		{
+			equipedSpell = "Tornado";
+		}
 
-        if (Input.IsActionJustPressed("shoot")/* && _anime.CurrentAnimation != "Shoot"*/)
-        {
-            Rpc("PlayShoot");
-            if (_bullet.IsColliding())
-            {
-                if (equipedSpell == string.Empty) return;
+		if (Input.IsActionJustPressed("shoot")/* && _anime.CurrentAnimation != "Shoot"*/)
+		{
+			Rpc("PlayShoot");
 
-                Vector3 point = _bullet.GetCollisionPoint();
-                SpellSpawner.CastSpell(this.Name, equipedSpell, point, new Vector3(_camera.Rotation.X, this.Rotation.Y, 0));
+			if (_bullet.IsColliding())
+			{
+				if (equipedSpell == string.Empty) return;
 
-                //equipedSpell = string.Empty;
-            }
-        }
-    }
+				Vector3 point = _bullet.GetCollisionPoint();
+				SpellSpawner.CastSpell(this.Name, equipedSpell, point, new Vector3(_camera.Rotation.X, this.Rotation.Y, 0));
 
-    public override void _PhysicsProcess(double delta)
-    {
-        if (!IsMultiplayerAuthority()) return;
+				//equipedSpell = string.Empty;
+			}
+		}
+	}
 
-        float deltaFloat = (float)delta;
+	public override void _PhysicsProcess(double delta)
+	{
+		if (!IsMultiplayerAuthority()) return;
 
-        // Add gravity
-        if (!IsOnFloor())
-        {
-            Velocity += GetGravity() * deltaFloat;
-        }
-        else
-        {
-            if (Input.IsActionJustPressed("jump"))
-            {
-                Velocity = new Vector3(Velocity.X, JUMP_VELOCITY, Velocity.Z);
-            }
-        }
+		float deltaFloat = (float)delta;
 
-        // Handle crouch
-        if (Input.IsActionPressed("crouch"))
-        {
-            _camera.Position = new Vector3(_camera.Position.X, 0.3f, _camera.Position.Z);
-        }
+		// Add gravity
+		if (!IsOnFloor())
+		{
+			Velocity += GetGravity() * deltaFloat;
+		}
+		else
+		{
+			if (Input.IsActionJustPressed("jump"))
+			{
+				Velocity = new Vector3(Velocity.X, JUMP_VELOCITY, Velocity.Z);
+			}
+		}
 
-        if (Input.IsActionJustReleased("crouch"))
-        {
-            _camera.Position = new Vector3(_camera.Position.X, 0.6f, _camera.Position.Z);
-        }
+		// Handle crouch
+		if (Input.IsActionPressed("crouch"))
+		{
+			_camera.Position = new Vector3(_camera.Position.X, 0.3f, _camera.Position.Z);
+		}
 
-        // Get input direction
-        Vector2 inputDir = Input.GetVector("left", "right", "forward", "backward");
-        Vector3 direction = (_body.Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
+		if (Input.IsActionJustReleased("crouch"))
+		{
+			_camera.Position = new Vector3(_camera.Position.X, 0.6f, _camera.Position.Z);
+		}
 
-        // Calculate speed (sprint adds speed when moving forward)
-        float totalSpeed = SPEED;
-        if (inputDir.Y < 0 && Input.IsActionPressed("sprint"))
-        {
-            totalSpeed += 3.0f;
-        }
-        // Apply movement if direction exists and mouse is captured
-        if (direction.Length() > 0 && Input.MouseMode == Input.MouseModeEnum.Captured)
-        {
-            Vector3 targetVelocity = new Vector3(
-                direction.X * totalSpeed,
-                Velocity.Y,
-                direction.Z * totalSpeed
-            );
+		// Get input direction
+		Vector2 inputDir = Input.GetVector("left", "right", "forward", "backward");
+		Vector3 direction = (_body.Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
 
-            if (IsOnFloor())
-            {
-                Velocity = targetVelocity;
-            }
-            else
-            {
-                Velocity = Velocity.MoveToward(targetVelocity, 15f * (float)delta);
-            }
-        }
-        else
-        {
-            if (IsOnFloor())
-            {
-                Velocity = new Vector3(
-                    Mathf.MoveToward(Velocity.X, 0, Math.Abs(Velocity.X) * 0.1f),
-                    Velocity.Y,
-                    Mathf.MoveToward(Velocity.Z, 0, Math.Abs(Velocity.Z) * 0.1f)
-                );
-            }
-        }
+		// Calculate speed (sprint adds speed when moving forward)
+		float totalSpeed = SPEED;
+		if (inputDir.Y < 0 && Input.IsActionPressed("sprint"))
+		{
+			totalSpeed += 3.0f;
+		}
+		// Apply movement if direction exists and mouse is captured
+		if (direction.Length() > 0 && Input.MouseMode == Input.MouseModeEnum.Captured)
+		{
+			Vector3 targetVelocity = new Vector3(
+				direction.X * totalSpeed,
+				Velocity.Y,
+				direction.Z * totalSpeed
+			);
 
-        // Quick fall recovery
-        if (_body.Position.Y < -100)
-        {
-            _body.Position = new Vector3(0, 0, 0);
-        }
+			if (IsOnFloor())
+			{
+				Velocity = targetVelocity;
+			}
+			else
+			{
+				Velocity = Velocity.MoveToward(targetVelocity, 15f * (float)delta);
+			}
+		}
+		else
+		{
+			if (IsOnFloor())
+			{
+				Velocity = new Vector3(
+					Mathf.MoveToward(Velocity.X, 0, Math.Abs(Velocity.X) * 0.1f),
+					Velocity.Y,
+					Mathf.MoveToward(Velocity.Z, 0, Math.Abs(Velocity.Z) * 0.1f)
+				);
+			}
+		}
 
-        //if (_anime.CurrentAnimation == "Shoot")
-        //{
-        //	//do nothing
-        //}
-        //else if (direction.Length() > 0 && IsOnFloor())
-        //{
-        //	_anime.Play("move");
-        //}
-        //else
-        //{
-        //	_anime.Play("idle");
-        //}
+		// Quick fall recovery
+		if (_body.Position.Y < -100)
+		{
+			_body.Position = new Vector3(0, 0, 0);
+		}
 
-        MoveAndSlide();
-    }
+		//if (_anime.CurrentAnimation == "Shoot")
+		//{
+		//	//do nothing
+		//}
+		//else if (direction.Length() > 0 && IsOnFloor())
+		//{
+		//	_anime.Play("move");
+		//}
+		//else
+		//{
+		//	_anime.Play("idle");
+		//}
 
-    //move all animation methods to dedicated animation class and gun animation class
-    [Rpc(CallLocal = true)]
-    public void PlayShoot()
-    {
-        //_anime.Stop();
-        //_anime.Play("Shoot");
-        //_flash.Restart();
-        //_flash.Emitting = true;
-    }
+		MoveAndSlide();
+	}
+
+	//move all animation methods to dedicated animation class and gun animation class
+	[Rpc(CallLocal = true)]
+	public void PlayShoot()
+	{
+		//_anime.Stop();
+		//_anime.Play("Shoot");
+		//_flash.Restart();
+		//_flash.Emitting = true;
+	}
 
 
-    //[Signal]
-    //private delegate _on_animation_player_animation_finished()
-    //{
-    //if (_anime.CurrentAnimation != "Shoot")
-    //{
-    //_anime.Play("idle");
-    //}
-    //}
+	//[Signal]
+	//private delegate _on_animation_player_animation_finished()
+	//{
+	//if (_anime.CurrentAnimation != "Shoot")
+	//{
+	//_anime.Play("idle");
+	//}
+	//}
 }

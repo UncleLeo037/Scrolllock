@@ -1,5 +1,0 @@
-[gd_scene format=3 uid="uid://dl61og602kn61"]
-
-[ext_resource type="PackedScene" uid="uid://btagf8707cp3v" path="res://assets/guns/musket.glb" id="1_h4hoy"]
-
-[node name="musket" unique_id=141644286 instance=ExtResource("1_h4hoy")]

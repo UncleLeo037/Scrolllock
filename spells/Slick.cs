@@ -1,13 +1,16 @@
 using Godot;
+using System;
 using Srolllock.spells;
 
-public partial class Force : Spell
+public partial class Slick : Spell
 {
-	private double lifetime = 0.1;
+	private double lifetime = 5;
+
 	public override void _Ready()
 	{
 		Area3D area = GetNode<Area3D>("Area3D");
 		area.BodyEntered += _on_area_3d_body_entered;
+		area.BodyExited += _on_area_3d_body_exited;
 	}
 
 	public override void _Process(double delta)
@@ -24,7 +27,15 @@ public partial class Force : Spell
 	{
 		if (body is Player player)
 		{
-			player.Velocity += (player.GlobalTransform.Origin - this.GlobalTransform.Origin).Normalized() * 14.0f;
+			player.hasFriction = false;
+		}
+	}
+
+	public void _on_area_3d_body_exited(Node3D body)
+	{
+		if (body is Player player)
+		{
+			player.hasFriction = true;
 		}
 	}
 }

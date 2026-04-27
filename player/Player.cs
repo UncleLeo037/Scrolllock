@@ -10,6 +10,9 @@ public partial class Player : CharacterBody3D
 	private const float SPEED = 5.0f;
 	private const float JUMP_VELOCITY = 4.5f;
 	private const float SENSITIVITY = 0.08f;
+	private const float FRICTION = 0.1f;
+
+	public bool hasFriction = true;
 
 	private Camera3D _camera;
 	private CharacterBody3D _body;
@@ -42,8 +45,8 @@ public partial class Player : CharacterBody3D
 		{
 			{Key.Key1, new Force()},
 			{Key.Key2, new Wall()},
-			{Key.Key3, new Tornado()}
-			//{Key.Key4, null}
+			{Key.Key3, new Tornado()},
+			{Key.Key4, new Slick()}
 			// {"Key5", null},
 			// {"Key6", null},
 			// {"Key7", null},
@@ -64,8 +67,6 @@ public partial class Player : CharacterBody3D
 
 		if (@event is InputEventKey keyEvent && keyEvent.Pressed && !keyEvent.Echo)
 		{
-			GD.Print(keyEvent);
-
 			if (_equipment.TryGetValue(keyEvent.PhysicalKeycode, out object item))
 			{
 				switch (item)
@@ -149,18 +150,21 @@ public partial class Player : CharacterBody3D
 				direction.Z * totalSpeed
 			);
 
-			if (IsOnFloor())
+			if (hasFriction)
 			{
-				Velocity = targetVelocity;
-			}
-			else
-			{
-				Velocity = Velocity.MoveToward(targetVelocity, 15f * (float)delta);
+				if (IsOnFloor())
+				{
+					Velocity = targetVelocity;
+				}
+				else
+				{
+					Velocity = Velocity.MoveToward(targetVelocity, 15f * (float)delta);
+				}
 			}
 		}
 		else
 		{
-			if (IsOnFloor())
+			if (IsOnFloor() && hasFriction)
 			{
 				Velocity = new Vector3(
 					Mathf.MoveToward(Velocity.X, 0, Math.Abs(Velocity.X) * 0.1f),

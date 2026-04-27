@@ -20,7 +20,7 @@ public partial class SpellSpawner : Node3D
 	public void SetSpells()
 	{
 		//this string list would be grabbed from a save file
-		string[] inventory = {"Force", "Wall", "Tornade"};
+		string[] inventory = {"Force", "Wall", "Tornado", "Slick"};
 
 		spellDictionary = new Dictionary<string, PackedScene>();
 

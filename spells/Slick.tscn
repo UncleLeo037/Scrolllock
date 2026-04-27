@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cwqsa3h3i7s0o"]
+
+[ext_resource type="Script" uid="uid://rcgchnchef2j" path="res://spells/Slick.cs" id="1_r2f5f"]
+[ext_resource type="Texture2D" uid="uid://bs72srrxslfor" path="res://assets/textures/ice.png" id="2_3s5qb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3s5qb"]
+size = Vector3(7, 7, 7)
+
+[node name="Slick" type="Node3D" unique_id=1626836136]
+script = ExtResource("1_r2f5f")
+
+[node name="Decal" type="Decal" parent="." unique_id=721815582]
+size = Vector3(8, 8, 8)
+texture_albedo = ExtResource("2_3s5qb")
+upper_fade = 0.0
+lower_fade = 0.0
+distance_fade_enabled = true
+
+[node name="Area3D" type="Area3D" parent="." unique_id=677474546]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1982523390]
+shape = SubResource("BoxShape3D_3s5qb")

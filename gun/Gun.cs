@@ -22,7 +22,7 @@ public partial class Gun : Node3D
 			Vector3 point = _rayCast.GetCollisionPoint();
 			SpellSpawner.CastSpell(this.Name, equipedSpell, point, new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0));
 
-			equipedSpell = string.Empty;
+			//equipedSpell = string.Empty;
 		}
 	}
 }

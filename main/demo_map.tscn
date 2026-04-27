@@ -39,6 +39,7 @@ mesh = SubResource("BoxMesh_fhrwt")
 metadata/_edit_lock_ = true
 
 [node name="GreatAvenue" type="CSGBox3D" parent="." unique_id=637337867]
+layers = 2
 calculate_tangents = false
 use_collision = true
 flip_faces = true
@@ -47,6 +48,7 @@ material = ExtResource("2_dbuku")
 metadata/_edit_lock_ = true
 
 [node name="LeftChambers" type="CSGCombiner3D" parent="GreatAvenue" unique_id=607593142]
+layers = 2
 calculate_tangents = false
 metadata/_edit_lock_ = true
 

@@ -1,7 +1,5 @@
 using Godot;
 using Srolllock.spells;
-using System;
-using System.Diagnostics.CodeAnalysis;
 
 public partial class Tornado : Spell
 {

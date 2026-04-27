@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://1d33ako3c375"]
 
+[ext_resource type="Script" uid="uid://bvwbn6u58ibla" path="res://player/Player.cs" id="1_aqcbf"]
 [ext_resource type="PackedScene" uid="uid://qia3h2wkrg6i" path="res://player/skeleton.glb" id="2_btcbx"]
 [ext_resource type="Texture2D" uid="uid://8fvgatus65mt" path="res://assets/bandage-texture.jpg" id="2_qjkh3"]
 [ext_resource type="PackedScene" uid="uid://djou8esfr14cu" path="res://gun/Pistol.tscn" id="4_gskgj"]
@@ -57,6 +58,7 @@ properties/1/replication_mode = 1
 [node name="Player" type="CharacterBody3D" unique_id=1074384815]
 collision_layer = 4
 collision_mask = 3
+script = ExtResource("1_aqcbf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=661437906]
 shape = SubResource("CapsuleShape3D_gwnis")

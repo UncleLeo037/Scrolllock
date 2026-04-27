@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://1d33ako3c375"]
 
-[ext_resource type="Script" uid="uid://boy6on2dc8yyn" path="res://player/Player.cs" id="1_aqcbf"]
+[ext_resource type="Script" path="res://player/Player.cs" id="1_aqcbf"]
 [ext_resource type="PackedScene" uid="uid://qia3h2wkrg6i" path="res://player/skeleton.glb" id="2_btcbx"]
 [ext_resource type="Texture2D" uid="uid://8fvgatus65mt" path="res://assets/bandage-texture.jpg" id="2_qjkh3"]
 [ext_resource type="PackedScene" uid="uid://djou8esfr14cu" path="res://gun/Pistol.tscn" id="4_gskgj"]
@@ -97,6 +97,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0
 
 [node name="Flash" type="GPUParticles3D" parent="Camera3D/Pistol" unique_id=1011981387]
 transform = Transform3D(-2.1588811e-07, 0, 0.030000003, 0, 0.030000003, 0, -0.030000003, 0, -2.1588811e-07, 10.246471, 1.3615816, 0.34637642)
+visible = false
 emitting = false
 amount = 1
 lifetime = 0.25

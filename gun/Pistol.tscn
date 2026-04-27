@@ -130,32 +130,17 @@ _data = {
 
 [node name="Pistol" type="Node3D" unique_id=1411006747]
 
-[node name="Right" type="MeshInstance3D" parent="." unique_id=360126041]
-transform = Transform3D(0.03, 0, 0, 0, 0.03, 0, 0, 0, 0.03, 0.5, -0.3, -0.5)
-mesh = SubResource("ArrayMesh_be3ps")
-skeleton = NodePath("")
-
-[node name="Hammer" type="MeshInstance3D" parent="Right" unique_id=1442098522]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5633621, 1.1742134, 0.96389925)
-mesh = SubResource("ArrayMesh_04gg7")
-skeleton = NodePath("")
-
-[node name="Trigger" type="MeshInstance3D" parent="Right" unique_id=1329748901]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8860054, 0.119091034, 0)
-mesh = SubResource("ArrayMesh_o1pol")
-skeleton = NodePath("")
-
-[node name="Left" type="MeshInstance3D" parent="." unique_id=885591780]
+[node name="Right" type="MeshInstance3D" parent="." unique_id=885591780]
 transform = Transform3D(0.03, 0, 0, 0, 0.03, 0, 0, 0, 0.03, 0.5, -0.3, 0.5)
 mesh = SubResource("ArrayMesh_be3ps")
 skeleton = NodePath("")
 
-[node name="Hammer" type="MeshInstance3D" parent="Left" unique_id=706708301]
+[node name="Hammer" type="MeshInstance3D" parent="Right" unique_id=706708301]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5633621, 1.1742134, 0.96389925)
 mesh = SubResource("ArrayMesh_04gg7")
 skeleton = NodePath("")
 
-[node name="Trigger" type="MeshInstance3D" parent="Left" unique_id=825576981]
+[node name="Trigger" type="MeshInstance3D" parent="Right" unique_id=825576981]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8860054, 0.119091034, 0)
 mesh = SubResource("ArrayMesh_o1pol")
 skeleton = NodePath("")

@@ -5,17 +5,24 @@ public partial class Gun : Node3D
 {
 	private PackedScene gunModel;
 	private RayCast3D _rayCast;
+	private AnimationPlayer _animPlay;
+	private GpuParticles3D _flash;
 	public string equipedSpell = string.Empty;
 
 	public override void _Ready()
 	{
 		_rayCast = GetNode<RayCast3D>("RayCast3D");
+		_animPlay = GetNode<AnimationPlayer>("AnimationPlayer");
+		_flash = GetNode<Node3D>("Node3D").GetNode<GpuParticles3D>("GPUParticles3D");
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
 	private void ShootAnim()
 	{
-		
+		_animPlay.Stop();
+		_animPlay.Play("shoot");
+		_flash.Restart();
+		_flash.Emitting = true;
 	}
 
 	public void Shoot()

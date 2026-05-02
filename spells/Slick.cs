@@ -25,6 +25,7 @@ public partial class Slick : Spell
 
 	public void _on_area_3d_body_entered(Node3D body)
 	{
+		//need to change this to add no firction to effects stack as it will cause issues if there are multiple slick spells
 		if (body is Player player)
 		{
 			player.hasFriction = false;
@@ -33,6 +34,7 @@ public partial class Slick : Spell
 
 	public void _on_area_3d_body_exited(Node3D body)
 	{
+		//this will remove one from the stack
 		if (body is Player player)
 		{
 			player.hasFriction = true;

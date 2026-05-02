@@ -96,7 +96,7 @@ public partial class Player : CharacterBody3D
 
 		if (Input.IsActionJustPressed("shoot")/* && _anime.CurrentAnimation != "Shoot"*/)
 		{
-			Rpc("PlayShoot");
+			//Rpc("PlayShoot");
 			_gun.Shoot();
 		}
 	}
@@ -150,16 +150,17 @@ public partial class Player : CharacterBody3D
 				direction.Z * totalSpeed
 			);
 
-			if (hasFriction)
+			if (IsOnFloor())
 			{
-				if (IsOnFloor())
+				if (hasFriction)
 				{
 					Velocity = targetVelocity;
 				}
-				else
-				{
-					Velocity = Velocity.MoveToward(targetVelocity, 15f * (float)delta);
-				}
+				Velocity = Velocity.MoveToward(targetVelocity, 1f * (float)delta);
+			}
+			else
+			{
+				Velocity = Velocity.MoveToward(targetVelocity, 15f * (float)delta);
 			}
 		}
 		else
@@ -177,7 +178,7 @@ public partial class Player : CharacterBody3D
 		// Quick fall recovery
 		if (_body.Position.Y < -100)
 		{
-			_body.Position = new Vector3(0, 0, 0);
+			this.Respawn();
 		}
 
 		//if (_anime.CurrentAnimation == "Shoot")
@@ -194,6 +195,20 @@ public partial class Player : CharacterBody3D
 		//}
 
 		MoveAndSlide();
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+	public async void Damage()
+	{
+		//will later apply damage and then call respawn which will check if player is dead
+		this.Respawn();
+	}
+
+	private async void Respawn()
+	{
+		//this location will later be set to a proper respawn point
+		//add check to see if health is less than 0 in here
+		_body.Position = new Vector3(0, 0, 0);
 	}
 
 	//move all animation methods to dedicated animation class and gun animation class

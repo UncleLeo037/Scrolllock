@@ -39,7 +39,7 @@ public partial class Player : CharacterBody3D
 		//add ref to player animation player to Gun so gun can trigger player animations when shooting
 		//_flash = _camera.GetNode<Node3D>("Gun").GetNode<GpuParticles3D>("Flash");
 		_gun = _camera.GetNode<Gun>("Gun");
-		_gun.Name = this.Name;
+		//_gun.Name = this.Name;
 
 		_equipment = new Dictionary<Key, object>()
 		{

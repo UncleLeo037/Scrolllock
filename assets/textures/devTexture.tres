@@ -1,9 +1,0 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://drccsornonlun"]
-
-[ext_resource type="Texture2D" uid="uid://cgorxyj7smnwb" path="res://assets/textures/dev_tile.png" id="1_vunxq"]
-
-[resource]
-albedo_color = Color(1, 0, 1, 1)
-albedo_texture = ExtResource("1_vunxq")
-uv1_triplanar = true
-texture_filter = 0

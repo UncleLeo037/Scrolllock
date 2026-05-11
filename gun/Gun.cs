@@ -16,8 +16,8 @@ public partial class Gun : Node3D
 		_flash = GetNode<Node3D>("Node3D").GetNode<GpuParticles3D>("GPUParticles3D");
 	}
 
-	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
-	private void ShootAnim()
+	[Rpc(CallLocal = true)]
+	public void ShootAnim()
 	{
 		_anime.Stop();
 		_anime.Play("shoot");
@@ -30,7 +30,7 @@ public partial class Gun : Node3D
 		if (_anime.CurrentAnimation != "shoot")
 		{
 			//add RPC shoot animation call. DO NOT move RPC from spell spawn to here! could cause spell sync issues
-			this.ShootAnim();
+			Rpc("ShootAnim");
 			var target = _rayCast.GetCollider();
 			if (target != null)
 			{

@@ -44,7 +44,7 @@ public partial class Gun : Node3D
 				}
 				else if (target is Player player)
 				{
-					player.Rpc("Damage");
+					player.Rpc("Damage", 35);
 				}
 			}
 		}

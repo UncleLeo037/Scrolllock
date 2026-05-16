@@ -11,17 +11,19 @@ public partial class Player : CharacterBody3D
 	private const float JUMP_VELOCITY = 4.5f;
 	private const float SENSITIVITY = 0.08f;
 	private const float FRICTION = 0.1f;
+	private const int MAX_HEALTH = 100;
 
 	public bool hasFriction = true;
 
 	private Camera3D _camera;
 	private CharacterBody3D _body;
+	private ProgressBar _healthBar;
 	//private AnimationPlayer _anime;
 
 	private Gun _gun;
 	private Dictionary<Key, object> _equipment;
-
 	private List<string> effects = new List<string>();
+	private double _health = MAX_HEALTH;
 
 	public override void _EnterTree()
 	{
@@ -39,7 +41,9 @@ public partial class Player : CharacterBody3D
 		//add ref to player animation player to Gun so gun can trigger player animations when shooting
 		//_flash = _camera.GetNode<Node3D>("Gun").GetNode<GpuParticles3D>("Flash");
 		_gun = _camera.GetNode<Gun>("Gun");
+		//this breaks RPC calls from in gun. Look at how to add gun name to rpc call if want to reintroduce.
 		//_gun.Name = this.Name;
+		_healthBar = GetNode<SubViewport>("SubViewport").GetNode<ProgressBar>("ProgressBar");
 
 		_equipment = new Dictionary<Key, object>()
 		{
@@ -60,6 +64,8 @@ public partial class Player : CharacterBody3D
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		_camera.Current = true;
 	}
+
+	
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
@@ -198,17 +204,20 @@ public partial class Player : CharacterBody3D
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
-	public async void Damage()
+	public async void Damage(int damage)
 	{
-		//will later apply damage and then call respawn which will check if player is dead
-		this.Respawn();
+		_health -= damage;
+		if (_health <= 0)
+		{
+			this.Respawn();
+		}
+		GetNode<SubViewport>("SubViewport").GetNode<ProgressBar>("ProgressBar").Value = _health;
 	}
 
 	private async void Respawn()
 	{
-		//this location will later be set to a proper respawn point
-		//add check to see if health is less than 0 in here
 		_body.Position = new Vector3(0, 0, 0);
+		_health = MAX_HEALTH;
 	}
 
 	//move all animation methods to dedicated animation class and gun animation class

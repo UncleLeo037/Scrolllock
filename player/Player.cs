@@ -43,7 +43,7 @@ public partial class Player : CharacterBody3D
 		_gun = _camera.GetNode<Gun>("Gun");
 		//this breaks RPC calls from in gun. Look at how to add gun name to rpc call if want to reintroduce.
 		//_gun.Name = this.Name;
-		GetNode<Sprite3D>("Sprite3D").Visible = false;
+		_healthBar = GetNode<SubViewport>("SubViewport").GetNode<ProgressBar>("ProgressBar");
 
 		_equipment = new Dictionary<Key, object>()
 		{
@@ -211,7 +211,7 @@ public partial class Player : CharacterBody3D
 		{
 			this.Respawn();
 		}
-		GetNode<SubViewportContainer>("SubViewportContainer").GetNode<SubViewport>("SubViewport").GetNode<ProgressBar>("ProgressBar").Value = _health;
+		GetNode<SubViewport>("SubViewport").GetNode<ProgressBar>("ProgressBar").Value = _health;
 	}
 
 	private async void Respawn()

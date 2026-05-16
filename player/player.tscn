@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://1d33ako3c375"]
+[gd_scene format=3 uid="uid://dftmannanli27"]
 
 [ext_resource type="Script" uid="uid://bvwbn6u58ibla" path="res://player/Player.cs" id="1_aqcbf"]
 [ext_resource type="PackedScene" uid="uid://qia3h2wkrg6i" path="res://player/skeleton.glb" id="2_btcbx"]
@@ -18,6 +18,12 @@ texture_filter = 0
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_boad6"]
 material = SubResource("StandardMaterial3D_g6k8r")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x8kxw"]
+bg_color = Color(0, 0, 0, 0.2509804)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqcbf"]
+bg_color = Color(0, 0.5019608, 0, 0.5019608)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_rkbax"]
 properties/0/path = NodePath(".:position")
@@ -74,6 +80,16 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Gun" parent="Camera3D" unique_id=102001726 instance=ExtResource("5_x8kxw")]
+
+[node name="ProgressBar" type="ProgressBar" parent="Camera3D" unique_id=257213825]
+offset_left = 31.0
+offset_top = 603.0
+offset_right = 287.0
+offset_bottom = 630.0
+theme_override_styles/background = SubResource("StyleBoxFlat_x8kxw")
+theme_override_styles/fill = SubResource("StyleBoxFlat_aqcbf")
+value = 100.0
+show_percentage = false
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1668601166]
 replication_config = SubResource("SceneReplicationConfig_rkbax")

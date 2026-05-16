@@ -63,7 +63,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 [node name="RayCast3D" type="RayCast3D" parent="Camera3D" unique_id=1879086249]
 target_position = Vector3(0, 0, -20)
 
-[node name="TextureRect" type="TextureRect" parent="Camera3D" unique_id=205007231]
+[node name="Gun" parent="Camera3D" unique_id=102001726 instance=ExtResource("5_x8kxw")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera3D" unique_id=1310262371]
+visible = false
+
+[node name="ProgressBar" type="ProgressBar" parent="Camera3D/CanvasLayer" unique_id=257213825]
+offset_left = 31.0
+offset_top = 603.0
+offset_right = 287.0
+offset_bottom = 630.0
+theme_override_styles/background = SubResource("StyleBoxFlat_x8kxw")
+theme_override_styles/fill = SubResource("StyleBoxFlat_aqcbf")
+show_percentage = false
+
+[node name="TextureRect" type="TextureRect" parent="Camera3D/CanvasLayer" unique_id=205007231]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -78,18 +92,6 @@ grow_vertical = 2
 texture = ExtResource("6_aqcbf")
 expand_mode = 1
 stretch_mode = 5
-
-[node name="Gun" parent="Camera3D" unique_id=102001726 instance=ExtResource("5_x8kxw")]
-
-[node name="ProgressBar" type="ProgressBar" parent="Camera3D" unique_id=257213825]
-offset_left = 31.0
-offset_top = 603.0
-offset_right = 287.0
-offset_bottom = 630.0
-theme_override_styles/background = SubResource("StyleBoxFlat_x8kxw")
-theme_override_styles/fill = SubResource("StyleBoxFlat_aqcbf")
-value = 100.0
-show_percentage = false
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1668601166]
 replication_config = SubResource("SceneReplicationConfig_rkbax")

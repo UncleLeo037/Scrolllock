@@ -18,6 +18,7 @@ public partial class Player : CharacterBody3D
 	private Camera3D _camera;
 	private CharacterBody3D _body;
 	private ProgressBar _healthBar;
+	private CanvasLayer _hud;
 	//private AnimationPlayer _anime;
 
 	private Gun _gun;
@@ -44,7 +45,10 @@ public partial class Player : CharacterBody3D
 		//this breaks RPC calls from in gun. Look at how to add gun name to rpc call if want to reintroduce.
 		//_gun.Name = this.Name;
 		GetNode<SubViewport>("SubViewport").GetNode<ProgressBar>("ProgressBar").Visible = false;
-		_healthBar = _camera.GetNode<ProgressBar>("ProgressBar");
+		_hud = _camera.GetNode<CanvasLayer>("CanvasLayer");
+		_healthBar = _hud.GetNode<ProgressBar>("ProgressBar");
+		_hud.Visible = true;
+		_healthBar.Value = MAX_HEALTH;
 
 		_equipment = new Dictionary<Key, object>()
 		{
@@ -213,11 +217,10 @@ public partial class Player : CharacterBody3D
 			this.Respawn();
 		}
 		GetNode<SubViewport>("SubViewport").GetNode<ProgressBar>("ProgressBar").Value = _health;
-		if (!IsMultiplayerAuthority()) return;
-		_healthBar.Value = _health;
+		if (IsMultiplayerAuthority()) _healthBar.Value = _health;
 	}
 
-	private async void Respawn()
+	private void Respawn()
 	{
 		_body.Position = new Vector3(0, 0, 0);
 		_health = MAX_HEALTH;

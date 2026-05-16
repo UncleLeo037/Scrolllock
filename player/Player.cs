@@ -212,7 +212,9 @@ public partial class Player : CharacterBody3D
 		{
 			this.Respawn();
 		}
-		GetNode<SubViewport>("SubViewport").GetNode<ProgressBar>("ProgressBar").Value = _healthBar.Value = _health;
+		GetNode<SubViewport>("SubViewport").GetNode<ProgressBar>("ProgressBar").Value = _health;
+		if (!IsMultiplayerAuthority()) return;
+		_healthBar.Value = _health;
 	}
 
 	private async void Respawn()

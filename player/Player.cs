@@ -17,7 +17,6 @@ public partial class Player : CharacterBody3D
 
 	private Camera3D _camera;
 	private CharacterBody3D _body;
-	private ProgressBar _healthBar;
 	private CanvasLayer _hud;
 	//private AnimationPlayer _anime;
 
@@ -25,6 +24,8 @@ public partial class Player : CharacterBody3D
 	private Dictionary<Key, object> _equipment;
 	private List<string> effects = new List<string>();
 	private double _health = MAX_HEALTH;
+	[Export]
+	private PackedScene HUD;
 
 	public override void _EnterTree()
 	{
@@ -33,9 +34,9 @@ public partial class Player : CharacterBody3D
 
 	public override void _Ready()
 	{
-		GD.Print(this.Name);
 		if (!IsMultiplayerAuthority()) return;
-
+		AddChild(HUD.Instantiate());
+		_hud = GetNode<CanvasLayer>("Hud");
 		_camera = GetNode<Camera3D>("Camera3D");
 		_body = GetNode<CharacterBody3D>(".");
 		//_anime = GetNode<AnimationPlayer>("AnimationPlayer");
@@ -45,10 +46,6 @@ public partial class Player : CharacterBody3D
 		//this breaks RPC calls from in gun. Look at how to add gun name to rpc call if want to reintroduce.
 		//_gun.Name = this.Name;
 		GetNode<SubViewport>("SubViewport").GetNode<ProgressBar>("ProgressBar").Visible = false;
-		_hud = _camera.GetNode<CanvasLayer>("CanvasLayer");
-		_healthBar = _hud.GetNode<ProgressBar>("ProgressBar");
-		_hud.Visible = true;
-		_healthBar.Value = MAX_HEALTH;
 
 		_equipment = new Dictionary<Key, object>()
 		{
@@ -70,7 +67,7 @@ public partial class Player : CharacterBody3D
 		_camera.Current = true;
 	}
 
-	
+
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
@@ -189,7 +186,7 @@ public partial class Player : CharacterBody3D
 		// Quick fall recovery
 		if (_body.Position.Y < -100)
 		{
-			this.Respawn();
+			Rpc("Damage", MAX_HEALTH);
 		}
 
 		//if (_anime.CurrentAnimation == "Shoot")
@@ -214,16 +211,11 @@ public partial class Player : CharacterBody3D
 		_health -= damage;
 		if (_health <= 0)
 		{
-			this.Respawn();
+			if (IsMultiplayerAuthority()) _body.Position = new Vector3(0, 0, 0);
+			_health = MAX_HEALTH;
 		}
 		GetNode<SubViewport>("SubViewport").GetNode<ProgressBar>("ProgressBar").Value = _health;
-		if (IsMultiplayerAuthority()) _healthBar.Value = _health;
-	}
-
-	private void Respawn()
-	{
-		_body.Position = new Vector3(0, 0, 0);
-		_health = MAX_HEALTH;
+		if (IsMultiplayerAuthority()) _hud.GetNode<ProgressBar>("ProgressBar").Value = _health;
 	}
 
 	//move all animation methods to dedicated animation class and gun animation class

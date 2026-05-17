@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://cjp241rp11xnt"]
+
+[ext_resource type="Texture2D" uid="uid://c6md4rybga6we" path="res://assets/crosshair.png" id="1_1jg6f"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1jg6f"]
+bg_color = Color(0, 0, 0, 0.5019608)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ig88g"]
+bg_color = Color(0, 0.6, 0, 0.6)
+
+[node name="Hud" type="CanvasLayer" unique_id=1503216563]
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1028699536]
+offset_left = 33.0
+offset_top = 590.0
+offset_right = 289.0
+offset_bottom = 622.0
+theme_override_styles/background = SubResource("StyleBoxFlat_1jg6f")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ig88g")
+value = 100.0
+show_percentage = false
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=923865110]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+texture = ExtResource("1_1jg6f")
+expand_mode = 1
+stretch_mode = 5

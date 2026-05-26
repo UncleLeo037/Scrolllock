@@ -1,9 +1,11 @@
 using Godot;
 using Srolllock.spells;
+using Srolllock.gun;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
+using System.Threading.Tasks;
 
 public partial class Player : CharacterBody3D
 {
@@ -18,9 +20,10 @@ public partial class Player : CharacterBody3D
 	private Camera3D _camera;
 	private CharacterBody3D _body;
 	private CanvasLayer _hud;
+	private MultiplayerSpawner _gunSpawner;
 	//private AnimationPlayer _anime;
 
-	private Gun _gun;
+	private DemoGun _gun;
 	private Dictionary<Key, object> _equipment;
 	private List<string> effects = new List<string>();
 	private double _health = MAX_HEALTH;
@@ -35,25 +38,27 @@ public partial class Player : CharacterBody3D
 	public override void _Ready()
 	{
 		if (!IsMultiplayerAuthority()) return;
+		//start loading screen
 		AddChild(HUD.Instantiate());
 		_hud = GetNode<CanvasLayer>("Hud");
 		_camera = GetNode<Camera3D>("Camera3D");
 		_body = GetNode<CharacterBody3D>(".");
+		_gunSpawner = _camera.GetNode<MultiplayerSpawner>("MultiplayerSpawner");
 		//_anime = GetNode<AnimationPlayer>("AnimationPlayer");
 		//add ref to player animation player to Gun so gun can trigger player animations when shooting
 		//_flash = _camera.GetNode<Node3D>("Gun").GetNode<GpuParticles3D>("Flash");
-		_gun = _camera.GetNode<Gun>("Gun");
+		//_gun = _camera.GetNode<DemoGun>("Gun");
 		//this breaks RPC calls from in gun. Look at how to add gun name to rpc call if want to reintroduce.
 		//_gun.Name = this.Name;
 		GetNode<SubViewport>("SubViewport").GetNode<ProgressBar>("ProgressBar").Visible = false;
 
 		_equipment = new Dictionary<Key, object>()
 		{
-			{Key.Key1, new Force()},
-			{Key.Key2, new Wall()},
-			{Key.Key3, new Tornado()},
-			{Key.Key4, new Slick()}
-			// {"Key5", null},
+			{Key.Key1, new DemoGun()},
+			{Key.Key2, new Force()},
+			{Key.Key3, new Wall()},
+			{Key.Key4, new Tornado()},
+			{Key.Key5, new Slick()}
 			// {"Key6", null},
 			// {"Key7", null},
 			// {"Key8", null},
@@ -65,6 +70,7 @@ public partial class Player : CharacterBody3D
 
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		_camera.Current = true;
+		//stop loading screen
 	}
 
 
@@ -82,9 +88,16 @@ public partial class Player : CharacterBody3D
 					case Spell spell:
 						_gun.equipedSpell = spell.GetType().Name;
 						break;
-					case Gun gun:
+					case DemoGun gun:
+						if (_gun != null)
+						{
+							_gun.QueueFree();
+						}
 						//need to change this to rpc method call so other players see changed gun
-						_gun = gun;
+						var gunScene = GD.Load<PackedScene>($"res://gun/DemoGun.tscn");
+						Node gunNode = gunScene.Instantiate();
+						_camera.AddChild(gunNode, true);
+						_gun = _camera.GetNode<DemoGun>(gunNode.Name.ToString());
 						break;
 				}
 			}
@@ -206,7 +219,7 @@ public partial class Player : CharacterBody3D
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
-	public async void Damage(int damage)
+	public void Damage(int damage)
 	{
 		_health -= damage;
 		if (_health <= 0)
@@ -227,7 +240,6 @@ public partial class Player : CharacterBody3D
 		//_flash.Restart();
 		//_flash.Emitting = true;
 	}
-
 
 	//[Signal]
 	//private delegate _on_animation_player_animation_finished()

@@ -11,14 +11,20 @@ bg_color = Color(0, 0.6, 0, 0.6)
 [node name="Hud" type="CanvasLayer" unique_id=1503216563]
 
 [node name="ProgressBar" type="ProgressBar" parent="." unique_id=1028699536]
-offset_left = 33.0
-offset_top = 590.0
-offset_right = 289.0
-offset_bottom = 622.0
+anchors_preset = -1
+anchor_top = 0.9506173
+anchor_right = 0.22222222
+anchor_bottom = 1.0
+offset_left = 27.0
+offset_top = -23.0
+offset_right = 27.0
+offset_bottom = -23.0
+grow_vertical = 0
 theme_override_styles/background = SubResource("StyleBoxFlat_1jg6f")
 theme_override_styles/fill = SubResource("StyleBoxFlat_ig88g")
 value = 100.0
 show_percentage = false
+metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=923865110]
 anchors_preset = 8

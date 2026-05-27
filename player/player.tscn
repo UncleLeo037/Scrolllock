@@ -46,15 +46,11 @@ shape = SubResource("CapsuleShape3D_gwnis")
 [node name="TestModel" type="MeshInstance3D" parent="." unique_id=1746710478]
 mesh = SubResource("CapsuleMesh_boad6")
 
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1625035346]
+spawn_path = NodePath("../Camera3D")
+
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1084597021]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
-
-[node name="RayCast3D" type="RayCast3D" parent="Camera3D" unique_id=1879086249]
-target_position = Vector3(0, 0, -20)
-
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Camera3D" unique_id=1625035346]
-_spawnable_scenes = PackedStringArray("uid://b4aiu1dradtl3")
-spawn_path = NodePath("..")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1668601166]
 replication_config = SubResource("SceneReplicationConfig_rkbax")

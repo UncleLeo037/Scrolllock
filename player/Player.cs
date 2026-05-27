@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
 using System.Threading.Tasks;
+using Srolllock.guns;
 
 public partial class Player : CharacterBody3D
 {
@@ -24,7 +25,7 @@ public partial class Player : CharacterBody3D
 	//private AnimationPlayer _anime;
 
 	private DemoGun _gun;
-	private Dictionary<Key, object> _equipment;
+	private Dictionary<Key, Node> _equipment;
 	private List<string> effects = new List<string>();
 	private double _health = MAX_HEALTH;
 	[Export]
@@ -39,22 +40,19 @@ public partial class Player : CharacterBody3D
 	{
 		if (!IsMultiplayerAuthority()) return;
 		//start loading screen
+
 		AddChild(HUD.Instantiate());
 		_hud = GetNode<CanvasLayer>("Hud");
 		_camera = GetNode<Camera3D>("Camera3D");
 		_body = GetNode<CharacterBody3D>(".");
-		_gunSpawner = _camera.GetNode<MultiplayerSpawner>("MultiplayerSpawner");
-		//_anime = GetNode<AnimationPlayer>("AnimationPlayer");
-		//add ref to player animation player to Gun so gun can trigger player animations when shooting
-		//_flash = _camera.GetNode<Node3D>("Gun").GetNode<GpuParticles3D>("Flash");
-		//_gun = _camera.GetNode<DemoGun>("Gun");
-		//this breaks RPC calls from in gun. Look at how to add gun name to rpc call if want to reintroduce.
-		//_gun.Name = this.Name;
+		_gunSpawner = GetNode<MultiplayerSpawner>("MultiplayerSpawner");
+		
+		//Hides own overhead health
 		GetNode<SubViewport>("SubViewport").GetNode<ProgressBar>("ProgressBar").Visible = false;
 
-		_equipment = new Dictionary<Key, object>()
+		_equipment = new Dictionary<Key, Node>()
 		{
-			{Key.Key1, new DemoGun()},
+			{Key.Key1, GD.Load<PackedScene>("res://gun/DemoGun.tscn").Instantiate<DemoGun>()},
 			{Key.Key2, new Force()},
 			{Key.Key3, new Wall()},
 			{Key.Key4, new Tornado()},
@@ -67,12 +65,20 @@ public partial class Player : CharacterBody3D
 			// {"Equal", null},
 			// {"Minus", null}
 		};
+		foreach (var pair in _equipment)
+		{
+			if (pair.Value is DemoGun gun)
+			{
+				_gunSpawner.AddSpawnableScene($"res://gun/{gun.GetType().Name}.tscn");
+				_camera.AddChild(gun);
+			}
+		}
 
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		_camera.Current = true;
+		
 		//stop loading screen
 	}
-
 
 
 	public override void _UnhandledInput(InputEvent @event)
@@ -81,23 +87,23 @@ public partial class Player : CharacterBody3D
 
 		if (@event is InputEventKey keyEvent && keyEvent.Pressed && !keyEvent.Echo)
 		{
-			if (_equipment.TryGetValue(keyEvent.PhysicalKeycode, out object item))
+			if (_equipment.TryGetValue(keyEvent.PhysicalKeycode, out Node item))
 			{
 				switch (item)
 				{
 					case Spell spell:
-						_gun.equipedSpell = spell.GetType().Name;
+						if (_gun != null)
+						{
+							_gun.equipedSpell = spell.GetType().Name;
+						}
 						break;
 					case DemoGun gun:
 						if (_gun != null)
 						{
-							_gun.QueueFree();
+							Rpc("ToggleGun", _gun.Name);
 						}
-						//need to change this to rpc method call so other players see changed gun
-						var gunScene = GD.Load<PackedScene>($"res://gun/DemoGun.tscn");
-						Node gunNode = gunScene.Instantiate();
-						_camera.AddChild(gunNode, true);
-						_gun = _camera.GetNode<DemoGun>(gunNode.Name.ToString());
+						_gun = gun;
+						Rpc("ToggleGun", _gun.Name);
 						break;
 				}
 			}
@@ -115,11 +121,18 @@ public partial class Player : CharacterBody3D
 			);
 		}
 
-		if (Input.IsActionJustPressed("shoot")/* && _anime.CurrentAnimation != "Shoot"*/)
+		if (Input.IsActionJustPressed("shoot"))
 		{
-			//Rpc("PlayShoot");
-			_gun.Shoot();
+			//only shoot if exists
+			_gun?.Shoot();
 		}
+	}
+	
+	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true)]
+	public async void ToggleGun(string gunPath)
+	{
+		var gun = _camera.GetNode<DemoGun>(gunPath);
+		gun.Visible = !gun.Visible;
 	}
 
 	public override void _PhysicsProcess(double delta)

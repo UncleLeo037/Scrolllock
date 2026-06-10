@@ -5,22 +5,30 @@ var peer : SteamMultiplayerPeer
 @export var player_scene : PackedScene
 var is_host : bool = false
 var is_joining : bool = false
+var is_ip : bool = false
 
 @onready var menu : Control = $Menu
 @onready var btn_host : Button = $Menu/Host
 @onready var btn_join : Button = $Menu/Join
 @onready var txt_input : LineEdit = $Menu/Prompt
+@onready var btn_ip : Button = $Menu/Lan
 
 @onready var pause : Control = $Pause
 @onready var btn_exit : Button = $Pause/Exit
 @onready var btn_copy : Button = $Pause/Copy
 @onready var display_id = $Pause/ID
 
+const PORT = 9999
+var enet_peer = ENetMultiplayerPeer.new()
+
 func _ready():
-	Steam.steamInitEx(480, true)
-	Steam.initRelayNetworkAccess()
-	Steam.lobby_created.connect(_on_lobby_created)
-	Steam.lobby_joined.connect(_on_lobby_joined)
+	if Steam.isSteamRunning():
+		Steam.steamInitEx(480, true)
+		Steam.initRelayNetworkAccess()
+		Steam.lobby_created.connect(_on_lobby_created)
+		Steam.lobby_joined.connect(_on_lobby_joined)
+	else:
+		_on_lan_pressed()
 
 func _unhandled_input(event : InputEvent) -> void:
 	if event.is_action_pressed("escape") and not menu.is_visible_in_tree():
@@ -83,7 +91,10 @@ func _remove_player(id : int):
 
 
 func _on_host_pressed() -> void:
-	host_lobby()
+	if is_ip:
+		host_enet()
+	else:
+		host_lobby()
 
 
 func _on_prompt_text_changed(new_text: String) -> void:
@@ -91,7 +102,10 @@ func _on_prompt_text_changed(new_text: String) -> void:
 
 
 func _on_join_pressed() -> void:
-	join_lobby(txt_input.text.to_int())
+	if is_ip:
+		join_enet()
+	else:
+		join_lobby(txt_input.text.to_int())
 
 
 func _on_exit_pressed() -> void:
@@ -102,3 +116,30 @@ func _on_exit_pressed() -> void:
 
 func _on_copy_pressed() -> void:
 	DisplayServer.clipboard_set(str(lobby_id))
+
+func _on_lan_pressed() -> void:
+	is_ip = !is_ip
+	if is_ip:
+		btn_ip.text = "Localhost"
+		txt_input.hide()
+		btn_join.disabled = false
+	else:
+		btn_ip.text = "SteamInit"
+		txt_input.show()
+		btn_join.disabled = true
+	if !Steam.isSteamRunning() and !is_ip:
+		_on_lan_pressed()
+
+func host_enet() -> void:
+	menu.hide()
+	enet_peer.create_server(PORT)
+	multiplayer.multiplayer_peer = enet_peer
+	multiplayer.peer_connected.connect(_add_player)
+	multiplayer.peer_disconnected.connect(_remove_player)
+
+	_add_player(multiplayer.get_unique_id())
+
+func join_enet():
+	menu.hide()
+	enet_peer.create_client("localhost", PORT)
+	multiplayer.multiplayer_peer = enet_peer

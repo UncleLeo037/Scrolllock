@@ -52,3 +52,4 @@ draw_pass_1 = SubResource("PlaneMesh_x2xgo")
 
 [node name="RayCast3D" type="RayCast3D" parent="." unique_id=438807092]
 target_position = Vector3(0, 0, -100)
+collision_mask = 7

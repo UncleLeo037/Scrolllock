@@ -32,6 +32,7 @@ public partial class DuelPistols : Gun
 			//add RPC shoot animation call. DO NOT move RPC from spell spawn to here! could cause spell sync issues
 			//Rpc("ShootAnim");
 			var target = _rayCast.GetCollider();
+			GD.Print(target);
 			if (target != null)
 			{
 				//should just shoot instead

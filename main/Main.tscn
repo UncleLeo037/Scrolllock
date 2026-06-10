@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://ck6smt7oulkc"]
 
 [ext_resource type="Script" uid="uid://blign5pet4tmj" path="res://main/main.gd" id="1_seaoi"]
-[ext_resource type="PackedScene" uid="uid://db151c17mdq1v" path="res://player/Player.tscn" id="2_ucdt6"]
 [ext_resource type="Script" uid="uid://5a44ol3bx0s" path="res://main/SpellSpawner.cs" id="3_ucdt6"]
 [ext_resource type="PackedScene" uid="uid://32vnjnwuxei8" path="res://maps/hub/Hub.tscn" id="5_qtrhv"]
 [ext_resource type="Texture2D" uid="uid://c6md4rybga6we" path="res://assets/crosshair.png" id="5_tv7ag"]
@@ -14,7 +13,6 @@ bg_color = Color(0, 0.5019608, 0, 0.5019608)
 
 [node name="Main" type="Node3D" unique_id=33220651]
 script = ExtResource("1_seaoi")
-player_scene = ExtResource("2_ucdt6")
 
 [node name="Menu" type="Control" parent="." unique_id=714204051]
 layout_mode = 3
@@ -60,7 +58,6 @@ offset_bottom = 307.0
 text = "local-NO-hosting"
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1284042800]
-_spawnable_scenes = PackedStringArray("uid://db151c17mdq1v")
 spawn_path = NodePath("..")
 
 [node name="SpellSpawner" type="Node3D" parent="." unique_id=854334226]
@@ -128,7 +125,7 @@ value = 100.0
 show_percentage = false
 
 [node name="Hub" parent="." unique_id=737521784 instance=ExtResource("5_qtrhv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.710149)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
 
 [connection signal="pressed" from="Menu/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Menu/Join" to="." method="_on_join_pressed"]

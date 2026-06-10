@@ -13,17 +13,26 @@ public partial class Lift : AnimatableBody3D
 
 	public override void _Ready()
 	{
-		target = GlobalPosition;
-		SetProcess(false);
-		Area3D area = GetNode<Area3D>("Area3D");
-		area.BodyEntered += OnBodyEntered;
+		//set authority to host
+        if (Multiplayer.IsServer())
+            SetMultiplayerAuthority(1);
+
+        if (IsMultiplayerAuthority())
+        {
+            target = Position;
+            Area3D area = GetNode<Area3D>("Area3D");
+            area.BodyEntered += OnBodyEntered;
+        }
 	}
 
 
 	public override void _PhysicsProcess(double delta)
 	{
-		GlobalPosition = GlobalPosition.MoveToward(target, SPEED*(float)delta);
-		if (GlobalPosition.Y == target.Y)
+		if (!IsMultiplayerAuthority())
+			return;
+
+		Position = Position.MoveToward(target, SPEED*(float)delta);
+		if (Position.Y == target.Y)
 		{
 			SetProcess(false);
 		}
@@ -33,11 +42,11 @@ public partial class Lift : AnimatableBody3D
 	{
 		if (body is Player)
 		{
-			if (GlobalPosition.Y == bottom)
+			if (Position.Y == bottom)
 			{
 				target.Y = top;
 			}
-			if (GlobalPosition.Y == top)
+			if (Position.Y == top)
 			{
 				target.Y = bottom;
 			}

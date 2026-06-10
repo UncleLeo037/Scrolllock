@@ -2,7 +2,7 @@ extends Node3D
 
 var lobby_id : int = 0
 var peer : SteamMultiplayerPeer
-@export var player_scene : PackedScene
+#@export var player_scene : PackedScene
 var is_host : bool = false
 var is_joining : bool = false
 var is_ip : bool = false
@@ -18,10 +18,13 @@ var is_ip : bool = false
 @onready var btn_copy : Button = $Pause/Copy
 @onready var display_id = $Pause/ID
 
+@onready var multiplayer_spawner : MultiplayerSpawner = $MultiplayerSpawner
+
 const PORT = 9999
 var enet_peer = ENetMultiplayerPeer.new()
 
 func _ready():
+	multiplayer_spawner.add_spawnable_scene("res://player/Player.tscn")
 	if Steam.isSteamRunning():
 		Steam.steamInitEx(480, true)
 		Steam.initRelayNetworkAccess()
@@ -79,7 +82,7 @@ func _on_lobby_joined(lobby_id : int, permissions : int, locked : bool, response
 	menu.hide()
 
 func _add_player(id : int = 1):
-	var player = player_scene.instantiate()
+	var player = preload("res://player/Player.tscn").instantiate()
 	player.name = str(id)
 	call_deferred("add_child", player)
 

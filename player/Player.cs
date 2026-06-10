@@ -44,7 +44,7 @@ public partial class Player : CharacterBody3D
 		_hud = GetNode<CanvasLayer>("Hud");
 		_camera = GetNode<Camera3D>("Camera3D");
 		_body = GetNode<CharacterBody3D>(".");
-		_gunSpawner = GetNode<MultiplayerSpawner>("MultiplayerSpawner");
+		_gunSpawner = GetNode<MultiplayerSpawner>("GunSpawner");
 		
 		//Hides own overhead health
 		GetNode<SubViewport>("SubViewport").GetNode<ProgressBar>("ProgressBar").Visible = false;
@@ -66,6 +66,8 @@ public partial class Player : CharacterBody3D
 			// {"Equal", null},
 			// {"Minus", null}
 		};
+
+		// THIS DOES NOT WORK
 		foreach (var pair in _equipment)
 		{
 			if (pair.Value is Gun gun)

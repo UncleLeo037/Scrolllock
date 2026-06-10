@@ -1,41 +1,45 @@
 using Godot;
 using System;
 
-public partial class Lift : Path3D
+public partial class Lift : AnimatableBody3D
 {
-	private float speed = 0.0f;
-	private PathFollow3D path;
+	[Export]
+	public float top;
+	[Export]
+	public float bottom;
+
+	private Vector3 target;
+	const float SPEED = 1.0f;
 
 	public override void _Ready()
 	{
-		path = GetNode<PathFollow3D>("PathFollow3D");
-		Area3D area = GetNode<AnimatableBody3D>("AnimatableBody3D").GetNode<Area3D>("Area3D");
-		area.BodyEntered += _on_area_3d_body_entered;
+		target = GlobalPosition;
+		SetProcess(false);
+		Area3D area = GetNode<Area3D>("Area3D");
+		area.BodyEntered += OnBodyEntered;
 	}
 
 
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
-		path.ProgressRatio += speed * (float)delta;
-		if (path.ProgressRatio == 0 || path.ProgressRatio == 1)
+		GlobalPosition = GlobalPosition.MoveToward(target, SPEED*(float)delta);
+		if (GlobalPosition.Y == target.Y)
 		{
 			SetProcess(false);
 		}
 	}
 
-	public void _on_area_3d_body_entered(Node3D body)
+	public void OnBodyEntered(Node3D body)
 	{
-		if (body is Player player)
+		if (body is Player)
 		{
-			if (path.ProgressRatio == 0)
+			if (GlobalPosition.Y == bottom)
 			{
-				GD.Print("up");
-				speed = 0.1f;
+				target.Y = top;
 			}
-			if (path.ProgressRatio == 1)
+			if (GlobalPosition.Y == top)
 			{
-				GD.Print("down");
-				speed = -0.1f;
+				target.Y = bottom;
 			}
 			SetProcess(true);
 		}

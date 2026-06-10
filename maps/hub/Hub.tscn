@@ -4,15 +4,8 @@
 [ext_resource type="Material" uid="uid://drccsornonlun" path="res://assets/textures/devTexture.tres" id="1_ywcfp"]
 [ext_resource type="Script" uid="uid://csqfy5syhc3pv" path="res://maps/hub/Lift.cs" id="2_8x6fp"]
 
-[sub_resource type="Curve3D" id="Curve3D_smasd"]
-_data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, -2.25, 0, 0, 0, 0, 0, 0, 0, 0, 6.75, 0),
-"tilts": PackedFloat32Array(0, 0)
-}
-point_count = 2
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_smasd"]
-size = Vector3(2, 0.5, 2)
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_8x6fp"]
+data = PackedVector3Array(-1, 0.25, 1, 1, 0.25, 1, -1, -0.25, 1, 1, 0.25, 1, 1, -0.25, 1, -1, -0.25, 1, 1, 0.25, -1, -1, 0.25, -1, 1, -0.25, -1, -1, 0.25, -1, -1, -0.25, -1, 1, -0.25, -1, 1, 0.25, 1, 1, 0.25, -1, 1, -0.25, 1, 1, 0.25, -1, 1, -0.25, -1, 1, -0.25, 1, -1, 0.25, -1, -1, 0.25, 1, -1, -0.25, -1, -1, 0.25, 1, -1, -0.25, 1, -1, -0.25, -1, 1, 0.25, 1, -1, 0.25, 1, 1, 0.25, -1, -1, 0.25, 1, -1, 0.25, -1, 1, 0.25, -1, -1, -0.25, 1, 1, -0.25, 1, -1, -0.25, -1, 1, -0.25, 1, 1, -0.25, -1, -1, -0.25, -1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_smasd"]
 size = Vector3(2, 0.5, 2)
@@ -22,40 +15,6 @@ size = Vector3(1, 2, 1)
 
 [node name="Hub" type="Node3D" unique_id=737521784]
 script = ExtResource("1_smasd")
-
-[node name="Lift" type="Path3D" parent="." unique_id=580617931]
-curve = SubResource("Curve3D_smasd")
-script = ExtResource("2_8x6fp")
-
-[node name="AnimatableBody3D" type="AnimatableBody3D" parent="Lift" unique_id=1440401822]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.25, 0)
-collision_mask = 4
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Lift/AnimatableBody3D" unique_id=357981359]
-shape = SubResource("BoxShape3D_smasd")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Lift/AnimatableBody3D" unique_id=1262475031]
-transform = Transform3D(0.99999994, -3.5527137e-15, 0, 0, 1, -8.351869e-23, 0, -3.5527133e-15, 0.9999999, 0, 0, 0)
-mesh = SubResource("BoxMesh_smasd")
-skeleton = NodePath("../../PathFollow3D")
-
-[node name="Area3D" type="Area3D" parent="Lift/AnimatableBody3D" unique_id=1492328327]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
-collision_layer = 7
-collision_mask = 7
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Lift/AnimatableBody3D/Area3D" unique_id=2125220894]
-shape = SubResource("BoxShape3D_8x6fp")
-
-[node name="PathFollow3D" type="PathFollow3D" parent="Lift" unique_id=1750723455]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.25, 0)
-rotation_mode = 0
-loop = false
-
-[node name="RemoteTransform3D" type="RemoteTransform3D" parent="Lift/PathFollow3D" unique_id=733647815]
-remote_path = NodePath("../../AnimatableBody3D")
-update_rotation = false
-update_scale = false
 
 [node name="outer" type="CSGBox3D" parent="." unique_id=525889241]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -31.276573, 0)
@@ -91,3 +50,27 @@ material = ExtResource("1_ywcfp")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, 0)
 size = Vector3(8, 10, 20)
 material = ExtResource("1_ywcfp")
+
+[node name="AnimatableBody3D" type="AnimatableBody3D" parent="." unique_id=1764728239]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.25, 0)
+collision_mask = 4
+script = ExtResource("2_8x6fp")
+top = 6.75
+bottom = -2.25
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AnimatableBody3D" unique_id=654372183]
+transform = Transform3D(0.99999994, -3.5527137e-15, 0, 0, 1, -8.351869e-23, 0, -3.5527133e-15, 0.9999999, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_8x6fp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="AnimatableBody3D" unique_id=1956678040]
+transform = Transform3D(0.99999994, -3.5527137e-15, 0, 0, 1, -8.351869e-23, 0, -3.5527133e-15, 0.9999999, 0, 0, 0)
+mesh = SubResource("BoxMesh_smasd")
+skeleton = NodePath("../../PathFollow3D")
+
+[node name="Area3D" type="Area3D" parent="AnimatableBody3D" unique_id=165447937]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+collision_layer = 7
+collision_mask = 7
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AnimatableBody3D/Area3D" unique_id=346988656]
+shape = SubResource("BoxShape3D_8x6fp")

@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://bobwn183d70ej"]
+
+[ext_resource type="Script" uid="uid://di0fnv4jekqlk" path="res://guns/Blunderbuss.cs" id="1_hq0r1"]
+[ext_resource type="PackedScene" uid="uid://cabqte5kwuidl" path="res://assets/guns/blunderbuss.glb" id="2_lt6l5"]
+[ext_resource type="Texture2D" uid="uid://dx6dt4sngj2oe" path="res://assets/textures/flash.png" id="3_4i8qk"]
+
+[sub_resource type="Gradient" id="Gradient_qvvr5"]
+offsets = PackedFloat32Array(0.12587413, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_aqihc"]
+gradient = SubResource("Gradient_qvvr5")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_iwd1x"]
+gravity = Vector3(0, 0, 0)
+color_ramp = SubResource("GradientTexture1D_aqihc")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c8t37"]
+transparency = 1
+albedo_texture = ExtResource("3_4i8qk")
+emission_enabled = true
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2ssem"]
+material = SubResource("StandardMaterial3D_c8t37")
+size = Vector2(0.6, 0.4)
+orientation = 2
+
+[node name="Blunderbuss" type="Node3D" unique_id=304946825]
+visible = false
+script = ExtResource("1_hq0r1")
+
+[node name="Trans" type="Node3D" parent="." unique_id=533089386]
+transform = Transform3D(-1.3113416e-09, 0, 0.03, 0, 0.03, 0, -0.03, 0, -1.3113416e-09, 0.5, -0.3, -0.6)
+
+[node name="blunderbuss" parent="Trans" unique_id=1345506610 instance=ExtResource("2_lt6l5")]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Trans" unique_id=1862871277]
+transform = Transform3D(1, 0, 4.6185278e-14, 0, 1, 0, -4.6185278e-14, 0, 1, 10, 1.4529238, 1.9073486e-06)
+emitting = false
+amount = 1
+lifetime = 0.1
+one_shot = true
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_iwd1x")
+draw_pass_1 = SubResource("PlaneMesh_2ssem")
+
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=358089968]
+target_position = Vector3(0, 0, -50)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=433654551]

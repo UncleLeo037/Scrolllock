@@ -1,6 +1,5 @@
 using Godot;
 using Srolllock.spells;
-using Srolllock.gun;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -24,7 +23,7 @@ public partial class Player : CharacterBody3D
 	private MultiplayerSpawner _gunSpawner;
 	//private AnimationPlayer _anime;
 
-	private DemoGun _gun;
+	private Gun _gun;
 	private Dictionary<Key, Node> _equipment;
 	private List<string> effects = new List<string>();
 	private double _health = MAX_HEALTH;
@@ -52,11 +51,13 @@ public partial class Player : CharacterBody3D
 
 		_equipment = new Dictionary<Key, Node>()
 		{
-			{Key.Key1, GD.Load<PackedScene>("res://gun/DemoGun.tscn").Instantiate<DemoGun>()},
+			{Key.Key1, GD.Load<PackedScene>("res://guns/DuelPistols.tscn").Instantiate<Gun>()},
 			{Key.Key2, new Force()},
 			{Key.Key3, new Wall()},
 			{Key.Key4, new Tornado()},
-			{Key.Key5, new Slick()}
+			{Key.Key5, new Slick()},
+			{Key.Key6, GD.Load<PackedScene>("res://guns/Blunderbuss.tscn").Instantiate<Gun>()},
+			{Key.Key7, GD.Load<PackedScene>("res://guns/RifledMusket.tscn").Instantiate<Gun>()},
 			// {"Key6", null},
 			// {"Key7", null},
 			// {"Key8", null},
@@ -67,7 +68,7 @@ public partial class Player : CharacterBody3D
 		};
 		foreach (var pair in _equipment)
 		{
-			if (pair.Value is DemoGun gun)
+			if (pair.Value is Gun gun)
 			{
 				_gunSpawner.AddSpawnableScene($"res://gun/{gun.GetType().Name}.tscn");
 				_camera.AddChild(gun);
@@ -97,7 +98,7 @@ public partial class Player : CharacterBody3D
 							_gun.equipedSpell = spell.GetType().Name;
 						}
 						break;
-					case DemoGun gun:
+					case Gun gun:
 						if (_gun != null)
 						{
 							Rpc("ToggleGun", _gun.Name);
@@ -131,7 +132,8 @@ public partial class Player : CharacterBody3D
 	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true)]
 	public async void ToggleGun(string gunPath)
 	{
-		var gun = _camera.GetNode<DemoGun>(gunPath);
+		//will add code to change player animation for gun here
+		var gun = _camera.GetNode<Gun>(gunPath);
 		gun.Visible = !gun.Visible;
 	}
 

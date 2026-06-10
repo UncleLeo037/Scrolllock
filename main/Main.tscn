@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://blign5pet4tmj" path="res://main/main.gd" id="1_seaoi"]
 [ext_resource type="PackedScene" uid="uid://db151c17mdq1v" path="res://player/Player.tscn" id="2_ucdt6"]
-[ext_resource type="PackedScene" uid="uid://vbahjmxesqjd" path="res://main/demo_map.tscn" id="3_gg8xm"]
 [ext_resource type="Script" uid="uid://5a44ol3bx0s" path="res://main/SpellSpawner.cs" id="3_ucdt6"]
+[ext_resource type="PackedScene" uid="uid://32vnjnwuxei8" path="res://maps/hub/Hub.tscn" id="5_qtrhv"]
 [ext_resource type="Texture2D" uid="uid://c6md4rybga6we" path="res://assets/crosshair.png" id="5_tv7ag"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tv7ag"]
@@ -13,36 +13,43 @@ bg_color = Color(0, 0, 0, 0.2509804)
 bg_color = Color(0, 0.5019608, 0, 0.5019608)
 
 [node name="Main" type="Node3D" unique_id=33220651]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1212606, 0, 0)
 script = ExtResource("1_seaoi")
 player_scene = ExtResource("2_ucdt6")
 
 [node name="Menu" type="Control" parent="." unique_id=714204051]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Host" type="Button" parent="Menu" unique_id=1703042559]
 layout_mode = 0
-offset_left = 450.0
-offset_top = 192.0
-offset_right = 695.0
-offset_bottom = 264.0
+offset_left = -122.0
+offset_top = -167.0
+offset_right = 123.0
+offset_bottom = -95.0
 text = "Host"
 
 [node name="Join" type="Button" parent="Menu" unique_id=1660772302]
 layout_mode = 0
-offset_left = 448.0
-offset_top = 287.0
-offset_right = 695.0
-offset_bottom = 362.0
+offset_left = -121.0
+offset_top = -79.0
+offset_right = 126.0
+offset_bottom = -4.0
 disabled = true
 text = "Join"
 
 [node name="Prompt" type="LineEdit" parent="Menu" unique_id=1982724209]
 layout_mode = 0
-offset_left = 435.0
-offset_top = 395.0
-offset_right = 714.0
-offset_bottom = 435.0
+offset_left = -137.0
+offset_top = 25.0
+offset_right = 142.0
+offset_bottom = 65.0
 placeholder_text = "Lobby ID"
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1284042800]
@@ -81,9 +88,6 @@ offset_top = 169.0
 offset_right = 307.0
 offset_bottom = 197.0
 
-[node name="DemoMap" parent="." unique_id=752502970 instance=ExtResource("3_gg8xm")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -50, 9, 0)
-
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1468753781]
 visible = false
 
@@ -114,6 +118,8 @@ theme_override_styles/background = SubResource("StyleBoxFlat_tv7ag")
 theme_override_styles/fill = SubResource("StyleBoxFlat_qtrhv")
 value = 100.0
 show_percentage = false
+
+[node name="Hub" parent="." unique_id=737521784 instance=ExtResource("5_qtrhv")]
 
 [connection signal="pressed" from="Menu/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Menu/Join" to="." method="_on_join_pressed"]

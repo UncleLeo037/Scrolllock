@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cjp241rp11xnt" path="res://player/HUD.tscn" id="2_x8kxw"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gwnis"]
+height = 1.8
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g6k8r"]
 albedo_texture = ExtResource("2_qjkh3")
@@ -16,6 +17,7 @@ texture_filter = 0
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_boad6"]
 material = SubResource("StandardMaterial3D_g6k8r")
+height = 1.8
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_rkbax"]
 properties/0/path = NodePath(".:position")
@@ -44,6 +46,7 @@ HUD = ExtResource("2_x8kxw")
 shape = SubResource("CapsuleShape3D_gwnis")
 
 [node name="TestModel" type="MeshInstance3D" parent="." unique_id=1746710478]
+layers = 3
 mesh = SubResource("CapsuleMesh_boad6")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1625035346]

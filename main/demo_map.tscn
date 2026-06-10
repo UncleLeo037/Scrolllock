@@ -39,7 +39,6 @@ mesh = SubResource("BoxMesh_fhrwt")
 metadata/_edit_lock_ = true
 
 [node name="GreatAvenue" type="CSGBox3D" parent="." unique_id=637337867]
-layers = 2
 calculate_tangents = false
 use_collision = true
 flip_faces = true

@@ -21,7 +21,7 @@ var is_ip : bool = false
 @onready var multiplayer_spawner : MultiplayerSpawner = $MultiplayerSpawner
 
 const PORT = 9999
-var enet_peer = ENetMultiplayerPeer.new()
+var enet_peer : ENetMultiplayerPeer = ENetMultiplayerPeer.new()
 
 func _ready():
 	multiplayer_spawner.add_spawnable_scene("res://player/Player.tscn")
@@ -112,7 +112,8 @@ func _on_join_pressed() -> void:
 
 
 func _on_exit_pressed() -> void:
-	peer.close()
+	if !is_ip:
+		peer.close()
 	Steam.steamShutdown()
 	get_tree().reload_current_scene()
 
@@ -125,10 +126,12 @@ func _on_lan_pressed() -> void:
 	if is_ip:
 		btn_ip.text = "Localhost"
 		txt_input.hide()
+		btn_copy.hide()
 		btn_join.disabled = false
 	else:
 		btn_ip.text = "SteamInit"
 		txt_input.show()
+		btn_copy.show()
 		btn_join.disabled = true
 	if !Steam.isSteamRunning() and !is_ip:
 		_on_lan_pressed()

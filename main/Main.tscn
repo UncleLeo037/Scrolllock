@@ -55,7 +55,7 @@ offset_left = -560.0
 offset_top = 240.0
 offset_right = -435.0
 offset_bottom = 307.0
-text = "local-NO-hosting"
+text = "SteamInit"
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1284042800]
 spawn_path = NodePath("..")

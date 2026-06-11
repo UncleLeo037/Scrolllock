@@ -4,11 +4,11 @@ using Srolllock.spells;
 
 public partial class SpellSpawner : MultiplayerSpawner
 {
-	public static SpellSpawner self;
+	public static SpellSpawner instance;
 	public override void _Ready()
 	{
 		SpawnFunction = Callable.From<Variant, Node>(SpawnSpell);
-		self = this;
+		instance = this;
 	}
 
 	public Node SpawnSpell(Variant detail)
@@ -21,8 +21,8 @@ public partial class SpellSpawner : MultiplayerSpawner
 		return spellInstance;
 	}
 
-    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-    public void RequestCastSpell(string path, Vector3 pos, Vector3 rot)
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+    public void RequestSpawnSpell(string path, Vector3 pos, Vector3 rot)
     {
         if (!IsMultiplayerAuthority())
             return;
@@ -33,22 +33,5 @@ public partial class SpellSpawner : MultiplayerSpawner
             {"position", pos},
             {"rotation", rot}
         });
-    }
-
-    public static void CastSpell(string path, Vector3 pos, Vector3 rot)
-    {
-        if (self.IsMultiplayerAuthority())
-        {
-            self.Spawn(new Dictionary<string, Variant>
-            {
-                {"path", path},
-                {"position", pos},
-                {"rotation", rot}
-            });
-        }
-        else
-        {
-            self.Rpc("RequestCastSpell", path, pos, rot);
-        }
     }
 }

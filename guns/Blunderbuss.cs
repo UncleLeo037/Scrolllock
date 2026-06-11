@@ -38,7 +38,7 @@ public partial class Blunderbuss : Gun
 				{
 					//spells will be called in different ways here in future and equipedSpell will be an object
 					Vector3 point = _rayCast.GetCollisionPoint();
-					SpellSpawner.CastSpell(equipedSpell, point, new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0));
+					SpellSpawner.instance.Rpc("RequestSpawnSpell", equipedSpell, point, new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0));
 					equipedSpell = string.Empty;
 				}
 				else if (target is Player player)

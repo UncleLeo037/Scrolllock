@@ -57,11 +57,12 @@ offset_right = -435.0
 offset_bottom = 307.0
 text = "SteamInit"
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1284042800]
+[node name="SpellSpawner" type="MultiplayerSpawner" parent="." unique_id=658143365]
 spawn_path = NodePath("..")
-
-[node name="SpellSpawner" type="Node3D" parent="." unique_id=854334226]
 script = ExtResource("3_ucdt6")
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1284042800]
+spawn_path = NodePath("..")
 
 [node name="Pause" type="Control" parent="." unique_id=251612886]
 visible = false

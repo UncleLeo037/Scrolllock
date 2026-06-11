@@ -18,7 +18,7 @@ var is_ip : bool = false
 @onready var btn_copy : Button = $Pause/Copy
 @onready var display_id = $Pause/ID
 
-@onready var multiplayer_spawner : MultiplayerSpawner = $MultiplayerSpawner
+@onready var multiplayer_spawner : MultiplayerSpawner = $PlayerSpawner
 
 const PORT = 9999
 var enet_peer : ENetMultiplayerPeer = ENetMultiplayerPeer.new()

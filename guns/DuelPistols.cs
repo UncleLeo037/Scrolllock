@@ -32,7 +32,6 @@ public partial class DuelPistols : Gun
 			//add RPC shoot animation call. DO NOT move RPC from spell spawn to here! could cause spell sync issues
 			//Rpc("ShootAnim");
 			var target = _rayCast.GetCollider();
-			GD.Print(target);
 			if (target != null)
 			{
 				//should just shoot instead
@@ -40,7 +39,7 @@ public partial class DuelPistols : Gun
 				{
 					//spells will be called in different ways here in future and equipedSpell will be an object
 					Vector3 point = _rayCast.GetCollisionPoint();
-					SpellSpawner.CastSpell(this.Name, equipedSpell, point, new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0));
+					SpellSpawner.CastSpell(equipedSpell, point, new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0));
 					equipedSpell = string.Empty;
 				}
 				else if (target is Player player)

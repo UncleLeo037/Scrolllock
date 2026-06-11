@@ -3,17 +3,15 @@ using Srolllock.guns;
 
 public partial class GunSpawner : MultiplayerSpawner
 {
-    public Gun _SpawnFunction(Variant data)
+    public Node _SpawnFunction(string path)
     {
-        string gunPath = data.AsString();
-
-        PackedScene gunScene = GD.Load<PackedScene>(gunPath);
-        Gun gunInstance = gunScene.Instantiate<Gun>();
+        PackedScene gunScene = GD.Load<PackedScene>($"res://{path}.tscn");
+        Node gunInstance = gunScene.Instantiate();
         return gunInstance;
     }
 
     public override void _Ready()
     {
-        SpawnFunction = Callable.From<Variant, Node>(_SpawnFunction);
+        SpawnFunction = Callable.From<string, Node>(_SpawnFunction);
     }
 }

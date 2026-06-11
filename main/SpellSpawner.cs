@@ -1,50 +1,54 @@
 using Godot;
+using Godot.Collections;
 using Srolllock.spells;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Dynamic;
 
-public partial class SpellSpawner : Node3D
+public partial class SpellSpawner : MultiplayerSpawner
 {
-	private static Node3D self;
-	private static Dictionary<string, PackedScene> spellDictionary;
-
+	public static SpellSpawner self;
 	public override void _Ready()
 	{
+		SpawnFunction = Callable.From<Variant, Node>(SpawnSpell);
 		self = this;
-
-		SetSpells();
 	}
 
-	public void SetSpells()
+	public Node SpawnSpell(Variant detail)
 	{
-		//this string list would be grabbed from a save file
-		string[] inventory = {"Force", "Wall", "Tornado", "Slick"};
-
-		spellDictionary = new Dictionary<string, PackedScene>();
-
-		foreach (string spell in inventory)
-		{
-			spellDictionary.Add(spell, GD.Load<PackedScene>($"res://spells/{spell}.tscn"));
-		}
+		Dictionary spell = (Dictionary)detail;
+		PackedScene spellScene = GD.Load<PackedScene>($"res://{spell["path"]}.tscn");
+		Spell spellInstance = spellScene.Instantiate<Spell>();
+		spellInstance.Position = (Vector3)spell["position"];
+		spellInstance.Rotation = (Vector3)spell["rotation"];
+		return spellInstance;
 	}
 
-	public static void CastSpell(string playerName, string spellName, Vector3 position, Vector3 rotation)
-	{
-		self.Rpc("SpawnSpell", playerName, spellName, position, rotation);
-	}
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+    public void RequestCastSpell(string path, Vector3 pos, Vector3 rot)
+    {
+        if (!IsMultiplayerAuthority())
+            return;
 
-	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
-	public void SpawnSpell(string playerName, string spellName, Vector3 position, Vector3 rotation)
-	{
-		PackedScene spellScene = spellDictionary[spellName];
-		Node spell = spellScene.Instantiate();
-		spell.Name = playerName;
-		AddChild(spell);
-		Spell node = GetNode<Spell>((string)spell.Name);
-		node.GlobalPosition = position;
-		node.Rotation = rotation;
-		node.Name = "old";
-	}
+        Spawn(new Dictionary<string, Variant>
+        {
+            {"path", path},
+            {"position", pos},
+            {"rotation", rot}
+        });
+    }
+
+    public static void CastSpell(string path, Vector3 pos, Vector3 rot)
+    {
+        if (self.IsMultiplayerAuthority())
+        {
+            self.Spawn(new Dictionary<string, Variant>
+            {
+                {"path", path},
+                {"position", pos},
+                {"rotation", rot}
+            });
+        }
+        else
+        {
+            self.Rpc("RequestCastSpell", path, pos, rot);
+        }
+    }
 }

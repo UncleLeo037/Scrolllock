@@ -47,6 +47,7 @@ public partial class Player : CharacterBody3D
 		_body = GetNode<CharacterBody3D>(".");
 		gunSpawner = GetNode<MultiplayerSpawner>("Camera3D/GunSpawner");
 		gunSpawner.SetMultiplayerAuthority(int.Parse(Name));
+		//SpellSpawner.self.SetMultiplayerAuthority
 
 		//Hides own overhead health
 		GetNode<SubViewport>("SubViewport").GetNode<ProgressBar>("ProgressBar").Visible = false;
@@ -94,13 +95,12 @@ public partial class Player : CharacterBody3D
 		{
 			if (_equipment.TryGetValue(keyEvent.PhysicalKeycode, out string item))
 			{
-				string[] type = item.Split("/");
-				switch (type[0])
+				switch (item.Split("/")[0])
 				{
 					case "spells":
 						if (_gun != null)
 						{
-							_gun.equipedSpell = type[1];
+							_gun.equipedSpell = item;
 						}
 						break;
 					case "guns":
@@ -108,7 +108,8 @@ public partial class Player : CharacterBody3D
 						{
 							_gun.QueueFree();
 						}
-						_gun = gunSpawner.Spawn($"res://{item}.tscn") as Gun;
+						_gun = gunSpawner.Spawn(item) as Gun;
+						_gun.Name = this.Name;
 						break;
 				}
 			}

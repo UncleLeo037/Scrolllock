@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dk8rpfma2v5hx" path="res://player/GunSpawner.cs" id="4_83hs8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gwnis"]
+radius = 0.45
 height = 1.8
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g6k8r"]
@@ -18,6 +19,7 @@ texture_filter = 0
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_boad6"]
 material = SubResource("StandardMaterial3D_g6k8r")
+radius = 0.45
 height = 1.8
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_rkbax"]

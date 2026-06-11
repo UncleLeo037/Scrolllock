@@ -20,11 +20,12 @@ public partial class Player : CharacterBody3D
 	private Camera3D _camera;
 	private CharacterBody3D _body;
 	private CanvasLayer _hud;
-	private MultiplayerSpawner _gunSpawner;
+	private MultiplayerSpawner gunSpawner;
+
 	//private AnimationPlayer _anime;
 
 	private Gun _gun;
-	private Dictionary<Key, Node> _equipment;
+	private Dictionary<Key, String> _equipment;
 	private List<string> effects = new List<string>();
 	private double _health = MAX_HEALTH;
 	[Export]
@@ -44,20 +45,21 @@ public partial class Player : CharacterBody3D
 		_hud = GetNode<CanvasLayer>("Hud");
 		_camera = GetNode<Camera3D>("Camera3D");
 		_body = GetNode<CharacterBody3D>(".");
-		_gunSpawner = GetNode<MultiplayerSpawner>("GunSpawner");
-		
+		gunSpawner = GetNode<MultiplayerSpawner>("Camera3D/GunSpawner");
+		gunSpawner.SetMultiplayerAuthority(int.Parse(Name));
+
 		//Hides own overhead health
 		GetNode<SubViewport>("SubViewport").GetNode<ProgressBar>("ProgressBar").Visible = false;
 
-		_equipment = new Dictionary<Key, Node>()
+		_equipment = new Dictionary<Key, String>()
 		{
-			{Key.Key1, GD.Load<PackedScene>("res://guns/DuelPistols.tscn").Instantiate<Gun>()},
-			{Key.Key2, new Force()},
-			{Key.Key3, new Wall()},
-			{Key.Key4, new Tornado()},
-			{Key.Key5, new Slick()},
-			{Key.Key6, GD.Load<PackedScene>("res://guns/Blunderbuss.tscn").Instantiate<Gun>()},
-			{Key.Key7, GD.Load<PackedScene>("res://guns/RifledMusket.tscn").Instantiate<Gun>()},
+			{Key.Key1, "guns/DuelPistols"},
+			{Key.Key2, "spells/Force"},
+			{Key.Key3, "spells/Wall"},
+			{Key.Key4, "spells/Tornado"},
+			{Key.Key5, "spells/Slick"},
+			{Key.Key6, "guns/Blunderbuss"},
+			{Key.Key7, "guns/RifledMusket"},
 			// {"Key6", null},
 			// {"Key7", null},
 			// {"Key8", null},
@@ -67,19 +69,19 @@ public partial class Player : CharacterBody3D
 			// {"Minus", null}
 		};
 
-		// THIS DOES NOT WORK
-		foreach (var pair in _equipment)
-		{
-			if (pair.Value is Gun gun)
-			{
-				_gunSpawner.AddSpawnableScene($"res://gun/{gun.GetType().Name}.tscn");
-				_camera.AddChild(gun);
-			}
-		}
+		// foreach (var pair in _equipment)
+		// {
+		// 	if (pair.Value.Split("/")[0].Equals("guns"))
+		// 	{
+		// 		Gun gun = GD.Load<PackedScene>($"res://{pair.Value}.tscn").Instantiate<Gun>();
+		// 		_camera.AddChild(gun);
+		// 		//GD.Print(_camera.GetNode(gun.Name.ToString()).Name);
+		// 	}
+		// }
 
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		_camera.Current = true;
-		
+
 		//stop loading screen
 	}
 
@@ -90,23 +92,23 @@ public partial class Player : CharacterBody3D
 
 		if (@event is InputEventKey keyEvent && keyEvent.Pressed && !keyEvent.Echo)
 		{
-			if (_equipment.TryGetValue(keyEvent.PhysicalKeycode, out Node item))
+			if (_equipment.TryGetValue(keyEvent.PhysicalKeycode, out string item))
 			{
-				switch (item)
+				string[] type = item.Split("/");
+				switch (type[0])
 				{
-					case Spell spell:
+					case "spells":
 						if (_gun != null)
 						{
-							_gun.equipedSpell = spell.GetType().Name;
+							_gun.equipedSpell = type[1];
 						}
 						break;
-					case Gun gun:
+					case "guns":
 						if (_gun != null)
 						{
-							Rpc("ToggleGun", _gun.Name);
+							_gun.QueueFree();
 						}
-						_gun = gun;
-						Rpc("ToggleGun", _gun.Name);
+						_gun = gunSpawner.Spawn($"res://{item}.tscn") as Gun;
 						break;
 				}
 			}
@@ -130,14 +132,7 @@ public partial class Player : CharacterBody3D
 			_gun?.Shoot();
 		}
 	}
-	
-	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true)]
-	public async void ToggleGun(string gunPath)
-	{
-		//will add code to change player animation for gun here
-		var gun = _camera.GetNode<Gun>(gunPath);
-		gun.Visible = !gun.Visible;
-	}
+
 
 	public override void _PhysicsProcess(double delta)
 	{

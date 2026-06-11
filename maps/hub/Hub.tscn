@@ -4,8 +4,26 @@
 [ext_resource type="Material" uid="uid://drccsornonlun" path="res://assets/textures/devTexture.tres" id="1_ywcfp"]
 [ext_resource type="PackedScene" uid="uid://bfteys40meiyv" path="res://maps/hub/Lift.tscn" id="3_8x6fp"]
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8x6fp"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Sky" id="Sky_smasd"]
+sky_material = SubResource("ProceduralSkyMaterial_8x6fp")
+
+[sub_resource type="Environment" id="Environment_ycays"]
+background_mode = 2
+sky = SubResource("Sky_smasd")
+tonemap_mode = 2
+glow_enabled = true
+volumetric_fog_enabled = true
+
 [node name="Hub" type="Node3D" unique_id=737521784]
 script = ExtResource("1_smasd")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=905789410]
+environment = SubResource("Environment_ycays")
 
 [node name="outer" type="CSGBox3D" parent="." unique_id=525889241]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -31.276573, 0)
@@ -13,7 +31,6 @@ layers = 2
 use_collision = true
 collision_layer = 3
 collision_mask = 0
-flip_faces = true
 size = Vector3(30, 150, 30)
 
 [node name="core" type="CSGCombiner3D" parent="outer" unique_id=1195571182]

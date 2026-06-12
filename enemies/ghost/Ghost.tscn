@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://ioqqcvjdbsve"]
+
+[ext_resource type="PackedScene" uid="uid://bywneq4wawja" path="res://enemies/ghost/Ghost.gltf" id="1_8qpe2"]
+[ext_resource type="Script" uid="uid://doe8nj4144uyi" path="res://enemies/ghost/Ghost.cs" id="1_qwsux"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j1a38"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qwsux"]
+radius = 10.0
+
+[node name="Ghost" type="CharacterBody3D" unique_id=1192299923]
+script = ExtResource("1_qwsux")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1450149067]
+shape = SubResource("CapsuleShape3D_j1a38")
+
+[node name="ghost" parent="." unique_id=297455051 instance=ExtResource("1_8qpe2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.55, 0)
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1441626684]
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1154589642]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=62338222]
+shape = SubResource("SphereShape3D_qwsux")

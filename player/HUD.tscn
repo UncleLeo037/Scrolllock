@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cjp241rp11xnt"]
 
-[ext_resource type="Texture2D" uid="uid://c6md4rybga6we" path="res://assets/crosshair.png" id="1_1jg6f"]
+[ext_resource type="Texture2D" uid="uid://c6md4rybga6we" path="res://player/crosshair.png" id="1_1jg6f"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1jg6f"]
 bg_color = Color(0, 0, 0, 0.5019608)

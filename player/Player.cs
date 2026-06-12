@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Reflection;
 using System.Threading.Tasks;
 using Srolllock.guns;
+using System.IO;
 
 public partial class Player : CharacterBody3D
 {
@@ -21,10 +22,9 @@ public partial class Player : CharacterBody3D
 	private CharacterBody3D _body;
 	private CanvasLayer _hud;
 	private MultiplayerSpawner gunSpawner;
-
 	//private AnimationPlayer _anime;
-
-	private Gun _gun;
+	private Gun _gunLocal;
+	private Node _gunRemote;
 	private Dictionary<Key, String> _equipment;
 	private List<string> effects = new List<string>();
 	private double _health = MAX_HEALTH;
@@ -53,13 +53,13 @@ public partial class Player : CharacterBody3D
 
 		_equipment = new Dictionary<Key, String>()
 		{
-			{Key.Key1, "guns/DuelPistols"},
+			{Key.Key1, "guns/Pistols"},
 			{Key.Key2, "spells/Force"},
 			{Key.Key3, "spells/Wall"},
 			{Key.Key4, "spells/Tornado"},
 			{Key.Key5, "spells/Slick"},
 			{Key.Key6, "guns/Blunderbuss"},
-			{Key.Key7, "guns/RifledMusket"},
+			{Key.Key7, "guns/Rifle"},
 			// {"Key6", null},
 			// {"Key7", null},
 			// {"Key8", null},
@@ -69,15 +69,15 @@ public partial class Player : CharacterBody3D
 			// {"Minus", null}
 		};
 
-		// foreach (var pair in _equipment)
-		// {
-		// 	if (pair.Value.Split("/")[0].Equals("guns"))
-		// 	{
-		// 		Gun gun = GD.Load<PackedScene>($"res://{pair.Value}.tscn").Instantiate<Gun>();
-		// 		_camera.AddChild(gun);
-		// 		//GD.Print(_camera.GetNode(gun.Name.ToString()).Name);
-		// 	}
-		// }
+		foreach (var pair in _equipment)
+		{
+			if (pair.Value.Split("/")[0].Equals("guns"))
+			{
+				Gun gun = GD.Load<PackedScene>($"res://{pair.Value}/{pair.Value.Split("/")[1]}.tscn").Instantiate<Gun>();
+				_camera.AddChild(gun);
+				//GD.Print(_camera.GetNode(gun.Name.ToString()).Name);
+			}
+		}
 
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		_camera.Current = true;
@@ -97,18 +97,21 @@ public partial class Player : CharacterBody3D
 				switch (item.Split("/")[0])
 				{
 					case "spells":
-						if (_gun != null)
+						if (_gunLocal != null)
 						{
-							_gun.equipedSpell = item;
+							_gunLocal.equipedSpell = item;
 						}
 						break;
 					case "guns":
-						if (_gun != null)
+						if (_gunRemote != null)
 						{
-							_gun.QueueFree();
+							_gunRemote.QueueFree();
+
 						}
-						_gun = gunSpawner.Spawn(item) as Gun;
-						
+						string _gunName = item.Split("/")[1];
+						_gunRemote = gunSpawner.Spawn(item+"/"+_gunName);
+						_gunLocal = _camera.GetNode<Gun>(_gunName);
+						_gunLocal.SetModel(_gunRemote); //for animation interaction
 						break;
 				}
 			}
@@ -129,7 +132,7 @@ public partial class Player : CharacterBody3D
 		if (Input.IsActionJustPressed("shoot"))
 		{
 			//only shoot if exists
-			_gun?.Shoot();
+			_gunLocal?.Shoot();
 		}
 	}
 

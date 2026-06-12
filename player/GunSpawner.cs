@@ -5,7 +5,7 @@ public partial class GunSpawner : MultiplayerSpawner
 {
     public Node _SpawnFunction(string path)
     {
-        PackedScene gunScene = GD.Load<PackedScene>($"res://{path}.tscn");
+        PackedScene gunScene = GD.Load<PackedScene>($"res://{path}.gltf");
         Node gunInstance = gunScene.Instantiate();
         return gunInstance;
     }

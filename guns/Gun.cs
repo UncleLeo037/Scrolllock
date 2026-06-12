@@ -9,11 +9,13 @@ namespace Srolllock.guns
 		protected RayCast3D _rayCast;
 		protected AnimationPlayer _anime;
 		protected GpuParticles3D _flash;
+		protected Node _model;
 
 		public override void _Ready()
 		{
 			_rayCast = GetNode<RayCast3D>("RayCast3D");
-			_anime = GetNode<AnimationPlayer>("AnimationPlayer");
+			//need to move this logic out of the local node
+			//_anime = GetNode<AnimationPlayer>("AnimationPlayer");
 			//_flash = GetNode<Node3D>("Node3D").GetNode<GpuParticles3D>("GPUParticles3D");
 		}
 
@@ -26,9 +28,16 @@ namespace Srolllock.guns
 			_flash.Emitting = true;
 		}
 
+		public virtual void SetModel(Node model)
+		{
+			_model = model;
+			_anime = model.GetNode<AnimationPlayer>("AnimationPlayer");
+			//_flash = model.GetNode<GpuParticles3D>("GpuParticles3D");
+		}
+
 		public virtual void Shoot()
 		{
-			if (_anime.CurrentAnimation != "shoot")
+			if (!(_anime?.CurrentAnimation == "shoot"))
 			{
 				//Rpc("ShootAnim");
 				var target = _rayCast.GetCollider();

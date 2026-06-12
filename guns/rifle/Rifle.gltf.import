@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://btagf8707cp3v"
-path="res://.godot/imported/musket.glb-c25464ad73954c5a37a10d4bf72d6c8b.scn"
+uid="uid://c3ee1p4t58nsl"
+path="res://.godot/imported/Rifle.gltf-e59a0060c1d93950595a100ccd4a7a0f.scn"
 
 [deps]
 
-source_file="res://assets/guns/musket.glb"
-dest_files=["res://.godot/imported/musket.glb-c25464ad73954c5a37a10d4bf72d6c8b.scn"]
+source_file="res://guns/rifle/Rifle.gltf"
+dest_files=["res://.godot/imported/Rifle.gltf-e59a0060c1d93950595a100ccd4a7a0f.scn"]
 
 [params]
 

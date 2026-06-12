@@ -31,7 +31,7 @@ namespace Srolllock.guns
 		public virtual void SetModel(Node model)
 		{
 			_model = model;
-			_anime = model.GetNode<AnimationPlayer>("AnimationPlayer");
+			//_anime = model.GetNode<AnimationPlayer>("AnimationPlayer");
 			//_flash = model.GetNode<GpuParticles3D>("GpuParticles3D");
 		}
 

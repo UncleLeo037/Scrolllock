@@ -2,11 +2,7 @@ using Godot;
 using Srolllock.spells;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Reflection;
-using System.Threading.Tasks;
 using Srolllock.guns;
-using System.IO;
 
 public partial class Player : CharacterBody3D
 {
@@ -92,14 +88,15 @@ public partial class Player : CharacterBody3D
 
 		if (@event is InputEventKey keyEvent && keyEvent.Pressed && !keyEvent.Echo)
 		{
-			if (_equipment.TryGetValue(keyEvent.PhysicalKeycode, out string item))
+			if (_equipment.TryGetValue(keyEvent.PhysicalKeycode, out string path))
 			{
-				switch (item.Split("/")[0])
+				string[] id = path.Split("/");
+				switch (id[0])
 				{
 					case "spells":
 						if (_gunLocal != null)
 						{
-							_gunLocal.equipedSpell = item;
+							_gunLocal.equipedSpell = path+"/"+id[1];
 						}
 						break;
 					case "guns":
@@ -108,9 +105,8 @@ public partial class Player : CharacterBody3D
 							_gunRemote.QueueFree();
 
 						}
-						string _gunName = item.Split("/")[1];
-						_gunRemote = gunSpawner.Spawn(item+"/"+_gunName);
-						_gunLocal = _camera.GetNode<Gun>(_gunName);
+						_gunRemote = gunSpawner.Spawn(path+"/"+id[1]);
+						_gunLocal = _camera.GetNode<Gun>(id[1]);
 						_gunLocal.SetModel(_gunRemote); //for animation interaction
 						break;
 				}

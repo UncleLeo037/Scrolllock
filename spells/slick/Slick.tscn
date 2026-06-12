@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cwqsa3h3i7s0o"]
 
-[ext_resource type="Script" uid="uid://rcgchnchef2j" path="res://spells/Slick.cs" id="1_r2f5f"]
+[ext_resource type="Script" uid="uid://rcgchnchef2j" path="res://spells/slick/Slick.cs" id="1_r2f5f"]
 [ext_resource type="Texture2D" uid="uid://bs72srrxslfor" path="res://assets/textures/ice.png" id="2_3s5qb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3s5qb"]

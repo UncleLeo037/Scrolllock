@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bdb48st6dr035"]
 
-[ext_resource type="Script" uid="uid://i1h5hoa5ofi" path="res://spells/Tornado.cs" id="1_unqjo"]
+[ext_resource type="Script" uid="uid://i1h5hoa5ofi" path="res://spells/tornado/Tornado.cs" id="1_unqjo"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_unqjo"]
 height = 4.0

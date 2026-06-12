@@ -28,6 +28,7 @@ namespace Srolllock.guns
 			_flash.Emitting = true;
 		}
 
+		//pistol will have multiple flash nodes so will need to make an override method for this in Pistols.cs
 		public virtual void SetModel(Node model)
 		{
 			_model = model;

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://wejclekkfyie"]
 
-[ext_resource type="Script" uid="uid://1iqd4w7p73d3" path="res://spells/Force.cs" id="1_1xy7k"]
+[ext_resource type="Script" uid="uid://1iqd4w7p73d3" path="res://spells/force/Force.cs" id="1_1xy7k"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_1xy7k"]
 

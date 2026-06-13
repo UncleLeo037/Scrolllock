@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ck6smt7oulkc"]
 
 [ext_resource type="Script" uid="uid://blign5pet4tmj" path="res://main/main.gd" id="1_seaoi"]
-[ext_resource type="PackedScene" uid="uid://vbahjmxesqjd" path="res://main/demo_map.tscn" id="3_5kcm4"]
+[ext_resource type="PackedScene" uid="uid://32vnjnwuxei8" path="res://maps/hub/Hub.tscn" id="3_5kcm4"]
 [ext_resource type="Script" uid="uid://5a44ol3bx0s" path="res://main/SpellSpawner.cs" id="3_ucdt6"]
 
 [node name="Main" type="Node3D" unique_id=33220651]
@@ -87,8 +87,8 @@ offset_top = 169.0
 offset_right = 307.0
 offset_bottom = 197.0
 
-[node name="DemoMap" parent="." unique_id=1021776607 instance=ExtResource("3_5kcm4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.159115, 8.103327, 0)
+[node name="Hub" parent="." unique_id=737521784 instance=ExtResource("3_5kcm4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75895166, -4.9700446)
 
 [connection signal="pressed" from="Menu/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Menu/Join" to="." method="_on_join_pressed"]

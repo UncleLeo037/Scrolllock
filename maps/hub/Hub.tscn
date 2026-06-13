@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ns4wlpfqjwyw" path="res://maps/hub/Hub.cs" id="1_smasd"]
 [ext_resource type="Material" uid="uid://drccsornonlun" path="res://assets/textures/devTexture.tres" id="1_ywcfp"]
 [ext_resource type="PackedScene" uid="uid://bfteys40meiyv" path="res://maps/hub/Lift.tscn" id="3_8x6fp"]
+[ext_resource type="PackedScene" uid="uid://ioqqcvjdbsve" path="res://enemies/ghost/Ghost.tscn" id="4_smasd"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8x6fp"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -19,13 +20,20 @@ tonemap_mode = 2
 glow_enabled = true
 volumetric_fog_enabled = true
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_8x6fp"]
+vertices = PackedVector3Array(-14.5, 44.223427, -14.5, -14.5, 44.223427, 14.5, 14.5, 44.223427, 14.5, 14.5, 44.223427, -14.5, -3.25, 7.473427, 0, -1.5, 7.473427, 0, -1.25, 7.473427, -1.5, -3.25, 7.473427, -9.25, 1.25, 7.473427, -1.5, 1.5, 7.473427, 0, 3.5, 7.473427, 0, 3.5, 7.473427, -9.25, -5.25, -1.5265732, -5.25, -4.5, -1.5265732, -4.25, 4.25, -1.5265732, -4.5, 5.5, -1.5265732, -5.25, -5.25, -1.5265732, 5.5, -4.25, -1.5265732, 4.5, 4.5, -1.5265732, 4.25, 5.5, -1.5265732, 5.5, -1.25, 7.473427, 1.5, -3.25, 7.473427, 9.5, 1.25, 7.473427, 1.5, 3.5, 7.473427, 9.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Array(5, 4, 6), PackedInt32Array(6, 4, 7), PackedInt32Array(9, 8, 10), PackedInt32Array(10, 8, 11), PackedInt32Array(6, 7, 8), PackedInt32Array(8, 7, 11), PackedInt32Array(13, 12, 14), PackedInt32Array(14, 12, 15), PackedInt32Array(13, 17, 12), PackedInt32Array(12, 17, 16), PackedInt32Array(14, 15, 18), PackedInt32Array(18, 15, 19), PackedInt32Array(17, 18, 16), PackedInt32Array(16, 18, 19), PackedInt32Array(5, 20, 4), PackedInt32Array(4, 20, 21), PackedInt32Array(9, 10, 22), PackedInt32Array(22, 10, 23), PackedInt32Array(20, 22, 21), PackedInt32Array(21, 22, 23)]
+
 [node name="Hub" type="Node3D" unique_id=737521784]
 script = ExtResource("1_smasd")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=905789410]
 environment = SubResource("Environment_ycays")
 
-[node name="outer" type="CSGBox3D" parent="." unique_id=525889241]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=380898971]
+navigation_mesh = SubResource("NavigationMesh_8x6fp")
+
+[node name="outer" type="CSGBox3D" parent="NavigationRegion3D" unique_id=525889241]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -31.276573, 0)
 layers = 2
 use_collision = true
@@ -33,31 +41,37 @@ collision_layer = 3
 collision_mask = 0
 size = Vector3(30, 150, 30)
 
-[node name="core" type="CSGCombiner3D" parent="outer" unique_id=1195571182]
+[node name="core" type="CSGCombiner3D" parent="NavigationRegion3D/outer" unique_id=1195571182]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 31.276573, 0)
 operation = 2
 use_collision = true
 collision_layer = 2
 collision_mask = 0
 
-[node name="tower" type="CSGBox3D" parent="outer/core" unique_id=94137128]
+[node name="tower" type="CSGBox3D" parent="NavigationRegion3D/outer/core" unique_id=94137128]
 size = Vector3(12, 4, 12)
 material = ExtResource("1_ywcfp")
 
-[node name="hole" type="CSGBox3D" parent="outer/core/tower" unique_id=870099026]
+[node name="hole" type="CSGBox3D" parent="NavigationRegion3D/outer/core/tower" unique_id=870099026]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -54.78589, 0)
 size = Vector3(8, 109.57178, 8)
 material = ExtResource("1_ywcfp")
 
-[node name="shaft" type="CSGBox3D" parent="outer/core/tower" unique_id=1087348713]
+[node name="shaft" type="CSGBox3D" parent="NavigationRegion3D/outer/core/tower" unique_id=1087348713]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
 size = Vector3(2, 6, 2)
 material = ExtResource("1_ywcfp")
 
-[node name="cathedral" type="CSGBox3D" parent="outer/core" unique_id=74763514]
+[node name="cathedral" type="CSGBox3D" parent="NavigationRegion3D/outer/core" unique_id=74763514]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, 0)
 size = Vector3(8, 10, 20)
 material = ExtResource("1_ywcfp")
 
 [node name="Lift" parent="." unique_id=1441701346 instance=ExtResource("3_8x6fp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.25, 0)
+
+[node name="Ghost" parent="." unique_id=1192299923 instance=ExtResource("4_smasd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.071338, -1.3255033, 4.1626005)
+
+[node name="Ghost2" parent="." unique_id=1492962182 instance=ExtResource("4_smasd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.326828, 7.6744967, -7.9510746)

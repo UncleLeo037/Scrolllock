@@ -88,7 +88,7 @@ offset_right = 307.0
 offset_bottom = 197.0
 
 [node name="Hub" parent="." unique_id=737521784 instance=ExtResource("3_5kcm4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75895166, -4.9700446)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8297348, -8.543346, 21.54691)
 
 [connection signal="pressed" from="Menu/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Menu/Join" to="." method="_on_join_pressed"]

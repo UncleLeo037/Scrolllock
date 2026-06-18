@@ -68,7 +68,6 @@ replication_config = SubResource("SceneReplicationConfig_rkbax")
 [node name="SubViewport" type="SubViewport" parent="." unique_id=137074681]
 transparent_bg = true
 handle_input_locally = false
-render_target_update_mode = 4
 
 [node name="ProgressBar" type="ProgressBar" parent="SubViewport" unique_id=1045981842]
 anchors_preset = 8

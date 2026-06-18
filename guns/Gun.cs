@@ -13,7 +13,12 @@ namespace Srolllock.guns
 
 		public override void _Ready()
 		{
-			_rayCast = GetNode<RayCast3D>("RayCast3D");
+			_rayCast = new RayCast3D();
+			AddChild(_rayCast);
+			_rayCast.TargetPosition = new Vector3(0, 0, -100);
+			_rayCast.SetCollisionMaskValue(1, true);
+			_rayCast.SetCollisionMaskValue(2, true);
+			_rayCast.SetCollisionMaskValue(3, true);
 			//need to move this logic out of the local node
 			//_anime = GetNode<AnimationPlayer>("AnimationPlayer");
 			//_flash = GetNode<Node3D>("Node3D").GetNode<GpuParticles3D>("GPUParticles3D");

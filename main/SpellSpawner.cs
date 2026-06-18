@@ -14,7 +14,7 @@ public partial class SpellSpawner : MultiplayerSpawner
 	public Node SpawnSpell(Variant detail)
 	{
 		Dictionary spell = (Dictionary)detail;
-		PackedScene spellScene = GD.Load<PackedScene>($"res://{spell["path"]}.tscn");
+		PackedScene spellScene = GD.Load<PackedScene>($"res://spells/{spell["name"]}/{spell["name"]}.tscn");
 		Spell spellInstance = spellScene.Instantiate<Spell>();
 		spellInstance.Position = (Vector3)spell["position"];
 		spellInstance.Rotation = (Vector3)spell["rotation"];
@@ -22,14 +22,14 @@ public partial class SpellSpawner : MultiplayerSpawner
 	}
 
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
-    public void RequestSpawnSpell(string path, Vector3 pos, Vector3 rot)
+    public void RequestSpawnSpell(string name, Vector3 pos, Vector3 rot)
     {
         if (!IsMultiplayerAuthority())
             return;
 
         Spawn(new Dictionary<string, Variant>
         {
-            {"path", path},
+            {"name", name},
             {"position", pos},
             {"rotation", rot}
         });

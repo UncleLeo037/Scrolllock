@@ -21,11 +21,9 @@ public partial class Player : CharacterBody3D
 	//private AnimationPlayer _anime;
 	private Gun _gunLocal;
 	private Node _gunRemote;
-	private Dictionary<Key, String> _equipment;
+	private Dictionary<Key, object> _equipment;
 	private List<string> effects = new List<string>();
 	private double _health = MAX_HEALTH;
-	[Export]
-	private PackedScene HUD;
 
 	public override void _EnterTree()
 	{
@@ -37,7 +35,7 @@ public partial class Player : CharacterBody3D
 		if (!IsMultiplayerAuthority()) return;
 		//start loading screen
 
-		AddChild(HUD.Instantiate());
+		AddChild(GD.Load<PackedScene>($"res://player/Hud.tscn").Instantiate());
 		_hud = GetNode<CanvasLayer>("Hud");
 		_camera = GetNode<Camera3D>("Camera3D");
 		_body = GetNode<CharacterBody3D>(".");
@@ -47,15 +45,15 @@ public partial class Player : CharacterBody3D
 		//Hides own overhead health
 		GetNode<ProgressBar>("SubViewport/ProgressBar").Visible = false;
 
-		_equipment = new Dictionary<Key, String>()
+		_equipment = new Dictionary<Key, object>()
 		{
-			{Key.Key1, "guns/Pistols"},
-			{Key.Key2, "spells/Force"},
-			{Key.Key3, "spells/Wall"},
-			{Key.Key4, "spells/Tornado"},
-			{Key.Key5, "spells/Slick"},
-			{Key.Key6, "guns/Blunderbuss"},
-			{Key.Key7, "guns/Rifle"},
+			{Key.Key1, new Pistols()},
+			{Key.Key2, new Force()},
+			{Key.Key3, new Wall()},
+			{Key.Key4, new Tornado()},
+			{Key.Key5, new Slick()},
+			{Key.Key6, new Blunderbuss()},
+			{Key.Key7, new Rifle()}
 			// {"Key6", null},
 			// {"Key7", null},
 			// {"Key8", null},
@@ -67,11 +65,9 @@ public partial class Player : CharacterBody3D
 
 		foreach (var pair in _equipment)
 		{
-			if (pair.Value.Split("/")[0].Equals("guns"))
+			if (pair.Value is Gun gun)
 			{
-				Gun gun = GD.Load<PackedScene>($"res://{pair.Value}/{pair.Value.Split("/")[1]}.tscn").Instantiate<Gun>();
 				_camera.AddChild(gun);
-				//GD.Print(_camera.GetNode(gun.Name.ToString()).Name);
 			}
 		}
 
@@ -88,25 +84,24 @@ public partial class Player : CharacterBody3D
 
 		if (@event is InputEventKey keyEvent && keyEvent.Pressed && !keyEvent.Echo)
 		{
-			if (_equipment.TryGetValue(keyEvent.PhysicalKeycode, out string path))
+			if (_equipment.TryGetValue(keyEvent.PhysicalKeycode, out object item))
 			{
-				string[] id = path.Split("/");
-				switch (id[0])
+				switch (item)
 				{
-					case "spells":
+					case Spell spell:
 						if (_gunLocal != null)
 						{
-							_gunLocal.equipedSpell = path+"/"+id[1];
+							_gunLocal.equipedSpell = spell.GetType().Name;
 						}
 						break;
-					case "guns":
+					case Gun gun:
 						if (_gunRemote != null)
 						{
 							_gunRemote.QueueFree();
 
 						}
-						_gunRemote = gunSpawner.Spawn(path+"/"+id[1]);
-						_gunLocal = _camera.GetNode<Gun>(id[1]);
+						_gunRemote = gunSpawner.Spawn(gun.GetType().Name);
+						_gunLocal = gun;
 						_gunLocal.SetModel(_gunRemote); //for animation interaction
 						break;
 				}

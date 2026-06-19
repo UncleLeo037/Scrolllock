@@ -12,17 +12,17 @@ public partial class Player : CharacterBody3D
 	private const float FRICTION = 0.1f;
 	private const int MAX_HEALTH = 100;
 
-	public bool hasFriction = true;
+	public bool HasFriction = true;
 
 	private Camera3D _camera;
 	private CharacterBody3D _body;
-	private CanvasLayer _hud;
-	private MultiplayerSpawner gunSpawner;
+	private Hud _hud;
+	private MultiplayerSpawner _gunSpawner;
 	//private AnimationPlayer _anime;
 	private Gun _gunLocal;
 	private Node _gunRemote;
 	private Dictionary<Key, object> _equipment;
-	private List<string> effects = new List<string>();
+	private List<string> _effects = new List<string>();
 	private double _health = MAX_HEALTH;
 
 	public override void _EnterTree()
@@ -32,15 +32,21 @@ public partial class Player : CharacterBody3D
 
 	public override void _Ready()
 	{
-		if (!IsMultiplayerAuthority()) return;
+		if (!IsMultiplayerAuthority())
+		{
+			//disable processing & inputs for non auth player
+			SetPhysicsProcess(false);
+			SetProcessInput(false);
+			return;
+		}
 		//start loading screen
 
 		AddChild(GD.Load<PackedScene>($"res://player/Hud.tscn").Instantiate());
-		_hud = GetNode<CanvasLayer>("Hud");
+		_hud = GetNode<Hud>("Hud");
 		_camera = GetNode<Camera3D>("Camera3D");
 		_body = GetNode<CharacterBody3D>(".");
-		gunSpawner = GetNode<MultiplayerSpawner>("Camera3D/GunSpawner");
-		gunSpawner.SetMultiplayerAuthority(int.Parse(Name));
+		_gunSpawner = GetNode<MultiplayerSpawner>("Camera3D/GunSpawner");
+		_gunSpawner.SetMultiplayerAuthority(int.Parse(Name));
 
 		//Hides own overhead health
 		GetNode<ProgressBar>("SubViewport/ProgressBar").Visible = false;
@@ -54,13 +60,6 @@ public partial class Player : CharacterBody3D
 			{Key.Key5, new Slick()},
 			{Key.Key6, new Blunderbuss()},
 			{Key.Key7, new Rifle()}
-			// {"Key6", null},
-			// {"Key7", null},
-			// {"Key8", null},
-			// {"Key9", null},
-			// {"Key0", null},
-			// {"Equal", null},
-			// {"Minus", null}
 		};
 
 		foreach (var pair in _equipment)
@@ -77,7 +76,7 @@ public partial class Player : CharacterBody3D
 		//stop loading screen
 	}
 
-
+	//should phase out this whole method
 	public override void _UnhandledInput(InputEvent @event)
 	{
 		if (!IsMultiplayerAuthority()) return;
@@ -100,16 +99,21 @@ public partial class Player : CharacterBody3D
 							_gunRemote.QueueFree();
 
 						}
-						_gunRemote = gunSpawner.Spawn(gun.GetType().Name);
+						_gunRemote = _gunSpawner.Spawn(gun.GetType().Name);
 						_gunLocal = gun;
 						_gunLocal.SetModel(_gunRemote); //for animation interaction
 						break;
 				}
 			}
 		}
+	}
 
-		if (@event is InputEventMouseMotion mouseMotion &&
-			Input.MouseMode == Input.MouseModeEnum.Captured)
+	public override void _Input(InputEvent @event)
+	{
+		//prevents fps controls when in menu
+		if (Input.MouseMode != Input.MouseModeEnum.Captured) return;
+
+		if (@event is InputEventMouseMotion mouseMotion)
 		{
 			_body.RotateY(Mathf.DegToRad(-mouseMotion.Relative.X * SENSITIVITY));
 			_camera.RotateX(Mathf.DegToRad(-mouseMotion.Relative.Y * SENSITIVITY));
@@ -119,25 +123,38 @@ public partial class Player : CharacterBody3D
 				_camera.Rotation.Z
 			);
 		}
-
-		if (Input.IsActionJustPressed("shoot"))
+		else if (Input.IsActionJustPressed("shoot"))
 		{
 			//only shoot if exists
 			_gunLocal?.Shoot();
 		}
+		// else if (Input.IsActionJustPressed("aim"))
+		// {
+		// 	//aim anim
+		// }
+		// else if (Input.IsActionJustPressed("reload"))
+		// {
+		// 	//load normal bullets
+		// }
+		// else if (Input.IsActionJustPressed("load"))
+		// {
+		// 	//load active spell
+		// }
 	}
-
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if (!IsMultiplayerAuthority()) return;
-
-		float deltaFloat = (float)delta;
-
+		//fall detection should be moved out of player and replaced with incredibly high tic damage
+		if (_body.Position.Y < -100)
+		{
+			Rpc("Damage", 100);
+		}
+		float floatDelta = (float)delta;
+		
 		// Add gravity
 		if (!IsOnFloor())
 		{
-			Velocity += GetGravity() * deltaFloat;
+			Velocity += GetGravity() * floatDelta;
 		}
 		else
 		{
@@ -145,17 +162,6 @@ public partial class Player : CharacterBody3D
 			{
 				Velocity = new Vector3(Velocity.X, JUMP_VELOCITY, Velocity.Z);
 			}
-		}
-
-		// Handle crouch
-		if (Input.IsActionPressed("crouch"))
-		{
-			_camera.Position = new Vector3(_camera.Position.X, 0.3f, _camera.Position.Z);
-		}
-
-		if (Input.IsActionJustReleased("crouch"))
-		{
-			_camera.Position = new Vector3(_camera.Position.X, 0.6f, _camera.Position.Z);
 		}
 
 		// Get input direction
@@ -179,20 +185,20 @@ public partial class Player : CharacterBody3D
 
 			if (IsOnFloor())
 			{
-				if (hasFriction)
+				if (HasFriction)
 				{
 					Velocity = targetVelocity;
 				}
-				Velocity = Velocity.MoveToward(targetVelocity, 1f * (float)delta);
+				Velocity = Velocity.MoveToward(targetVelocity, 1f * floatDelta);
 			}
 			else
 			{
-				Velocity = Velocity.MoveToward(targetVelocity, 15f * (float)delta);
+				Velocity = Velocity.MoveToward(targetVelocity, 15f * floatDelta);
 			}
 		}
 		else
 		{
-			if (IsOnFloor() && hasFriction)
+			if (IsOnFloor() && HasFriction)
 			{
 				Velocity = new Vector3(
 					Mathf.MoveToward(Velocity.X, 0, Math.Abs(Velocity.X) * 0.1f),
@@ -201,25 +207,6 @@ public partial class Player : CharacterBody3D
 				);
 			}
 		}
-
-		// Quick fall recovery
-		if (_body.Position.Y < -100)
-		{
-			Rpc("Damage", MAX_HEALTH);
-		}
-
-		//if (_anime.CurrentAnimation == "Shoot")
-		//{
-		//	//do nothing
-		//}
-		//else if (direction.Length() > 0 && IsOnFloor())
-		//{
-		//	_anime.Play("move");
-		//}
-		//else
-		//{
-		//	_anime.Play("idle");
-		//}
 
 		MoveAndSlide();
 	}
@@ -234,25 +221,6 @@ public partial class Player : CharacterBody3D
 			_health = MAX_HEALTH;
 		}
 		GetNode<SubViewport>("SubViewport").GetNode<ProgressBar>("ProgressBar").Value = _health;
-		if (IsMultiplayerAuthority()) _hud.GetNode<ProgressBar>("ProgressBar").Value = _health;
+		if (IsMultiplayerAuthority()) _hud.HealthBar.Value = _health;
 	}
-
-	//move all animation methods to dedicated animation class and gun animation class
-	[Rpc(CallLocal = true)]
-	public void PlayShoot()
-	{
-		//_anime.Stop();
-		//_anime.Play("Shoot");
-		//_flash.Restart();
-		//_flash.Emitting = true;
-	}
-
-	//[Signal]
-	//private delegate _on_animation_player_animation_finished()
-	//{
-	//if (_anime.CurrentAnimation != "Shoot")
-	//{
-	//_anime.Play("idle");
-	//}
-	//}
 }

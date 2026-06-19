@@ -28,7 +28,7 @@ public partial class Slick : Spell
 		//need to change this to add no firction to effects stack as it will cause issues if there are multiple slick spells
 		if (body is Player player)
 		{
-			player.hasFriction = false;
+			player.HasFriction = false;
 		}
 	}
 
@@ -37,7 +37,7 @@ public partial class Slick : Spell
 		//this will remove one from the stack
 		if (body is Player player)
 		{
-			player.hasFriction = true;
+			player.HasFriction = true;
 		}
 	}
 }

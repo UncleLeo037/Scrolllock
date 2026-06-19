@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cjp241rp11xnt"]
 
 [ext_resource type="Texture2D" uid="uid://c6md4rybga6we" path="res://player/crosshair.png" id="1_1jg6f"]
+[ext_resource type="Script" uid="uid://ch3174miqio58" path="res://player/Hud.cs" id="1_xjc8e"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1jg6f"]
 bg_color = Color(0, 0, 0, 0.5019608)
@@ -9,6 +10,7 @@ bg_color = Color(0, 0, 0, 0.5019608)
 bg_color = Color(0, 0.6, 0, 0.6)
 
 [node name="Hud" type="CanvasLayer" unique_id=1503216563]
+script = ExtResource("1_xjc8e")
 
 [node name="ProgressBar" type="ProgressBar" parent="." unique_id=1028699536]
 anchors_preset = -1

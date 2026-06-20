@@ -43,8 +43,7 @@ public partial class Hud : CanvasLayer
 		_radial.Hide();
 		if (equip)
 		{
-			var item = (Equipment)Loadout[_radial.Select - 1];
-			string name = item.GetType().Name;
+			var item = (IEquipment)Loadout[_radial.Select - 1];
 			string type = item.GetType().BaseType.Name;
 			_icons[type].Texture = item.Icon;
 			return item;

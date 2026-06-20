@@ -51,7 +51,7 @@ public partial class Radial : Control
 	{
 		for (int i = 0; i < _options.Length; i++)
 		{
-			Equipment item = (Equipment)_options[i];
+			var item = (IEquipment)_options[i];
 			Vector2 angle = Vector2.FromAngle((float.Tau * i / _options.Length) - float.Tau / 4) * _flip;
 			Vector2 pos = _radius * angle + _offset;
 			DrawTexture(

@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://wejclekkfyie"]
+
+[ext_resource type="Script" uid="uid://1iqd4w7p73d3" path="res://spells/force/Force.cs" id="1_1xy7k"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1xy7k"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6eahp"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(1, 1, 1, 0.2)
+
+[sub_resource type="SphereMesh" id="SphereMesh_14w60"]
+material = SubResource("StandardMaterial3D_6eahp")
+
+[node name="Force" type="Node3D" unique_id=159027205]
+script = ExtResource("1_1xy7k")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=316522222]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1981545619]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+shape = SubResource("SphereShape3D_1xy7k")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D" unique_id=748133247]
+mesh = SubResource("SphereMesh_14w60")

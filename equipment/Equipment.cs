@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Equipment : Node3D
+public partial interface IEquipment
 {
-	public virtual Texture2D Icon { get; set; }
+	Texture2D Icon { get; set; }
 }

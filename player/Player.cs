@@ -96,7 +96,7 @@ public partial class Player : CharacterBody3D
 			// 	//load active spell
 			// }
 		}
-		if (Input.MouseMode == Input.MouseModeEnum.ConfinedHidden && Input.IsActionJustPressed("shoot"))
+		if (Input.MouseMode == Input.MouseModeEnum.ConfinedHidden && (Input.IsActionJustPressed("shoot") || Input.IsActionJustPressed("aim")))
 		{
 			switch (_hud.CloseRadial())
 			{

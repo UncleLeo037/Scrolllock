@@ -13,7 +13,7 @@ public partial class Slick : Spell
 		area.BodyExited += _on_area_3d_body_exited;
 	}
 
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		//change to use animation waiting system to wait for spell effect to finish playing
 		lifetime -= delta;

@@ -9,10 +9,21 @@ public partial class Hud : CanvasLayer
 	public List<object> Loadout;
 	private Radial _radial;
 
+	private TextureRect _gun;
+	private TextureRect _spell;
+
+	private Dictionary<string, TextureRect> _icons = new Dictionary<string, TextureRect>()
+	{
+		{"Gun", null},
+		{"Spell", null}
+	};
+
 	public override void _Ready()
 	{
 		HealthBar = GetNode<ProgressBar>("ProgressBar");
 		_radial = GetNode<Radial>("Radial");
+		_icons["Gun"] = GetNode<TextureRect>("TextureGun");
+		_icons["Spell"] = GetNode<TextureRect>("TextureSpell");
 		Loadout = new List<object>()
 		{
 			new Pistols(),
@@ -23,8 +34,6 @@ public partial class Hud : CanvasLayer
 			new Blunderbuss(),
 			new Rifle()
 		};
-		_radial.Options = Loadout;
-		_radial.QueueRedraw();
 	}
 
 	public object CloseRadial()
@@ -32,7 +41,11 @@ public partial class Hud : CanvasLayer
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		_radial.SetProcess(false);
 		_radial.Hide();
-		return Loadout[_radial.Select - 1];
+		var item = Loadout[_radial.Select - 1];
+		string name = item.GetType().Name;
+		string type = item.GetType().BaseType.Name;
+		_icons[type].Texture = GD.Load<Texture2D>($"res://{type}s/{name}/{name}.tres");
+		return item;
 	}
 
 	public override void _Input(InputEvent @event)
@@ -41,11 +54,9 @@ public partial class Hud : CanvasLayer
 
 		if (Input.IsActionJustPressed("radial"))
 		{
-			Input.MouseMode = Input.MouseModeEnum.ConfinedHidden;
-			_radial.SetProcess(true);
-			_radial.Show();
+			_radial.Start(Loadout);
 		}
-		else if (Input.IsActionJustReleased("radial"))
+		else if (Input.IsActionJustReleased("radial") && _radial.Visible)
 		{
 			CloseRadial();
 		}

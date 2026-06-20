@@ -14,7 +14,7 @@ public partial class Tornado : Spell
 		pull = center.GetNode<Node3D>("Pull");
 	}
 
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		this.Rotation = Vector3.Zero;
 		//defines tornado center pull point, need to make rotating

@@ -44,7 +44,7 @@ namespace Srolllock.guns
 
 		public void SetSpell(Spell spell)
 		{
-			_spell = spell.GetType().Name;
+			_spell = spell?.GetType().Name ?? string.Empty;
 		}
 
 		public virtual void Shoot()

@@ -10,7 +10,7 @@ public partial class Radial : Control
 	private int _radius = 200;
 	private Vector2 _offset = Vector2.One * 64 / -2;
 	private TextureRect _select;
-	private object[] _options;
+	private (IEquipment item, Vector2 vect)[] _options;
 	public override void _Ready()
 	{
 		SetProcess(false);
@@ -31,32 +31,35 @@ public partial class Radial : Control
 			Select = 0;
 		}
 
-		if (_options[Select] is Vector2 vector)
-		{
-			_select.Position = vector;
-		}
+		_select.Position = _options[Select].vect;
 	}
 
-	public void Start(List<object> loadout)
+	public void Start()
 	{
 		//prevent radial open when in menu
 		if (Input.MouseMode == Input.MouseModeEnum.Visible) return;
-
 		Input.MouseMode = Input.MouseModeEnum.ConfinedHidden;
-		_options = loadout.ToArray();
-		//QueueRedraw();
 		Show();
 		SetProcess(true);
+	}
+
+	public void Setup(List<object> loadout)
+	{
+		_options = new (IEquipment, Vector2)[loadout.Count];
+		for (int i = 0; i < loadout.Count; i++)
+		{
+			_options[i].item = (IEquipment)loadout[i];
+			float phi = 1.5f * float.Pi - float.Tau * i / _options.Length;
+			_options[i].vect = _radius * Vector2.FromAngle(phi) + _offset;
+		}
+		QueueRedraw();
 	}
 
 	public override void _Draw()
 	{
 		for (int i = 0; i < _options.Length; i++)
 		{
-			float phi = 1.5f * float.Pi - float.Tau * i / _options.Length;
-			Vector2 pos = _radius * Vector2.FromAngle(phi) + _offset;
-			DrawTexture(((IEquipment)_options[i]).Icon, pos);
-			_options[i] = pos;
+			DrawTexture(_options[i].item.Icon, _options[i].vect);
 		}
 	}
 }

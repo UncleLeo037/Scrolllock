@@ -34,6 +34,7 @@ public partial class Hud : CanvasLayer
 			new Blunderbuss(),
 			new Rifle()
 		};
+		_radial.Setup(Loadout);
 	}
 
 	public object CloseRadial(bool equip = true)
@@ -57,7 +58,7 @@ public partial class Hud : CanvasLayer
 
 		if (Input.IsActionJustPressed("radial"))
 		{
-			_radial.Start(Loadout);
+			_radial.Start();
 		}
 		else if (Input.IsActionJustReleased("radial") && _radial.Visible)
 		{

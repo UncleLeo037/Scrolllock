@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using System;
 using Srolllock.spells;
 
 public partial class SpellSpawner : MultiplayerSpawner
@@ -14,7 +15,7 @@ public partial class SpellSpawner : MultiplayerSpawner
 	public Node SpawnSpell(Variant detail)
 	{
 		Dictionary spell = (Dictionary)detail;
-		PackedScene spellScene = GD.Load<PackedScene>($"res://spells/{spell["name"]}/{spell["name"]}.tscn");
+		PackedScene spellScene = GD.Load<PackedScene>($"res://equipment/spells/{spell["name"].ToString().ToLower()}/{spell["name"]}.tscn");
 		Spell spellInstance = spellScene.Instantiate<Spell>();
 		spellInstance.Position = (Vector3)spell["position"];
 		spellInstance.Rotation = (Vector3)spell["rotation"];

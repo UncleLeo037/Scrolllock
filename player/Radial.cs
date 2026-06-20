@@ -21,7 +21,7 @@ public partial class Radial : Control
     public override void _Process(double delta)
     {
 		Vector2 mos_pos = GetLocalMousePosition();
-		if (mos_pos == Vector2.Zero) mos_pos = new Vector2(0, -0.5f);
+		if (mos_pos == Vector2.Zero) mos_pos = new Vector2(0, -0.1f);
         float angle = (mos_pos.Angle() - float.Tau / 2 / _options.Length + float.Tau / 4) * -1;
 		if (angle < 0.0f)
 		{
@@ -51,13 +51,11 @@ public partial class Radial : Control
 	{
 		for (int i = 0; i < _options.Length; i++)
 		{
-			var item = _options[i];
-			var angle = Vector2.FromAngle((float.Tau * i / _options.Length) - float.Tau / 4) * _flip;
-			var pos = _radius * angle + _offset;
-			string name = item.GetType().Name;
-			string type = item.GetType().BaseType.Name;
+			Equipment item = (Equipment)_options[i];
+			Vector2 angle = Vector2.FromAngle((float.Tau * i / _options.Length) - float.Tau / 4) * _flip;
+			Vector2 pos = _radius * angle + _offset;
 			DrawTexture(
-				GD.Load<Texture2D>($"res://{type}s/{name}/{name}.tres"),
+				item.Icon,
 				pos
 			);
 			_options[i] = pos;

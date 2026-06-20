@@ -36,16 +36,20 @@ public partial class Hud : CanvasLayer
 		};
 	}
 
-	public object CloseRadial()
+	public object CloseRadial(bool equip = true)
 	{
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		_radial.SetProcess(false);
 		_radial.Hide();
-		var item = Loadout[_radial.Select - 1];
-		string name = item.GetType().Name;
-		string type = item.GetType().BaseType.Name;
-		_icons[type].Texture = GD.Load<Texture2D>($"res://{type}s/{name}/{name}.tres");
-		return item;
+		if (equip)
+		{
+			var item = Loadout[_radial.Select - 1];
+			string name = item.GetType().Name;
+			string type = item.GetType().BaseType.Name;
+			_icons[type].Texture = GD.Load<Texture2D>($"res://{type}s/{name}/{name}.tres");
+			return item;
+		}
+		return null;
 	}
 
 	public override void _Input(InputEvent @event)
@@ -58,7 +62,7 @@ public partial class Hud : CanvasLayer
 		}
 		else if (Input.IsActionJustReleased("radial") && _radial.Visible)
 		{
-			CloseRadial();
+			CloseRadial(false);
 		}
 	}
 }

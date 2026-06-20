@@ -113,6 +113,8 @@ public partial class Player : CharacterBody3D
 					_gunLocal = gun;
 					_gunLocal.SetModel(_gunRemote); //for animation interaction
 					break;
+				default:
+					break;
 			}
 		}
 	}

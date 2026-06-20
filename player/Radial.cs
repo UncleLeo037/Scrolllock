@@ -29,7 +29,6 @@ public partial class Radial : Control
 		}
 		float rad = angle % float.Tau;
 		Select = (int)Math.Ceiling(rad / float.Tau * _options.Length);
-		GD.Print(Select);
 		if (_options[Select - 1] is Vector2 vector)
 		{
 			_select.Position = vector;
@@ -50,7 +49,6 @@ public partial class Radial : Control
 
 	public override void _Draw()
 	{
-		DrawArc(Vector2.Zero, _radius - 50, 0, float.Tau, 128, Colors.Black, 4, true);
 		for (int i = 0; i < _options.Length; i++)
 		{
 			var item = _options[i];

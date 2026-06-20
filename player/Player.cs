@@ -175,7 +175,7 @@ public partial class Player : CharacterBody3D
 			totalSpeed += 3.0f;
 		}
 		// Apply movement if direction exists and mouse is captured
-		if (direction.Length() > 0 && Input.MouseMode == Input.MouseModeEnum.Captured)
+		if (direction.Length() > 0 && Input.MouseMode != Input.MouseModeEnum.Visible)
 		{
 			Vector3 targetVelocity = new Vector3(
 				direction.X * totalSpeed,

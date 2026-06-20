@@ -37,7 +37,8 @@ func _unhandled_input(event : InputEvent) -> void:
 	if event.is_action_pressed("escape") and not menu.is_visible_in_tree():
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		pause.show()
-	if event is InputEventMouseButton and not menu.is_visible_in_tree():
+	#should move this to resume button
+	if event is InputEventMouseButton and not menu.is_visible_in_tree() and not Input.mouse_mode == Input.MOUSE_MODE_CONFINED_HIDDEN:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		pause.hide()
 

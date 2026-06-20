@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://c6md4rybga6we" path="res://player/crosshair.png" id="1_1jg6f"]
 [ext_resource type="Script" uid="uid://ch3174miqio58" path="res://player/Hud.cs" id="1_xjc8e"]
 [ext_resource type="Script" uid="uid://kbmm5wff3w6r" path="res://player/Radial.cs" id="3_txuo1"]
+[ext_resource type="Texture2D" uid="uid://8wonmv4wr6hx" path="res://player/seal.png" id="4_ga1fq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1jg6f"]
 bg_color = Color(0, 0, 0, 0.5019608)
@@ -57,4 +58,20 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_txuo1")
-BackColor = Color(0, 0, 0, 1)
+
+[node name="TextureRect" type="TextureRect" parent="Radial" unique_id=558431471]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_ga1fq")
+expand_mode = 1

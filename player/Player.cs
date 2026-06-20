@@ -21,7 +21,7 @@ public partial class Player : CharacterBody3D
 	//private AnimationPlayer _anime;
 	private Gun _gunLocal;
 	private Node _gunRemote;
-	private Dictionary<Key, object> _equipment;
+	private Spell _spell;
 	private List<string> _effects = new List<string>();
 	private double _health = MAX_HEALTH;
 
@@ -51,24 +51,7 @@ public partial class Player : CharacterBody3D
 		//Hides own overhead health
 		GetNode<ProgressBar>("SubViewport/ProgressBar").Visible = false;
 
-		_equipment = new Dictionary<Key, object>()
-		{
-			{Key.Key1, new Pistols()},
-			{Key.Key2, new Force()},
-			{Key.Key3, new Wall()},
-			{Key.Key4, new Tornado()},
-			{Key.Key5, new Slick()},
-			{Key.Key6, new Blunderbuss()},
-			{Key.Key7, new Rifle()}
-		};
-
-		foreach (var pair in _equipment)
-		{
-			if (pair.Value is Gun gun)
-			{
-				_camera.AddChild(gun);
-			}
-		}
+		foreach (var item in _hud.Loadout) if (item is Gun gun) _camera.AddChild(gun);
 
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		_camera.Current = true;
@@ -76,70 +59,62 @@ public partial class Player : CharacterBody3D
 		//stop loading screen
 	}
 
-	//should phase out this whole method
-	public override void _UnhandledInput(InputEvent @event)
-	{
-		if (!IsMultiplayerAuthority()) return;
-
-		if (@event is InputEventKey keyEvent && keyEvent.Pressed && !keyEvent.Echo)
-		{
-			if (_equipment.TryGetValue(keyEvent.PhysicalKeycode, out object item))
-			{
-				switch (item)
-				{
-					case Spell spell:
-						if (_gunLocal != null)
-						{
-							_gunLocal.equipedSpell = spell.GetType().Name;
-						}
-						break;
-					case Gun gun:
-						if (_gunRemote != null)
-						{
-							_gunRemote.QueueFree();
-
-						}
-						_gunRemote = _gunSpawner.Spawn(gun.GetType().Name);
-						_gunLocal = gun;
-						_gunLocal.SetModel(_gunRemote); //for animation interaction
-						break;
-				}
-			}
-		}
-	}
-
 	public override void _Input(InputEvent @event)
 	{
 		//prevents fps controls when in menu
-		if (Input.MouseMode != Input.MouseModeEnum.Captured) return;
+		if (Input.MouseMode == Input.MouseModeEnum.Captured)
+		{
+			if (@event is InputEventMouseMotion mouseMotion)
+			{
+				_body.RotateY(Mathf.DegToRad(-mouseMotion.Relative.X * SENSITIVITY));
+				_camera.RotateX(Mathf.DegToRad(-mouseMotion.Relative.Y * SENSITIVITY));
+				_camera.Rotation = new Vector3(
+					Mathf.Clamp(_camera.Rotation.X, Mathf.DegToRad(-90), Mathf.DegToRad(90)),
+					_camera.Rotation.Y,
+					_camera.Rotation.Z
+				);
+			}
+			else if (Input.IsActionJustPressed("shoot"))
+			{
+				//only shoot if exists
+				_gunLocal?.Shoot();
+			}
+			else if (Input.IsActionJustPressed("load"))
+			{
+				_gunLocal?.SetSpell(_spell);
+			}
+			// else if (Input.IsActionJustPressed("aim"))
+			// {
+			// 	//aim anim
+			// }
+			// else if (Input.IsActionJustPressed("reload"))
+			// {
+			// 	//load normal bullets
+			// }
+			// else if (Input.IsActionJustPressed("load"))
+			// {
+			// 	//load active spell
+			// }
+		}
+		if (Input.MouseMode == Input.MouseModeEnum.ConfinedHidden && Input.IsActionJustPressed("shoot"))
+		{
+			switch (_hud.CloseRadial())
+			{
+				case Spell spell:
+					_spell = spell;
+					break;
+				case Gun gun:
+					if (_gunRemote != null)
+					{
+						_gunRemote.QueueFree();
 
-		if (@event is InputEventMouseMotion mouseMotion)
-		{
-			_body.RotateY(Mathf.DegToRad(-mouseMotion.Relative.X * SENSITIVITY));
-			_camera.RotateX(Mathf.DegToRad(-mouseMotion.Relative.Y * SENSITIVITY));
-			_camera.Rotation = new Vector3(
-				Mathf.Clamp(_camera.Rotation.X, Mathf.DegToRad(-90), Mathf.DegToRad(90)),
-				_camera.Rotation.Y,
-				_camera.Rotation.Z
-			);
+					}
+					_gunRemote = _gunSpawner.Spawn(gun.GetType().Name);
+					_gunLocal = gun;
+					_gunLocal.SetModel(_gunRemote); //for animation interaction
+					break;
+			}
 		}
-		else if (Input.IsActionJustPressed("shoot"))
-		{
-			//only shoot if exists
-			_gunLocal?.Shoot();
-		}
-		// else if (Input.IsActionJustPressed("aim"))
-		// {
-		// 	//aim anim
-		// }
-		// else if (Input.IsActionJustPressed("reload"))
-		// {
-		// 	//load normal bullets
-		// }
-		// else if (Input.IsActionJustPressed("load"))
-		// {
-		// 	//load active spell
-		// }
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -150,7 +125,7 @@ public partial class Player : CharacterBody3D
 			Rpc("Damage", 100);
 		}
 		float floatDelta = (float)delta;
-		
+
 		// Add gravity
 		if (!IsOnFloor())
 		{

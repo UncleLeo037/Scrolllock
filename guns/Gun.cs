@@ -1,11 +1,12 @@
 using Godot;
+using Srolllock.spells;
 using System;
 
 namespace Srolllock.guns
 {
 	public partial class Gun : Node3D
 	{
-		public string equipedSpell = string.Empty;
+		protected string _spell = string.Empty;
 		protected RayCast3D _rayCast;
 		protected AnimationPlayer _anime;
 		protected GpuParticles3D _flash;
@@ -41,6 +42,11 @@ namespace Srolllock.guns
 			//_flash = model.GetNode<GpuParticles3D>("GpuParticles3D");
 		}
 
+		public void SetSpell(Spell spell)
+		{
+			_spell = spell.GetType().Name;
+		}
+
 		public virtual void Shoot()
 		{
 			if (!(_anime?.CurrentAnimation == "shoot"))
@@ -50,13 +56,13 @@ namespace Srolllock.guns
 				if (target != null)
 				{
 					//should just shoot instead
-					if (!string.IsNullOrEmpty(equipedSpell))
+					if (!string.IsNullOrEmpty(_spell))
 					{
 						//spells will be called in different ways here in future
 						Vector3 point = _rayCast.GetCollisionPoint();
 						//only sends signal to host for spawning spells
-						SpellSpawner.instance.RpcId(1, "RequestSpawnSpell", equipedSpell, point, new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0));
-						equipedSpell = string.Empty;
+						SpellSpawner.instance.RpcId(1, "RequestSpawnSpell", _spell, point, new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0));
+						_spell = string.Empty;
 					}
 					else if (target is Player player)
 					{

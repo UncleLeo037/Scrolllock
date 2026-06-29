@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://c6md4rybga6we" path="res://player/crosshair.png" id="1_1jg6f"]
 [ext_resource type="Script" uid="uid://ch3174miqio58" path="res://player/Hud.cs" id="1_xjc8e"]
 [ext_resource type="Script" uid="uid://kbmm5wff3w6r" path="res://player/Radial.cs" id="3_txuo1"]
-[ext_resource type="Texture2D" uid="uid://claemnlqn2fwb" path="res://player/Seal.png" id="4_qs2o8"]
+[ext_resource type="Texture2D" uid="uid://claemnlqn2fwb" path="res://player/seal.png" id="4_qs2o8"]
 [ext_resource type="Texture2D" uid="uid://d1wp22jlynrgh" path="res://player/Sigil.png" id="5_qs2o8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1jg6f"]
@@ -49,6 +49,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Radial" type="Control" parent="." unique_id=1999100907]
+visible = false
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5

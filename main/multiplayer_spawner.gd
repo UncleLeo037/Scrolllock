@@ -1,4 +1,4 @@
-extends Node3D
+extends MultiplayerSpawner
 
 var lobby_id : int = 0
 var peer : SteamMultiplayerPeer
@@ -18,12 +18,12 @@ var is_ip : bool = false
 @onready var btn_copy : Button = $Pause/Copy
 @onready var display_id = $Pause/ID
 
-@onready var multiplayer_spawner : MultiplayerSpawner = $PlayerSpawner
+@onready var multiplayer_spawner : MultiplayerSpawner = $"."
 
 const PORT = 9999
 var enet_peer : ENetMultiplayerPeer = ENetMultiplayerPeer.new()
 
-func _ready():
+func manual_ready():
 	multiplayer_spawner.add_spawnable_scene("res://player/Player.tscn")
 	if Steam.isSteamRunning():
 		Steam.steamInitEx(480, true)

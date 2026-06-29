@@ -49,7 +49,6 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Radial" type="Control" parent="." unique_id=1999100907]
-visible = false
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -62,6 +61,7 @@ script = ExtResource("3_txuo1")
 
 [node name="TextureRect" type="TextureRect" parent="Radial" unique_id=558431471]
 show_behind_parent = true
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -93,6 +93,8 @@ grow_vertical = 2
 text = "Click to Equip"
 
 [node name="TextureCircle" type="TextureRect" parent="Radial" unique_id=2095393908]
+texture_filter = 1
+texture_repeat = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

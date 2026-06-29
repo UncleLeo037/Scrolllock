@@ -23,14 +23,15 @@ public partial class Lift : AnimatableBody3D
             Area3D area = GetNode<Area3D>("Area3D");
             area.BodyEntered += OnBodyEntered;
         }
+		else
+		{
+			SetPhysicsProcess(false);
+		}
 	}
 
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if (!IsMultiplayerAuthority())
-			return;
-
 		Position = Position.MoveToward(target, SPEED*(float)delta);
 		if (Position.Y == target.Y)
 		{

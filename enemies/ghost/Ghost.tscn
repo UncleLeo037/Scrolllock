@@ -17,6 +17,14 @@ albedo_color = Color(1, 0, 0, 1)
 material = SubResource("StandardMaterial3D_qwsux")
 text = "->"
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qwsux"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation:y")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
 [node name="Ghost" type="CharacterBody3D" unique_id=1192299923]
 collision_layer = 8
 collision_mask = 3
@@ -41,3 +49,6 @@ shape = SubResource("BoxShape3D_qwsux")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1653872679]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1, 0)
 mesh = SubResource("TextMesh_n3rkx")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=194931463]
+replication_config = SubResource("SceneReplicationConfig_qwsux")

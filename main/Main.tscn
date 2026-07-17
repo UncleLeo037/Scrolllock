@@ -79,6 +79,3 @@ offset_left = 26.0
 offset_top = 169.0
 offset_right = 307.0
 offset_bottom = 197.0
-
-[node name="WorldSpawner" type="MultiplayerSpawner" parent="." unique_id=1794824041]
-spawn_path = NodePath("..")

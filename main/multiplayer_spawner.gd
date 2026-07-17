@@ -43,7 +43,7 @@ func _on_lobby_created(result : int, lobby_id : int):
 		multiplayer.multiplayer_peer = peer
 		multiplayer.peer_connected.connect(_add_player)
 		multiplayer.peer_disconnected.connect(_remove_player)
-		get_parent().add_child(preload("res://maps/hub/Hub.tscn").instantiate())
+		add_child(preload("res://maps/hub/Hub.tscn").instantiate())
 		_add_player()
 		
 		print("Lobby created, join code: ", lobby_id)

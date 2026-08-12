@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://5y8sw2pb8dnr"
-path="res://.godot/imported/Rifle.gltf-e59a0060c1d93950595a100ccd4a7a0f.scn"
+uid="uid://tiqk3gug252k"
+path="res://.godot/imported/blunderbuss.gltf-6e68707e6961678dec9c268f5b4d16c8.scn"
 
 [deps]
 
-source_file="res://guns/rifle/Rifle.gltf"
-dest_files=["res://.godot/imported/Rifle.gltf-e59a0060c1d93950595a100ccd4a7a0f.scn"]
+source_file="res://guns/models/blunderbuss.gltf"
+dest_files=["res://.godot/imported/blunderbuss.gltf-6e68707e6961678dec9c268f5b4d16c8.scn"]
 
 [params]
 

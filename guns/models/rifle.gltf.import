@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://4unm154yk8nv"
-path="res://.godot/imported/Pistols.gltf-997205a9a0d3ae12fbf5f7f10c0d826c.scn"
+uid="uid://c11b5ystm52am"
+path="res://.godot/imported/rifle.gltf-ef5f75057e2db901b3727179c0745076.scn"
 
 [deps]
 
-source_file="res://guns/pistols/Pistols.gltf"
-dest_files=["res://.godot/imported/Pistols.gltf-997205a9a0d3ae12fbf5f7f10c0d826c.scn"]
+source_file="res://guns/models/rifle.gltf"
+dest_files=["res://.godot/imported/rifle.gltf-ef5f75057e2db901b3727179c0745076.scn"]
 
 [params]
 

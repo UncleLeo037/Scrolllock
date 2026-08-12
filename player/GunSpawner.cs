@@ -3,9 +3,11 @@ using Srolllock.guns;
 
 public partial class GunSpawner : MultiplayerSpawner
 {
+
+
     public Node _SpawnFunction(string name)
     {
-        PackedScene gunScene = GD.Load<PackedScene>($"res://guns/{name.ToLower()}/{name}.gltf");
+        PackedScene gunScene = GD.Load<PackedScene>($"res://guns/models/{name}.gltf");
         Node gunInstance = gunScene.Instantiate();
         return gunInstance;
     }

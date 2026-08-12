@@ -27,7 +27,7 @@ public partial class Hud : CanvasLayer
 		_icons["Spell"] = GetNode<TextureRect>("TextureSpell");
 		Loadout = new List<object>()
 		{
-			new Pistols(),
+			new Pistols("Pistols", "Pistols"),
 			new Force(),
 			new Wall(),
 			new Tornado(),

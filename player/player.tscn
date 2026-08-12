@@ -67,7 +67,7 @@ script = ExtResource("4_83hs8")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.3, -0.5)
 
 [node name="GunSpawner" type="MultiplayerSpawner" parent="Camera3D/Left" unique_id=455188321]
-_spawnable_scenes = PackedStringArray("uid://vdw66stui8dm", "uid://4unm154yk8nv", "uid://5y8sw2pb8dnr")
+_spawnable_scenes = PackedStringArray("uid://tiqk3gug252k", "uid://b8avn51lwmphn", "uid://c11b5ystm52am")
 spawn_path = NodePath("..")
 script = ExtResource("4_83hs8")
 

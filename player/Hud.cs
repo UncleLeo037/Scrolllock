@@ -12,6 +12,7 @@ public partial class Hud : CanvasLayer
 	private TextureRect _gun;
 	private TextureRect _spell;
 
+	//list of on screen icons for active equipment and maybe spell effects
 	private Dictionary<string, TextureRect> _icons = new Dictionary<string, TextureRect>()
 	{
 		{"Gun", null},

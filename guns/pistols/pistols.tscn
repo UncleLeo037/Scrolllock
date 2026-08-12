@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cn8s18ebnftxh"]
+
+[node name="Pistols" type="Node3D" unique_id=732135535]
+
+[node name="Body" type="CSGBox3D" parent="." unique_id=1905634713]
+size = Vector3(0.05, 0.05, 0.1)
+
+[node name="Barrel" type="CSGCylinder3D" parent="." unique_id=260024811]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.004682455, -0.122)
+radius = 0.02
+height = 0.2
+smooth_faces = false
+
+[node name="Handle" type="CSGCylinder3D" parent="." unique_id=371265050]
+transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, -0.027908381, 0.06364098)
+radius = 0.025
+height = 0.1
+smooth_faces = false

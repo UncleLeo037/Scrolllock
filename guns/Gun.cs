@@ -10,7 +10,7 @@ namespace Srolllock.guns
 		protected RayCast3D _rayCast;
 		protected AnimationPlayer _anime;
 		protected GpuParticles3D _flash;
-		protected Node _model;
+		protected Node3D _model;
 		public override void _Ready()
 		{
 			_rayCast = new RayCast3D();
@@ -34,11 +34,17 @@ namespace Srolllock.guns
 		}
 
 		//pistol will have multiple flash nodes so will need to make an override method for this in Pistols.cs
-		public virtual void SetModel(Node model)
+		public virtual void SpawnModel(GunSpawner spawner)
 		{
-			_model = model;
+			_model = (Node3D)spawner.Spawn(GetType().Name);
+			_model.Translate(new Vector3(0.5f, -0.3f, -0.5f));
 			//_anime = model.GetNode<AnimationPlayer>("AnimationPlayer");
 			//_flash = model.GetNode<GpuParticles3D>("GpuParticles3D");
+		}
+
+		public virtual void Despawn()
+		{
+			_model.QueueFree();
 		}
 
 		public void SetSpell(Spell spell)

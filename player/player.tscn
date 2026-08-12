@@ -56,8 +56,8 @@ mesh = SubResource("CapsuleMesh_boad6")
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1084597021]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 
-[node name="GunSpawner" type="MultiplayerSpawner" parent="Camera3D" unique_id=1625035346]
-spawn_path = NodePath("..")
+[node name="GunSpawner" type="MultiplayerSpawner" parent="." unique_id=1625035346]
+spawn_path = NodePath("../Camera3D")
 script = ExtResource("4_83hs8")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1668601166]
@@ -90,3 +90,5 @@ show_percentage = false
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 1.2, 0)
 billboard = 1
 texture = SubResource("ViewportTexture_x8kxw")
+
+[node name="TempAnimPlayer" type="AnimationPlayer" parent="." unique_id=1619721154]

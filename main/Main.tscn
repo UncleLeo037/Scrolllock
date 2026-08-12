@@ -6,6 +6,7 @@
 
 [node name="Main" type="Node3D" unique_id=33220651]
 script = ExtResource("1_cmtxc")
+IsEnet = true
 
 [node name="SpellSpawner" type="MultiplayerSpawner" parent="." unique_id=658143365]
 spawn_path = NodePath("..")

@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://cikx3tmbyhpqs"]
+
+[node name="Musket" type="Node3D" unique_id=680000420]
+
+[node name="Barrel" type="CSGCylinder3D" parent="." unique_id=1399804985]
+transform = Transform3D(0.99999994, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.00035697222, 0.019991696, -0.45343757)
+radius = 0.02
+height = 1.0
+smooth_faces = false
+
+[node name="Body" type="CSGCylinder3D" parent="." unique_id=274898265]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.00035697222, 5.9604645e-08, -0.24896045)
+radius = 0.03
+height = 0.6
+smooth_faces = false
+
+[node name="Handle" type="CSGCylinder3D" parent="." unique_id=1107628307]
+transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0.00035697222, -0.023240618, 0.06924088)
+radius = 0.03
+height = 0.119824216
+smooth_faces = false

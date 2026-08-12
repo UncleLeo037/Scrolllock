@@ -17,10 +17,9 @@ public partial class Player : CharacterBody3D
 	private Camera3D _camera;
 	private CharacterBody3D _body;
 	private Hud _hud;
-	private MultiplayerSpawner _gunSpawner;
+	private GunSpawner _gunSpawner;
 	//private AnimationPlayer _anime;
-	private Gun _gunLocal;
-	private Node _gunRemote;
+	private Gun _gun;
 	private Spell _spell;
 	private List<string> _effects = new List<string>();
 	private double _health = MAX_HEALTH;
@@ -39,13 +38,13 @@ public partial class Player : CharacterBody3D
 			SetProcessInput(false);
 			return;
 		}
-		//start loading screen
+		//loading screen should probably be started by join or host button
 
 		AddChild(GD.Load<PackedScene>($"res://player/Hud.tscn").Instantiate());
 		_hud = GetNode<Hud>("Hud");
 		_camera = GetNode<Camera3D>("Camera3D");
 		_body = GetNode<CharacterBody3D>(".");
-		_gunSpawner = GetNode<MultiplayerSpawner>("Camera3D/GunSpawner");
+		_gunSpawner = GetNode<GunSpawner>("GunSpawner");
 		_gunSpawner.SetMultiplayerAuthority(int.Parse(Name));
 
 		//Hides own overhead health
@@ -56,7 +55,7 @@ public partial class Player : CharacterBody3D
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		_camera.Current = true;
 
-		//stop loading screen
+		//stop loading screen because camera is present
 	}
 
 	public override void _Input(InputEvent @event)
@@ -77,11 +76,11 @@ public partial class Player : CharacterBody3D
 			else if (Input.IsActionJustPressed("shoot"))
 			{
 				//only shoot if exists
-				_gunLocal?.Shoot();
+				_gun?.Shoot();
 			}
 			else if (Input.IsActionJustPressed("load"))
 			{
-				_gunLocal?.SetSpell(_spell);
+				_gun?.SetSpell(_spell);
 			}
 			// else if (Input.IsActionJustPressed("aim"))
 			// {
@@ -104,14 +103,9 @@ public partial class Player : CharacterBody3D
 					_spell = spell;
 					break;
 				case Gun gun:
-					if (_gunRemote != null)
-					{
-						_gunRemote.QueueFree();
-
-					}
-					_gunRemote = _gunSpawner.Spawn(gun.GetType().Name);
-					_gunLocal = gun;
-					_gunLocal.SetModel(_gunRemote); //for animation interaction
+					_gun?.Despawn(); //despawn equiped model if exists
+					_gun = gun;
+					_gun.SpawnModel(_gunSpawner);
 					break;
 				default:
 					break;

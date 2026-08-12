@@ -34,10 +34,9 @@ namespace Srolllock.guns
 		}
 
 		//pistol will have multiple flash nodes so will need to make an override method for this in Pistols.cs
-		public virtual void SpawnModel(GunSpawner spawner)
+		public virtual void SpawnModel(GunSpawner spawner, GunSpawner temp)
 		{
 			_model = (Node3D)spawner.Spawn(GetType().Name);
-			_model.Translate(new Vector3(0.5f, -0.3f, -0.5f));
 			//_anime = model.GetNode<AnimationPlayer>("AnimationPlayer");
 			//_flash = model.GetNode<GpuParticles3D>("GpuParticles3D");
 		}

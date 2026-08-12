@@ -17,7 +17,8 @@ public partial class Player : CharacterBody3D
 	private Camera3D _camera;
 	private CharacterBody3D _body;
 	private Hud _hud;
-	private GunSpawner _gunSpawner;
+	private GunSpawner _rightSpawner;
+	private GunSpawner _leftSpawner;
 	//private AnimationPlayer _anime;
 	private Gun _gun;
 	private Spell _spell;
@@ -44,8 +45,11 @@ public partial class Player : CharacterBody3D
 		_hud = GetNode<Hud>("Hud");
 		_camera = GetNode<Camera3D>("Camera3D");
 		_body = GetNode<CharacterBody3D>(".");
-		_gunSpawner = GetNode<GunSpawner>("GunSpawner");
-		_gunSpawner.SetMultiplayerAuthority(int.Parse(Name));
+		_rightSpawner = GetNode<GunSpawner>("Camera3D/Right/GunSpawner");
+		_rightSpawner.SetMultiplayerAuthority(int.Parse(Name));
+
+		_leftSpawner = GetNode<GunSpawner>("Camera3D/Left/GunSpawner");
+		_leftSpawner.SetMultiplayerAuthority(int.Parse(Name));
 
 		//Hides own overhead health
 		GetNode<ProgressBar>("SubViewport/ProgressBar").Visible = false;
@@ -105,7 +109,7 @@ public partial class Player : CharacterBody3D
 				case Gun gun:
 					_gun?.Despawn(); //despawn equiped model if exists
 					_gun = gun;
-					_gun.SpawnModel(_gunSpawner);
+					_gun.SpawnModel(_rightSpawner, _leftSpawner);
 					break;
 				default:
 					break;

@@ -9,8 +9,10 @@ public partial class Pistols : Gun, IEquipment
 
     public Pistols(string mainName = null, string sideName = null)
 	{
-		_modelName = string.IsNullOrEmpty(mainName) ? GetType().Name : mainName;
-        _sideName = string.IsNullOrEmpty(sideName) ? GetType().Name : sideName;
+		var type = string.IsNullOrEmpty(mainName) ? GetType().Name : mainName;
+		_modelName = $"{GetType().Name}/{type}";
+        type = string.IsNullOrEmpty(sideName) ? GetType().Name : sideName;
+        _sideName = $"{GetType().Name}/{type}";
 	}
 
     public override void SpawnModel(GunSpawner rightSpawner, GunSpawner leftSpawner)

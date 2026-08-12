@@ -27,15 +27,6 @@ namespace Srolllock.guns
 			//_flash = GetNode<Node3D>("Node3D").GetNode<GpuParticles3D>("GPUParticles3D");
 		}
 
-		[Rpc(CallLocal = true)]
-		public void ShootAnim()
-		{
-			//_anime.Stop();
-			//_anime.Play("shoot");
-			//_flash.Restart();
-			//_flash.Emitting = true;
-		}
-
 		//pistol will have multiple flash nodes so will need to make an override method for this in Pistols.cs
 		public virtual void SpawnModel(GunSpawner spawner, GunSpawner temp)
 		{
@@ -58,7 +49,6 @@ namespace Srolllock.guns
 		{
 			if (!(_anime?.CurrentAnimation == "shoot"))
 			{
-				Rpc("ShootAnim");
 				var target = _rayCast.GetCollider();
 				if (target != null)
 				{

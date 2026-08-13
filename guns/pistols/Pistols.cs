@@ -12,7 +12,7 @@ public partial class Pistols : Gun, IEquipment
     public Pistols(string mainName = null, string sideName = null)
     {
         var type = string.IsNullOrEmpty(mainName) ? GetType().Name : mainName;
-        _modelName = $"{GetType().Name}/{type}";
+        _modelPath = $"{GetType().Name}/{type}";
         type = string.IsNullOrEmpty(sideName) ? GetType().Name : sideName;
         _sideName = $"{GetType().Name}/{type}";
         Icon = GD.Load<Texture2D>($"res://guns/{GetType().Name}/{mainName}.png");
@@ -20,7 +20,7 @@ public partial class Pistols : Gun, IEquipment
 
     public override void SpawnModel(GunSpawner rightSpawner, GunSpawner leftSpawner)
     {
-        _model = (Node3D)rightSpawner.Spawn(_modelName);
+        _model = (Node3D)rightSpawner.Spawn(_modelPath);
         _offhand = (Node3D)leftSpawner.Spawn(_sideName);
         //_anime = model.GetNode<AnimationPlayer>("AnimationPlayer");
         //_flash = model.GetNode<GpuParticles3D>("GpuParticles3D");
@@ -38,7 +38,7 @@ public partial class Pistols : Gun, IEquipment
         {
             timer = cooldown;
             string animation = _isRight ? "ShootRight" : "ShootLeft";
-            _anime.GetParent().Rpc("PlayAnim", animation, -0.25f, _isRight);
+            _playerRef.Rpc("PlayAnim", animation, -0.25f, _isRight);
             _isRight = !_isRight;
 
             var target = _rayCast.GetCollider();

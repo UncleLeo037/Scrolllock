@@ -8,9 +8,9 @@ namespace Srolllock.guns
 	{
 		protected string _spell = string.Empty;
 		protected RayCast3D _rayCast;
-		protected AnimationPlayer _anime;
+		protected Player _playerRef;
 		protected Node3D _model;
-		protected string _modelName;
+		protected string _modelPath;
 
 		protected double cooldown = 0.5;
 		protected double timer = 0.0;
@@ -33,18 +33,20 @@ namespace Srolllock.guns
 			if (timer > 0.0) timer -= 1 * delta;
 		}
 
-		public void Setup(AnimationPlayer anim, Camera3D camera)
+		public void Setup(Camera3D camera)
 		{
-			_anime = anim;
+			_playerRef = camera.GetParent<Player>();
 			camera.AddChild(this);
 		}
 
 		//pistol will have multiple flash nodes so will need to make an override method for this in Pistols.cs
 		public virtual void SpawnModel(GunSpawner spawner, GunSpawner temp)
 		{
-			_model = (Node3D)spawner.Spawn(_modelName);
-			//_anime = model.GetNode<AnimationPlayer>("AnimationPlayer");
-			//_flash = model.GetNode<GpuParticles3D>("GpuParticles3D");
+			_model = (Node3D)spawner.Spawn(_modelPath);
+			
+			// use something like this paired with a dynamic shared autospawn list
+			//PackedScene gunScene = GD.Load<PackedScene>($"res://guns/{_modelPath}.gltf");
+			//_playerRef.GetNode("Camera3D/Left").AddChild(gunScene.Instantiate());
 		}
 
 		public virtual void Despawn()
@@ -62,7 +64,7 @@ namespace Srolllock.guns
 			if (timer <= 0.0)
 			{
 				timer = cooldown;
-				_anime.GetParent().Rpc("PlayAnim", "ShootRight", -1f, true);
+				_playerRef.Rpc("PlayAnim", "ShootRight", -1f, true);
 				var target = _rayCast.GetCollider();
 				if (target != null)
 				{

@@ -61,7 +61,7 @@ public partial class Player : CharacterBody3D
 		//Hides own overhead health
 		GetNode<ProgressBar>("SubViewport/ProgressBar").Visible = false;
 
-		foreach (var item in _hud.Loadout) if (item is Gun gun) gun.Setup(_anime, _camera);
+		foreach (var item in _hud.Loadout) if (item is Gun gun) gun.Setup(_camera);
 
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		_camera.Current = true;

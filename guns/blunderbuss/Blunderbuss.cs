@@ -8,7 +8,7 @@ public partial class Blunderbuss : Gun, IEquipment
 	public Blunderbuss(string name = null)
 	{
 		var temp = string.IsNullOrEmpty(name) ? GetType().Name : name;
-		_modelName = $"{GetType().Name}/{temp}";
+		_modelPath = $"{GetType().Name}/{temp}";
 		Icon = GD.Load<Texture2D>($"res://guns/{GetType().Name}/{temp}.png");
 	}
 
@@ -17,7 +17,7 @@ public partial class Blunderbuss : Gun, IEquipment
 		if (timer <= 0.0)
 		{
 			timer = cooldown;
-			_anime.GetParent().Rpc("PlayAnim", "ShootRight", -0.65f, true);
+			_playerRef.Rpc("PlayAnim", "ShootRight", -0.65f, true);
 			var target = _rayCast.GetCollider();
 			if (target != null)
 			{

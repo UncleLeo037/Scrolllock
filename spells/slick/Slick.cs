@@ -12,6 +12,7 @@ public partial class Slick : Spell, IEquipment
 		Area3D area = GetNode<Area3D>("Area3D");
 		area.BodyEntered += _on_area_3d_body_entered;
 		area.BodyExited += _on_area_3d_body_exited;
+		Scale = Scale*(0.5f+(0.5f*Modifier));
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -29,7 +30,7 @@ public partial class Slick : Spell, IEquipment
 		//need to change this to add no firction to effects stack as it will cause issues if there are multiple slick spells
 		if (body is Player player)
 		{
-			player.HasFriction = false;
+			player.AddEffect(Name);
 		}
 	}
 
@@ -38,7 +39,7 @@ public partial class Slick : Spell, IEquipment
 		//this will remove one from the stack
 		if (body is Player player)
 		{
-			player.HasFriction = true;
+			player.RemoveEffect(Name);
 		}
 	}
 }

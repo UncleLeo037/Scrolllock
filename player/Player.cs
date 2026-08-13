@@ -193,6 +193,34 @@ public partial class Player : CharacterBody3D
 		MoveAndSlide();
 	}
 
+	public void AddEffect(string effect)
+	{
+		if (!_effects.Contains(effect))
+		{
+			switch (effect)
+			{
+				case "Slick":
+					HasFriction = false;
+					break;
+			}
+		}
+		_effects.Add(effect);
+	}
+
+	public void RemoveEffect(string effect)
+	{
+		_effects.Remove(effect);
+		if (!_effects.Contains(effect))
+		{
+			switch (effect)
+			{
+				case "Slick":
+					HasFriction = true;
+					break;
+			}
+		}
+	}
+
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
 	public void Damage(int damage)
 	{

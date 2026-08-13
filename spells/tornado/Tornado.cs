@@ -14,6 +14,7 @@ public partial class Tornado : Spell, IEquipment
 		area = GetNode<Area3D>("Area3D");
 		center = GetNode<Node3D>("Center");
 		pull = center.GetNode<Node3D>("Pull");
+		Scale = Scale*(0.5f+(0.5f*Modifier));
 	}
 
 	public override void _PhysicsProcess(double delta)

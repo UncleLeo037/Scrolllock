@@ -3,18 +3,20 @@ using Srolllock.guns;
 
 public partial class Blunderbuss : Gun, IEquipment
 {
-	public Texture2D Icon { get; set; } = GD.Load<Texture2D>($"res://guns/blunderbuss/blunderbuss.png");
+	public Texture2D Icon { get; set; }
 
 	public Blunderbuss(string name = null)
 	{
 		var temp = string.IsNullOrEmpty(name) ? GetType().Name : name;
 		_modelName = $"{GetType().Name}/{temp}";
+		Icon = GD.Load<Texture2D>($"res://guns/{GetType().Name}/{temp}.png");
 	}
 
 	public override void Shoot()
 	{
-		if (_anime?.CurrentAnimation.ToString().Contains("Shoot") == false)
+		if (timer <= 0.0)
 		{
+			timer = cooldown;
 			_anime.GetParent().Rpc("PlayAnim", "ShootRight", -0.65f, true);
 			var target = _rayCast.GetCollider();
 			if (target != null)

@@ -12,6 +12,9 @@ namespace Srolllock.guns
 		protected Node3D _model;
 		protected string _modelName;
 
+		protected double cooldown = 0.5;
+		protected double timer = 0.0;
+
 		public override void _Ready()
 		{
 			_rayCast = new RayCast3D();
@@ -23,6 +26,11 @@ namespace Srolllock.guns
 			//need to move this logic out of the local node
 			//_anime = GetNode<AnimationPlayer>("AnimationPlayer");
 			//_flash = GetNode<Node3D>("Node3D").GetNode<GpuParticles3D>("GPUParticles3D");
+		}
+
+		public override void _PhysicsProcess(double delta)
+		{
+			if (timer > 0.0) timer -= 1 * delta;
 		}
 
 		public void Setup(AnimationPlayer anim, Camera3D camera)
@@ -51,8 +59,9 @@ namespace Srolllock.guns
 
 		public virtual void Shoot()
 		{
-			if (_anime?.CurrentAnimation.ToString().Contains("Shoot") == false)
+			if (timer <= 0.0)
 			{
+				timer = cooldown;
 				_anime.GetParent().Rpc("PlayAnim", "ShootRight", -1f, true);
 				var target = _rayCast.GetCollider();
 				if (target != null)

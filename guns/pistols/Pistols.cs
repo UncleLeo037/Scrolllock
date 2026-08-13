@@ -4,7 +4,7 @@ using Srolllock.guns;
 
 public partial class Pistols : Gun, IEquipment
 {
-    public Texture2D Icon { get; set; } = GD.Load<Texture2D>($"res://guns/pistols/pistols.png");
+    public Texture2D Icon { get; set; }
     private Node3D _offhand;
     private string _sideName;
     private bool _isRight = true;
@@ -15,6 +15,7 @@ public partial class Pistols : Gun, IEquipment
         _modelName = $"{GetType().Name}/{type}";
         type = string.IsNullOrEmpty(sideName) ? GetType().Name : sideName;
         _sideName = $"{GetType().Name}/{type}";
+        Icon = GD.Load<Texture2D>($"res://guns/{GetType().Name}/{mainName}.png");
     }
 
     public override void SpawnModel(GunSpawner rightSpawner, GunSpawner leftSpawner)
@@ -33,17 +34,12 @@ public partial class Pistols : Gun, IEquipment
 
     public override void Shoot()
     {
-        if (_anime?.CurrentAnimation.ToString().Contains("Shoot") == false)
+        if (timer <= 0.0)
         {
+            timer = cooldown;
+            string animation = _isRight ? "ShootRight" : "ShootLeft";
+            _anime.GetParent().Rpc("PlayAnim", animation, -0.25f, _isRight);
             _isRight = !_isRight;
-            if (_isRight)
-            {
-                _anime.GetParent().Rpc("PlayAnim", "ShootRight", -0.25f, true);
-            }
-            else
-            {
-                _anime.GetParent().Rpc("PlayAnim", "ShootLeft", -0.25f, false);
-            }
 
             var target = _rayCast.GetCollider();
             if (target != null)

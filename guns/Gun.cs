@@ -9,9 +9,7 @@ namespace Srolllock.guns
 		protected string _spell = string.Empty;
 		protected RayCast3D _rayCast;
 		protected AnimationPlayer _anime;
-		protected GpuParticles3D _flash;
 		protected Node3D _model;
-
 		protected string _modelName;
 
 		public override void _Ready()
@@ -25,6 +23,12 @@ namespace Srolllock.guns
 			//need to move this logic out of the local node
 			//_anime = GetNode<AnimationPlayer>("AnimationPlayer");
 			//_flash = GetNode<Node3D>("Node3D").GetNode<GpuParticles3D>("GPUParticles3D");
+		}
+
+		public void Setup(AnimationPlayer anim, Camera3D camera)
+		{
+			_anime = anim;
+			camera.AddChild(this);
 		}
 
 		//pistol will have multiple flash nodes so will need to make an override method for this in Pistols.cs
@@ -47,8 +51,9 @@ namespace Srolllock.guns
 
 		public virtual void Shoot()
 		{
-			if (!(_anime?.CurrentAnimation == "shoot"))
+			if (_anime?.CurrentAnimation.ToString().Contains("Shoot") == false)
 			{
+				_anime.Rpc("PlayAnim", "ShootRight");
 				var target = _rayCast.GetCollider();
 				if (target != null)
 				{

@@ -19,7 +19,7 @@ public partial class Player : CharacterBody3D
 	private Hud _hud;
 	private GunSpawner _rightSpawner;
 	private GunSpawner _leftSpawner;
-	//private AnimationPlayer _anime;
+	private AnimationPlayer _anime;
 	private Gun _gun;
 	private Spell _spell;
 	private List<string> _effects = new List<string>();
@@ -45,6 +45,8 @@ public partial class Player : CharacterBody3D
 		_hud = GetNode<Hud>("Hud");
 		_camera = GetNode<Camera3D>("Camera3D");
 		_body = GetNode<CharacterBody3D>(".");
+		_anime = GetNode<AnimationPlayer>("AnimationPlayer");
+
 		_rightSpawner = GetNode<GunSpawner>("Camera3D/Right/GunSpawner");
 		_rightSpawner.SetMultiplayerAuthority(int.Parse(Name));
 
@@ -54,7 +56,7 @@ public partial class Player : CharacterBody3D
 		//Hides own overhead health
 		GetNode<ProgressBar>("SubViewport/ProgressBar").Visible = false;
 
-		foreach (var item in _hud.Loadout) if (item is Gun gun) _camera.AddChild(gun);
+		foreach (var item in _hud.Loadout) if (item is Gun gun) gun.Setup(_anime, _camera);
 
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		_camera.Current = true;

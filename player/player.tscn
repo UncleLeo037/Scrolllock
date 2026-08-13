@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bvwbn6u58ibla" path="res://player/Player.cs" id="1_aqcbf"]
 [ext_resource type="Texture2D" uid="uid://8fvgatus65mt" path="res://assets/bandage-texture.jpg" id="2_qjkh3"]
 [ext_resource type="Script" uid="uid://dk8rpfma2v5hx" path="res://player/GunSpawner.cs" id="4_83hs8"]
+[ext_resource type="Script" uid="uid://byoap4wuhixvj" path="res://player/PlayerAnimator.cs" id="4_x8kxw"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gwnis"]
 radius = 0.45
@@ -41,6 +42,120 @@ bg_color = Color(0, 0.6627451, 0, 1)
 [sub_resource type="ViewportTexture" id="ViewportTexture_x8kxw"]
 viewport_path = NodePath("SubViewport")
 
+[sub_resource type="Animation" id="Animation_x8kxw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D/Right:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.5, -0.3, -0.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D/Right:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera3D/Left:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.5, -0.3, -0.5)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera3D/Left:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_aqcbf"]
+resource_name = "ShootLeft"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D/Left:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector3(-0.5, -0.2, -0.5), Vector3(-0.5, -0.3, -0.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D/Left:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector3(0.43633232, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_83hs8"]
+resource_name = "ShootRight"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D/Right:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector3(0.5, -0.2, -0.5), Vector3(0.5, -0.3, -0.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D/Right:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector3(0.43633232, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x8kxw"]
+_data = {
+&"RESET": SubResource("Animation_x8kxw"),
+&"ShootLeft": SubResource("Animation_aqcbf"),
+&"ShootRight": SubResource("Animation_83hs8")
+}
+
 [node name="Player" type="CharacterBody3D" unique_id=1074384815]
 collision_layer = 4
 collision_mask = 3
@@ -67,7 +182,6 @@ script = ExtResource("4_83hs8")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.3, -0.5)
 
 [node name="GunSpawner" type="MultiplayerSpawner" parent="Camera3D/Left" unique_id=455188321]
-_spawnable_scenes = PackedStringArray("uid://tiqk3gug252k", "uid://b8avn51lwmphn", "uid://c11b5ystm52am")
 spawn_path = NodePath("..")
 script = ExtResource("4_83hs8")
 
@@ -102,4 +216,6 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 1
 billboard = 1
 texture = SubResource("ViewportTexture_x8kxw")
 
-[node name="TempAnimPlayer" type="AnimationPlayer" parent="." unique_id=1619721154]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1619721154]
+libraries/ = SubResource("AnimationLibrary_x8kxw")
+script = ExtResource("4_x8kxw")

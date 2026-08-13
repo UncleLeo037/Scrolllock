@@ -26,7 +26,7 @@ public partial class Force : Spell, IEquipment
 	{
 		if (body is Player player)
 		{
-			player.Velocity += (player.GlobalTransform.Origin - this.GlobalTransform.Origin).Normalized() * 14.0f;
+			player.Velocity += (player.GlobalTransform.Origin - this.GlobalTransform.Origin).Normalized() * (14.0f * Modifier);
 		}
 	}
 }

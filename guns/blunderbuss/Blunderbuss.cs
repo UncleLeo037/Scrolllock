@@ -44,7 +44,7 @@ public partial class Blunderbuss : Gun, IEquipment
 					if (!string.IsNullOrEmpty(_spell))
 					{
 						//only sends signal to host for spawning spells
-						SpellSpawner.instance.RpcId(1, "RequestSpawnSpell", _spell, ray.GetCollisionPoint(), new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0));
+						SpellSpawner.instance.RpcId(1, "RequestSpawnSpell", _spell, ray.GetCollisionPoint(), new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0), 1.2f/_rayCasts.Count);
 					}
 					else if (target is Player player)
 					{

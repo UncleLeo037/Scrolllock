@@ -17,13 +17,14 @@ public partial class SpellSpawner : MultiplayerSpawner
 		Dictionary spell = (Dictionary)detail;
 		PackedScene spellScene = GD.Load<PackedScene>($"res://spells/{spell["name"].ToString().ToLower()}/{spell["name"]}.tscn");
 		Spell spellInstance = spellScene.Instantiate<Spell>();
+		spellInstance.Modifier = (float)spell["modifier"];
 		spellInstance.Position = (Vector3)spell["position"];
 		spellInstance.Rotation = (Vector3)spell["rotation"];
 		return spellInstance;
 	}
 
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
-    public void RequestSpawnSpell(string name, Vector3 pos, Vector3 rot)
+    public void RequestSpawnSpell(string name, Vector3 pos, Vector3 rot, float modifier)
     {
         if (!IsMultiplayerAuthority())
             return;
@@ -32,7 +33,8 @@ public partial class SpellSpawner : MultiplayerSpawner
         {
             {"name", name},
             {"position", pos},
-            {"rotation", rot}
+            {"rotation", rot},
+			{"modifier", modifier}
         });
     }
 }

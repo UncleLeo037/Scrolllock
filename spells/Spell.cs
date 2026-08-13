@@ -11,6 +11,8 @@ namespace Srolllock.spells
 	{
 		public double Cooldown;
 
+		public float Modifier = 1;
+
         public override void _Process(double delta)
         {
             Cooldown -= delta;

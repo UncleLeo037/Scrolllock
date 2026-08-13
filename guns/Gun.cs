@@ -81,7 +81,7 @@ namespace Srolllock.guns
 						//spells will be called in different ways here in future
 						Vector3 point = _rayCasts.First().GetCollisionPoint();
 						//only sends signal to host for spawning spells
-						SpellSpawner.instance.RpcId(1, "RequestSpawnSpell", _spell, point, new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0));
+						SpellSpawner.instance.RpcId(1, "RequestSpawnSpell", _spell, point, new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0), 1);
 						_spell = string.Empty;
 					}
 					else if (target is Player player)

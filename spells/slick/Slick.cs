@@ -28,11 +28,11 @@ public partial class Slick : Spell, IEquipment
 	{
 		if (body is Player player)
 		{
-			if (!player.effects.Contains(Name))
+			if (!player.effects.Contains(GetType().Name))
 			{
 				player.HasFriction = false;
 			}
-			player.effects.Add(Name);
+			player.effects.Add(GetType().Name);
 		}
 	}
 
@@ -40,8 +40,8 @@ public partial class Slick : Spell, IEquipment
 	{
 		if (body is Player player)
 		{
-			player.effects.Remove(Name);
-			if (!player.effects.Contains(Name))
+			player.effects.Remove(GetType().Name);
+			if (!player.effects.Contains(GetType().Name))
 			{
 				player.HasFriction = true;
 			}

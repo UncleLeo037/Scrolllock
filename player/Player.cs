@@ -19,6 +19,8 @@ public partial class Player : CharacterBody3D
 	private Hud _hud;
 	private GunSpawner _rightSpawner;
 	private GunSpawner _leftSpawner;
+	private GpuParticles3D _rightFlash;
+	private GpuParticles3D _leftFlash;
 	private AnimationPlayer _anime;
 	private Gun _gun;
 	private Spell _spell;
@@ -32,6 +34,10 @@ public partial class Player : CharacterBody3D
 
 	public override void _Ready()
 	{
+		_anime = GetNode<AnimationPlayer>("AnimationPlayer");
+		_rightFlash = GetNode<GpuParticles3D>("Camera3D/Right/MuzzleFlash");
+		_leftFlash = GetNode<GpuParticles3D>("Camera3D/Left/MuzzleFlash");
+
 		if (!IsMultiplayerAuthority())
 		{
 			//disable processing & inputs for non auth player
@@ -45,7 +51,6 @@ public partial class Player : CharacterBody3D
 		_hud = GetNode<Hud>("Hud");
 		_camera = GetNode<Camera3D>("Camera3D");
 		_body = GetNode<CharacterBody3D>(".");
-		_anime = GetNode<AnimationPlayer>("AnimationPlayer");
 
 		_rightSpawner = GetNode<GunSpawner>("Camera3D/Right/GunSpawner");
 		_rightSpawner.SetMultiplayerAuthority(int.Parse(Name));
@@ -199,5 +204,23 @@ public partial class Player : CharacterBody3D
 		}
 		GetNode<SubViewport>("SubViewport").GetNode<ProgressBar>("ProgressBar").Value = _health;
 		if (IsMultiplayerAuthority()) _hud.HealthBar.Value = _health;
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+	public void PlayAnim(string animation, float pos, bool isRight)
+	{
+		_anime.Play(animation);
+		if (isRight)
+		{
+			_rightFlash.Position = new Vector3(0, 0, pos);
+			_rightFlash.Restart();
+			_rightFlash.Emitting = true;
+		}
+		else
+		{
+			_leftFlash.Restart();
+			_leftFlash.Emitting = true;
+			_leftFlash.Position = new Vector3(0, 0, pos);
+		}
 	}
 }

@@ -38,11 +38,11 @@ public partial class Pistols : Gun, IEquipment
             _isRight = !_isRight;
             if (_isRight)
             {
-                _anime.Rpc("PlayAnim", "ShootRight");
+                _anime.GetParent().Rpc("PlayAnim", "ShootRight", -0.25f, true);
             }
             else
             {
-                _anime.Rpc("PlayAnim", "ShootLeft");
+                _anime.GetParent().Rpc("PlayAnim", "ShootLeft", -0.25f, false);
             }
 
             var target = _rayCast.GetCollider();

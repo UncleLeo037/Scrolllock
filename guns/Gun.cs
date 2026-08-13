@@ -53,7 +53,7 @@ namespace Srolllock.guns
 		{
 			if (_anime?.CurrentAnimation.ToString().Contains("Shoot") == false)
 			{
-				_anime.Rpc("PlayAnim", "ShootRight");
+				_anime.GetParent().Rpc("PlayAnim", "ShootRight", -1f, true);
 				var target = _rayCast.GetCollider();
 				if (target != null)
 				{

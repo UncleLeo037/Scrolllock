@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bvwbn6u58ibla" path="res://player/Player.cs" id="1_aqcbf"]
 [ext_resource type="Texture2D" uid="uid://8fvgatus65mt" path="res://assets/bandage-texture.jpg" id="2_qjkh3"]
 [ext_resource type="Script" uid="uid://dk8rpfma2v5hx" path="res://player/GunSpawner.cs" id="4_83hs8"]
-[ext_resource type="Script" uid="uid://byoap4wuhixvj" path="res://player/PlayerAnimator.cs" id="4_x8kxw"]
+[ext_resource type="Texture2D" uid="uid://dx6dt4sngj2oe" path="res://assets/textures/flash.png" id="4_aqcbf"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gwnis"]
 radius = 0.45
@@ -21,6 +21,24 @@ texture_filter = 0
 material = SubResource("StandardMaterial3D_g6k8r")
 radius = 0.45
 height = 1.8
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_83hs8"]
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_83hs8"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("4_aqcbf")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_83hs8"]
+material = SubResource("StandardMaterial3D_83hs8")
+size = Vector2(0.5, 0.5)
+orientation = 2
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_rkbax"]
 properties/0/path = NodePath(".:position")
@@ -178,12 +196,30 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.3, -0.5)
 spawn_path = NodePath("..")
 script = ExtResource("4_83hs8")
 
+[node name="MuzzleFlash" type="GPUParticles3D" parent="Camera3D/Right" unique_id=2120078619]
+emitting = false
+amount = 1
+lifetime = 0.25
+one_shot = true
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_83hs8")
+draw_pass_1 = SubResource("PlaneMesh_83hs8")
+
 [node name="Left" type="Node3D" parent="Camera3D" unique_id=1420081598]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.3, -0.5)
 
 [node name="GunSpawner" type="MultiplayerSpawner" parent="Camera3D/Left" unique_id=455188321]
 spawn_path = NodePath("..")
 script = ExtResource("4_83hs8")
+
+[node name="MuzzleFlash" type="GPUParticles3D" parent="Camera3D/Left" unique_id=1658290447]
+emitting = false
+amount = 1
+lifetime = 0.25
+one_shot = true
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_83hs8")
+draw_pass_1 = SubResource("PlaneMesh_83hs8")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1668601166]
 replication_config = SubResource("SceneReplicationConfig_rkbax")
@@ -218,4 +254,3 @@ texture = SubResource("ViewportTexture_x8kxw")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1619721154]
 libraries/ = SubResource("AnimationLibrary_x8kxw")
-script = ExtResource("4_x8kxw")

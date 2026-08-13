@@ -12,8 +12,6 @@ public partial class Player : CharacterBody3D
 	private const float FRICTION = 0.1f;
 	private const int MAX_HEALTH = 100;
 
-	public bool HasFriction = true;
-
 	private Camera3D _camera;
 	private CharacterBody3D _body;
 	private Hud _hud;
@@ -24,8 +22,11 @@ public partial class Player : CharacterBody3D
 	private AnimationPlayer _anime;
 	private Gun _gun;
 	private Spell _spell;
-	private List<string> _effects = new List<string>();
 	private double _health = MAX_HEALTH;
+
+	public List<string> effects = new List<string>();
+	//this should be expanded into a list/dict of bools that turn effects on and off
+	public bool HasFriction = true;
 
 	public override void _EnterTree()
 	{
@@ -191,34 +192,6 @@ public partial class Player : CharacterBody3D
 		}
 
 		MoveAndSlide();
-	}
-
-	public void AddEffect(string effect)
-	{
-		if (!_effects.Contains(effect))
-		{
-			switch (effect)
-			{
-				case "Slick":
-					HasFriction = false;
-					break;
-			}
-		}
-		_effects.Add(effect);
-	}
-
-	public void RemoveEffect(string effect)
-	{
-		_effects.Remove(effect);
-		if (!_effects.Contains(effect))
-		{
-			switch (effect)
-			{
-				case "Slick":
-					HasFriction = true;
-					break;
-			}
-		}
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]

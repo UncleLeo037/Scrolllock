@@ -5,19 +5,18 @@ using Srolllock.spells;
 public partial class Slick : Spell, IEquipment
 {
 	private double lifetime = 5;
-	public Texture2D Icon {get; set;} = GD.Load<Texture2D>($"res://spells/slick/slick.png");
+	public Texture2D Icon { get; set; } = GD.Load<Texture2D>($"res://spells/slick/slick.png");
 
 	public override void _Ready()
 	{
 		Area3D area = GetNode<Area3D>("Area3D");
 		area.BodyEntered += _on_area_3d_body_entered;
 		area.BodyExited += _on_area_3d_body_exited;
-		Scale = Scale*(0.5f+(0.5f*Modifier));
+		Scale = Scale * (0.5f + (0.5f * Modifier));
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		//change to use animation waiting system to wait for spell effect to finish playing
 		lifetime -= delta;
 		if (lifetime <= 0.0)
 		{
@@ -27,19 +26,25 @@ public partial class Slick : Spell, IEquipment
 
 	public void _on_area_3d_body_entered(Node3D body)
 	{
-		//need to change this to add no firction to effects stack as it will cause issues if there are multiple slick spells
 		if (body is Player player)
 		{
-			player.AddEffect(Name);
+			if (!player.effects.Contains(Name))
+			{
+				player.HasFriction = false;
+			}
+			player.effects.Add(Name);
 		}
 	}
 
 	public void _on_area_3d_body_exited(Node3D body)
 	{
-		//this will remove one from the stack
 		if (body is Player player)
 		{
-			player.RemoveEffect(Name);
+			player.effects.Remove(Name);
+			if (!player.effects.Contains(Name))
+			{
+				player.HasFriction = true;
+			}
 		}
 	}
 }

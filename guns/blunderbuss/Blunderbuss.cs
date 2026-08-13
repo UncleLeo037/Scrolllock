@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using Srolllock.guns;
 
@@ -10,31 +12,51 @@ public partial class Blunderbuss : Gun, IEquipment
 		var temp = string.IsNullOrEmpty(name) ? GetType().Name : name;
 		_modelPath = $"{GetType().Name}/{temp}";
 		Icon = GD.Load<Texture2D>($"res://guns/{GetType().Name}/{temp}.png");
+		cooldown = 0.9;
 	}
 
-	public override void Shoot()
+	public override void _Ready()
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			RayCast3D temp = new RayCast3D();
+			temp.SetCollisionMaskValue(1, true);
+			temp.SetCollisionMaskValue(2, true);
+			temp.SetCollisionMaskValue(3, true);
+			temp.TargetPosition = new Vector3((float)GD.RandRange(-sway, sway), (float)GD.RandRange(-sway, sway), -50);
+			_rayCasts.Add(temp);
+			AddChild(temp);
+		}
+	}
+
+	public override async void Shoot()
 	{
 		if (timer <= 0.0)
 		{
 			timer = cooldown;
 			_playerRef.Rpc("PlayAnim", "ShootRight", -0.65f, true);
-			var target = _rayCast.GetCollider();
-			if (target != null)
+
+			foreach (RayCast3D ray in _rayCasts)
 			{
-				//should just shoot instead
-				if (!string.IsNullOrEmpty(_spell))
+				var target = ray.GetCollider();
+				if (target != null)
 				{
-					//spells will be called in different ways here in future
-					Vector3 point = _rayCast.GetCollisionPoint();
-					//only sends signal to host for spawning spells
-					SpellSpawner.instance.RpcId(1, "RequestSpawnSpell", _spell, point, new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0));
-					_spell = string.Empty;
+					if (!string.IsNullOrEmpty(_spell))
+					{
+						//only sends signal to host for spawning spells
+						SpellSpawner.instance.RpcId(1, "RequestSpawnSpell", _spell, ray.GetCollisionPoint(), new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0));
+					}
+					else if (target is Player player)
+					{
+						//send damage signal to all
+						player.Rpc("Damage", 15);
+					}
 				}
-				else if (target is Player player)
-				{
-					//send damage signal to all
-					player.Rpc("Damage", 35);
-				}
+			}
+			_spell = string.Empty;
+			foreach (RayCast3D ray in _rayCasts)
+			{
+				ray.TargetPosition = new Vector3((float)GD.RandRange(-sway, sway), (float)GD.RandRange(-sway, sway), -50);
 			}
 		}
 	}

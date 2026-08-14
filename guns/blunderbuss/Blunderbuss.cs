@@ -6,6 +6,8 @@ using Srolllock.guns;
 public partial class Blunderbuss : Gun, IEquipment
 {
 	public Texture2D Icon { get; set; }
+	private List<RayCast3D> _rayCasts = new List<RayCast3D>();
+	private int _shots = 6;
 
 	public Blunderbuss(string name = null)
 	{
@@ -17,7 +19,7 @@ public partial class Blunderbuss : Gun, IEquipment
 
 	public override void _Ready()
 	{
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < _shots; i++)
 		{
 			RayCast3D temp = new RayCast3D();
 			temp.SetCollisionMaskValue(1, true);

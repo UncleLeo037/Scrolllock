@@ -31,12 +31,12 @@ public partial class Blunderbuss : Gun, IEquipment
 		}
 	}
 
-	public override async void Shoot()
+	public override void Shoot()
 	{
 		if (timer <= 0.0)
 		{
 			timer = cooldown;
-			_playerRef.Rpc("PlayAnim", "ShootRight", -0.65f, true);
+			_playerRef.Rpc("PlayAnim", "ShootRight", -0.65f);
 
 			foreach (RayCast3D ray in _rayCasts)
 			{

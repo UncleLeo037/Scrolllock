@@ -27,6 +27,7 @@ public partial class Player : CharacterBody3D
 	public List<string> effects = new List<string>();
 	//this should be expanded into a list/dict of bools that turn effects on and off
 	public bool HasFriction = true;
+	public bool IsAiming = false;
 
 	public override void _EnterTree()
 	{
@@ -87,17 +88,25 @@ public partial class Player : CharacterBody3D
 			}
 			else if (Input.IsActionJustPressed("shoot"))
 			{
-				//only shoot if exists
 				_gun?.Shoot();
+				IsAiming = false;
 			}
 			else if (Input.IsActionJustPressed("load"))
 			{
 				_gun?.SetSpell(_spell);
 			}
-			// else if (Input.IsActionJustPressed("aim"))
-			// {
-			// 	//aim anim
-			// }
+			else if (Input.IsActionJustPressed("aim"))
+			{
+				_gun?.Aim();
+			}
+			else if (Input.IsActionJustReleased("aim"))
+			{
+				if (IsAiming)
+				{
+					_anime.PlayBackwards("AimRight");
+					IsAiming = false;
+				}
+			}
 			// else if (Input.IsActionJustPressed("reload"))
 			// {
 			// 	//load normal bullets
@@ -208,20 +217,16 @@ public partial class Player : CharacterBody3D
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
-	public void PlayAnim(string animation, float pos, bool isRight)
+	public void PlayAnim(string animation, float pos)
 	{
+		//sets up muzzle flash position and node for shoot animation
+		if (animation.Contains("Shoot"))
+		{
+			var temp = animation.Contains("Right") ? _rightFlash : _leftFlash;
+			temp.Position = new Vector3(0, 0, pos);
+			temp.Restart();
+		}
 		_anime.Play(animation);
-		if (isRight)
-		{
-			_rightFlash.Position = new Vector3(0, 0, pos);
-			_rightFlash.Restart();
-			_rightFlash.Emitting = true;
-		}
-		else
-		{
-			_leftFlash.Restart();
-			_leftFlash.Emitting = true;
-			_leftFlash.Position = new Vector3(0, 0, pos);
-		}
+		if (!animation.Contains("Aim")) _anime.Queue("RESET"); //prevents guns getting stuck
 	}
 }

@@ -52,6 +52,12 @@ namespace Srolllock.guns
 			_spell = spell?.GetType().Name ?? string.Empty;
 		}
 
+		public virtual void Aim()
+		{
+			_playerRef.IsAiming = true;
+			_playerRef.Rpc("PlayAnim", "AimRight", 0);
+		}
+
 		public virtual async void Shoot()
 		{
 			//do nothing and look pretty

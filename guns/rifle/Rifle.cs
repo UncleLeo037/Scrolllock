@@ -30,11 +30,11 @@ public partial class Rifle : Gun, IEquipment
 		//_flash = model.GetNode<GpuParticles3D>("GpuParticles3D");
 	}
 
-	public override async void Shoot()
+	public override void Shoot()
 	{
 		if (timer > 0.0) return;
 		timer = cooldown;
-		_playerRef.Rpc("PlayAnim", "ShootRight", -1f, true);
+		_playerRef.Rpc("PlayAnim", "ShootRight", -1f);
 
 		for (int i = 0; i < _piercing; i++)
 		{

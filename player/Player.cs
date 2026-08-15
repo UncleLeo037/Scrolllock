@@ -225,6 +225,7 @@ public partial class Player : CharacterBody3D
 			var temp = animation.Contains("Right") ? _rightFlash : _leftFlash;
 			temp.Position = new Vector3(0, 0, pos);
 			temp.Restart();
+			//muzzle flash emmiting value is controlled by animation
 		}
 		_anime.Play(animation);
 		if (!animation.Contains("Aim")) _anime.Queue("RESET"); //prevents guns getting stuck

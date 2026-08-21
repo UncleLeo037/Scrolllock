@@ -1,13 +1,12 @@
 using Godot;
 using Srolllock.spells;
 
-public partial class Tornado : Spell, IEquipment
+public partial class Tornado : Spell
 {
 	private double lifetime = 3;
 	Area3D area;
 	Node3D center;
 	Node3D pull;
-	public Texture2D Icon {get; set;} = GD.Load<Texture2D>($"res://spells/tornado/tornado.png");
 
 	public override void _Ready()
 	{

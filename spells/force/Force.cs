@@ -1,10 +1,9 @@
 using Godot;
 using Srolllock.spells;
 
-public partial class Force : Spell, IEquipment
+public partial class Force : Spell
 {
 	private double lifetime = 0.1;
-	public Texture2D Icon {get; set;} = GD.Load<Texture2D>($"res://spells/force/force.png");
 	
 	public override void _Ready()
 	{

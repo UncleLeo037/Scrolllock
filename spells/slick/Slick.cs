@@ -2,10 +2,14 @@ using Godot;
 using System;
 using Srolllock.spells;
 
-public partial class Slick : Spell, IEquipment
+public partial class Slick : Spell
 {
 	private double lifetime = 5;
-	public Texture2D Icon { get; set; } = GD.Load<Texture2D>($"res://spells/slick/slick.png");
+
+	// public Slick()
+	// {
+	// 	Icon = GD.Load<Texture2D>($"res://spells/{GetType().Name}/{GetType().Name}.png");
+	// }
 
 	public override void _Ready()
 	{

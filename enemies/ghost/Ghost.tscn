@@ -2,6 +2,16 @@
 
 [ext_resource type="PackedScene" uid="uid://bywneq4wawja" path="res://enemies/ghost/Ghost.gltf" id="1_8qpe2"]
 [ext_resource type="Script" uid="uid://doe8nj4144uyi" path="res://enemies/ghost/Ghost.cs" id="1_qwsux"]
+[ext_resource type="Texture2D" uid="uid://dhfbgrb3qq1ky" path="res://enemies/ghost/Ghost.png" id="2_n3rkx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o47iy"]
+transparency = 1
+cull_mode = 2
+albedo_texture = ExtResource("2_n3rkx")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_qwsux"]
+material = SubResource("StandardMaterial3D_o47iy")
+size = Vector2(0.5, 0.5)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j1a38"]
 radius = 0.4
@@ -9,13 +19,6 @@ height = 1.8
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qwsux"]
 size = Vector3(3, 3, 3)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qwsux"]
-albedo_color = Color(1, 0, 0, 1)
-
-[sub_resource type="TextMesh" id="TextMesh_n3rkx"]
-material = SubResource("StandardMaterial3D_qwsux")
-text = "->"
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qwsux"]
 properties/0/path = NodePath(".:position")
@@ -29,6 +32,10 @@ properties/1/replication_mode = 1
 collision_layer = 8
 collision_mask = 3
 script = ExtResource("1_qwsux")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=140337433]
+transform = Transform3D(-4.371139e-08, 0.99999994, 3.821371e-15, -4.371139e-08, 1.9106853e-15, -1, -1, -4.3711385e-08, 4.371139e-08, 0.4, 0.4, 0)
+mesh = SubResource("PlaneMesh_qwsux")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1450149067]
 shape = SubResource("CapsuleShape3D_j1a38")
@@ -45,10 +52,6 @@ collision_mask = 4
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=62338222]
 transform = Transform3D(0.9999999, 0, 0, 0, 1, 0, 0, 0, 0.9999999, 1.9, 0.4, 0)
 shape = SubResource("BoxShape3D_qwsux")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1653872679]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1, 0)
-mesh = SubResource("TextMesh_n3rkx")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=194931463]
 replication_config = SubResource("SceneReplicationConfig_qwsux")

@@ -85,4 +85,4 @@ material = ExtResource("1_ywcfp")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.25, 0)
 
 [node name="Ghost" parent="." unique_id=1492962182 instance=ExtResource("4_smasd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.326828, 7.6744967, -7.9510746)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.326828, 8.145802, -7.9510746)

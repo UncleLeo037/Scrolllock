@@ -3,7 +3,7 @@ using Srolllock.guns;
 using Srolllock.spells;
 using System.Collections.Generic;
 
-public partial class Hud : CanvasLayer
+public partial class Hud : Control
 {
 	public ProgressBar HealthBar;
 	public List<object> Loadout;

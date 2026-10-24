@@ -17,7 +17,15 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 config/name="Scrolllock"
 run/main_scene="uid://ck6smt7oulkc"
 config/features=PackedStringArray("4.6", "C#", "Forward Plus")
+boot_splash/stretch_mode=0
 config/icon="uid://c775j5xrcxkcn"
+
+[display]
+
+window/size/viewport_width=720
+window/size/viewport_height=480
+window/stretch/mode="viewport"
+window/stretch/aspect="keep_height"
 
 [dotnet]
 
@@ -90,6 +98,11 @@ load={
 3d_physics/layer_3="Player"
 3d_physics/layer_4="Enemy"
 3d_physics/layer_5="Interactable"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+shading/overrides/force_vertex_shading=true
 
 [steam]
 

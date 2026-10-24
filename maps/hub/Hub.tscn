@@ -2,23 +2,24 @@
 
 [ext_resource type="Script" uid="uid://ns4wlpfqjwyw" path="res://maps/hub/Hub.cs" id="1_smasd"]
 [ext_resource type="Material" uid="uid://drccsornonlun" path="res://assets/textures/devTexture.tres" id="1_ywcfp"]
+[ext_resource type="Texture2D" uid="uid://d2ebtbsr6gytm" path="res://assets/AllSkyFree_Sky_EpicGloriousPink_Equirect.png" id="2_ycays"]
 [ext_resource type="PackedScene" uid="uid://bfteys40meiyv" path="res://maps/hub/Lift.tscn" id="3_8x6fp"]
 [ext_resource type="PackedScene" uid="uid://ioqqcvjdbsve" path="res://enemies/ghost/Ghost.tscn" id="4_smasd"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8x6fp"]
-sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-ground_bottom_color = Color(0, 0, 0, 1)
-ground_horizon_color = Color(0, 0, 0, 1)
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_a65qh"]
+panorama = ExtResource("2_ycays")
 
 [sub_resource type="Sky" id="Sky_smasd"]
-sky_material = SubResource("ProceduralSkyMaterial_8x6fp")
+sky_material = SubResource("PanoramaSkyMaterial_a65qh")
 
 [sub_resource type="Environment" id="Environment_ycays"]
 background_mode = 2
 sky = SubResource("Sky_smasd")
-tonemap_mode = 2
-glow_enabled = true
-volumetric_fog_enabled = true
+fog_enabled = true
+fog_light_color = Color(0, 0, 0, 1)
+fog_light_energy = 0.0
+fog_density = 0.1
+fog_sky_affect = 0.0
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_8x6fp"]
 vertices = PackedVector3Array(-0.75, 7.473427, -13.5, 1, 7.473427, -13.5, 1.25, 7.473427, -15.5, -1, 7.473427, -15.5, 14.5, 7.473427, -44.5, -14.5, 7.473427, -44.5, 14.5, 7.473427, -15.5, -14.5, 7.473427, -15.5, -14.5, 44.223427, -14.5, -14.5, 44.223427, 14.5, 14.5, 44.223427, 14.5, 14.5, 44.223427, -14.5, -3.25, 7.473427, 0, -1.5, 7.473427, 0, -1.25, 7.473427, -1.5, -1.25, 7.473427, -9.25, -3.25, 7.473427, -9.25, 1.25, 7.473427, -1.5, 1.5, 7.473427, 0, 3.5, 7.473427, 0, 3.5, 7.473427, -9.25, -0.75, 7.473427, -9.75, 1, 7.473427, -9.5, -5.25, -1.5265732, -5.25, -4.5, -1.5265732, -4.25, 4.25, -1.5265732, -4.5, 5.5, -1.5265732, -5.25, -5.25, -1.5265732, 5.5, -4.25, -1.5265732, 4.5, 4.5, -1.5265732, 4.25, 5.5, -1.5265732, 5.5, -1.25, 7.473427, 1.5, -3.25, 7.473427, 9.5, 1.25, 7.473427, 1.5, 3.5, 7.473427, 9.5)
@@ -27,6 +28,10 @@ polygons = [PackedInt32Array(0, 3, 1), PackedInt32Array(1, 3, 2), PackedInt32Arr
 [node name="Hub" type="Node3D" unique_id=737521784]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.191109, 25.053467)
 script = ExtResource("1_smasd")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1603050482]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=905789410]
 environment = SubResource("Environment_ycays")

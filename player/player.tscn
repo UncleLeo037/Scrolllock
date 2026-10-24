@@ -935,13 +935,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_7uels")
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_aqcbf"]
-radius = 0.1
-height = 0.3
-
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gwnis"]
 radius = 0.2
-height = 1.6
+height = 1.9
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g6k8r"]
 albedo_texture = ExtResource("2_qjkh3")
@@ -1355,13 +1351,7 @@ mesh = SubResource("ArrayMesh_igw31")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("3_gskgj")
 
-[node name="HeadHitbox" type="CollisionShape3D" parent="." unique_id=836950582]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
-shape = SubResource("CapsuleShape3D_aqcbf")
-disabled = true
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=661437906]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
 shape = SubResource("CapsuleShape3D_gwnis")
 
 [node name="TestModel" type="MeshInstance3D" parent="." unique_id=1746710478]
@@ -1371,6 +1361,7 @@ mesh = SubResource("CapsuleMesh_boad6")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1084597021]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.80173236, 0)
+fov = 90.0
 
 [node name="Right" type="Node3D" parent="Camera3D" unique_id=424581948]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.3, -0.5)
@@ -1432,7 +1423,6 @@ show_percentage = false
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=683185514]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 1.2, 0)
-visible = false
 billboard = 1
 texture = SubResource("ViewportTexture_x8kxw")
 

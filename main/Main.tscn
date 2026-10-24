@@ -3,6 +3,12 @@
 [ext_resource type="Script" uid="uid://midmbp30rj6t" path="res://main/Main.cs" id="1_cmtxc"]
 [ext_resource type="Script" uid="uid://blign5pet4tmj" path="res://main/multiplayer_spawner.gd" id="3_cmtxc"]
 [ext_resource type="Script" uid="uid://5a44ol3bx0s" path="res://main/SpellSpawner.cs" id="3_ucdt6"]
+[ext_resource type="Shader" uid="uid://dubpaikhqv52l" path="res://shaders/retro_shader.gdshader" id="4_cmtxc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cmtxc"]
+shader = ExtResource("4_cmtxc")
+shader_parameter/viewport_size = Vector2(720, 480)
+shader_parameter/virtual_resolution = Vector2(360, 240)
 
 [node name="Main" type="Node3D" unique_id=33220651]
 script = ExtResource("1_cmtxc")
@@ -80,3 +86,14 @@ offset_left = 26.0
 offset_top = 169.0
 offset_right = 307.0
 offset_bottom = 197.0
+
+[node name="ShaderLayer" type="CanvasLayer" parent="." unique_id=1522685416]
+
+[node name="Shader" type="ColorRect" parent="ShaderLayer" unique_id=1910419210]
+material = SubResource("ShaderMaterial_cmtxc")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

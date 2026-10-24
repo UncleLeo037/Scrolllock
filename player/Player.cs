@@ -60,8 +60,9 @@ public partial class Player : CharacterBody3D
 		_leftSpawner = GetNode<GunSpawner>("Camera3D/Left/GunSpawner");
 		_leftSpawner.SetMultiplayerAuthority(int.Parse(Name));
 
-		//Hides own overhead health
+		//Hides own overhead health and own body
 		GetNode<ProgressBar>("SubViewport/ProgressBar").Visible = false;
+		GetNode<Node3D>("Model").Visible = false;
 
 		foreach (var item in _hud.Loadout) if (item is Gun gun) gun.Setup(_camera);
 
@@ -103,7 +104,8 @@ public partial class Player : CharacterBody3D
 			{
 				if (IsAiming)
 				{
-					_anime.PlayBackwards("AimRight");
+					//_anime.PlayBackwards("AimRight");
+					this.Rpc("PlayAnim", "AimRightBackwards", 0);
 					IsAiming = false;
 				}
 			}
@@ -227,7 +229,23 @@ public partial class Player : CharacterBody3D
 			temp.Restart();
 			//muzzle flash emmiting value is controlled by animation
 		}
-		_anime.Play(animation);
+		if (animation.Contains("Backwards"))
+		{
+			_anime.PlayBackwards(animation.Replace("Backwards", ""));
+		}
+		else
+		{
+			_anime.Play(animation);
+		}
 		if (!animation.Contains("Aim")) _anime.Queue("RESET"); //prevents guns getting stuck
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+	public void AddEffect(Spell effect)
+	{
+		//GetMultiplayerAuthority();
+		//used to spawn bodyless spell effects that only target one player for tic effects
+		//only call for target authority
+		AddChild(effect);
 	}
 }

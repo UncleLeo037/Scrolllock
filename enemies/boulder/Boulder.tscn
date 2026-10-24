@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cs2n1jv5y3vc4"]
+
+[ext_resource type="Script" uid="uid://j63bve0i7jo7" path="res://enemies/boulder/Boulder.cs" id="1_s1sk5"]
+[ext_resource type="Material" uid="uid://blbk628hkm07s" path="res://assets/textures/cobble.tres" id="1_t2htm"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_4f0ha"]
+material = ExtResource("1_t2htm")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_t2htm"]
+
+[node name="Boulder" type="CharacterBody3D" unique_id=1499137583]
+script = ExtResource("1_s1sk5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1607310986]
+mesh = SubResource("SphereMesh_4f0ha")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=150633202]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.9999998, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("SphereShape3D_t2htm")

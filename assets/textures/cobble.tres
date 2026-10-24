@@ -1,9 +1,6 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://blbk628hkm07s"]
 
-[ext_resource type="Texture2D" uid="uid://dy73uoju6s18s" path="res://assets/textures/cobble.png" id="1_0n30u"]
+[ext_resource type="Texture2D" uid="uid://ct18pbhhaxggy" path="res://enemies/boulder/rock_0002_color_1k.jpg" id="1_0n30u"]
 
 [resource]
 albedo_texture = ExtResource("1_0n30u")
-uv1_scale = Vector3(0.5, 0.5, 0.5)
-uv1_triplanar = true
-texture_filter = 0

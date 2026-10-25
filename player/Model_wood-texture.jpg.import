@@ -2,17 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ba0w6vl4m788k"
-path.s3tc="res://.godot/imported/wood-texture.jpg-ea76b51474557062ca0cc5e87d56a803.s3tc.ctex"
+uid="uid://dnhki7ky2twgx"
+path.s3tc="res://.godot/imported/Model_wood-texture.jpg-c2be1e356839bfd3e7a72ea0fce741a9.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={
+"md5": "54060cda10a5404cd36374089770670e"
+}
 
 [deps]
 
-source_file="res://player/wood-texture.jpg"
-dest_files=["res://.godot/imported/wood-texture.jpg-ea76b51474557062ca0cc5e87d56a803.s3tc.ctex"]
+source_file="res://player/Model_wood-texture.jpg"
+dest_files=["res://.godot/imported/Model_wood-texture.jpg-c2be1e356839bfd3e7a72ea0fce741a9.s3tc.ctex"]
 
 [params]
 

@@ -1,11 +1,11 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://b8y7qaej1w5w0"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://b8y7qaej1w5w0"]
 
-[ext_resource type="Texture2D" uid="uid://ba0w6vl4m788k" path="res://player/wood-texture.jpg" id="1_y03hi"]
+[ext_resource type="Shader" uid="uid://ctogi4kiro64x" path="res://shaders/retro_models.gdshader" id="1_tudit"]
+[ext_resource type="Texture2D" uid="uid://dnhki7ky2twgx" path="res://player/Model_wood-texture.jpg" id="2_qmjs2"]
 
 [resource]
-albedo_texture = ExtResource("1_y03hi")
-uv1_triplanar = true
-uv1_triplanar_sharpness = 100.0
-uv2_triplanar_sharpness = 2.2191389
-uv2_world_triplanar = true
-texture_filter = 0
+render_priority = 0
+shader = ExtResource("1_tudit")
+shader_parameter/albedo_texture = ExtResource("2_qmjs2")
+shader_parameter/snap_enabled = true
+shader_parameter/snap_resolution = 148.0

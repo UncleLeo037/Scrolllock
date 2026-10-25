@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://crruvs8261hwn"]
+
+[ext_resource type="Shader" uid="uid://ctogi4kiro64x" path="res://shaders/retro_models.gdshader" id="1_wp8c8"]
+[ext_resource type="Texture2D" uid="uid://piidcj8whs24" path="res://player/Model_rock_0002_color_1k.jpg" id="2_hs4xe"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_wp8c8")
+shader_parameter/albedo_texture = ExtResource("2_hs4xe")
+shader_parameter/snap_enabled = true
+shader_parameter/snap_resolution = 148.0

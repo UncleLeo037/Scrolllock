@@ -31,6 +31,10 @@ window/stretch/aspect="keep_height"
 
 project/assembly_name="Srolllock"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/func_godot/plugin.cfg", "res://addons/godotsteam/plugin.cfg")
+
 [input]
 
 forward={

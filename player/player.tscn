@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://bsshe27b6tx62"]
+[gd_scene format=4 uid="uid://c3k7om72c5x8"]
 
 [ext_resource type="Script" uid="uid://bvwbn6u58ibla" path="res://player/Player.cs" id="1_aqcbf"]
 [ext_resource type="Texture2D" uid="uid://8fvgatus65mt" path="res://assets/bandage-texture.jpg" id="2_qjkh3"]

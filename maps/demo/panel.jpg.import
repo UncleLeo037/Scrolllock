@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://crpeeo4ikn1hs"
-path.s3tc="res://.godot/imported/—Pngtree—panoramic skybox texture sunset with_16362293.jpg-cc4de4295aa0a41388fe7344ef7bd2d7.s3tc.ctex"
+uid="uid://btf66amnj24nb"
+path.s3tc="res://.godot/imported/panel.jpg-7286f1dc62020eaeeab460d5d52f8a27.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/—Pngtree—panoramic skybox texture sunset with_16362293.jpg"
-dest_files=["res://.godot/imported/—Pngtree—panoramic skybox texture sunset with_16362293.jpg-cc4de4295aa0a41388fe7344ef7bd2d7.s3tc.ctex"]
+source_file="res://maps/demo/panel.jpg"
+dest_files=["res://.godot/imported/panel.jpg-7286f1dc62020eaeeab460d5d52f8a27.s3tc.ctex"]
 
 [params]
 

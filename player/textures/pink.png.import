@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8fvgatus65mt"
-path.s3tc="res://.godot/imported/bandage-texture.jpg-8fee75d4d735bcf3d3805e55bbda0d8e.s3tc.ctex"
+uid="uid://du13n866761bb"
+path.s3tc="res://.godot/imported/pink.png-491991e75e903287f7c41579672a9afb.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/bandage-texture.jpg"
-dest_files=["res://.godot/imported/bandage-texture.jpg-8fee75d4d735bcf3d3805e55bbda0d8e.s3tc.ctex"]
+source_file="res://player/textures/pink.png"
+dest_files=["res://.godot/imported/pink.png-491991e75e903287f7c41579672a9afb.s3tc.ctex"]
 
 [params]
 

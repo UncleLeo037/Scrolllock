@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://crruvs8261hwn"]
 
 [ext_resource type="Shader" uid="uid://ctogi4kiro64x" path="res://shaders/retro_models.gdshader" id="1_wp8c8"]
-[ext_resource type="Texture2D" uid="uid://piidcj8whs24" path="res://player/Model_rock_0002_color_1k.jpg" id="2_hs4xe"]
+[ext_resource type="Texture2D" uid="uid://piidcj8whs24" path="res://player/textures/Model_rock_0002_color_1k.jpg" id="2_hs4xe"]
 
 [resource]
 render_priority = 0

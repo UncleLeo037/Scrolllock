@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://piidcj8whs24"
-path.s3tc="res://.godot/imported/Model_rock_0002_color_1k.jpg-33f7a87d442a66b8dbc3484f259a03d3.s3tc.ctex"
+uid="uid://bwhh77v4nugi5"
+path.s3tc="res://.godot/imported/Model_rock_0002_color_1k.jpg-a38a1628c164fc5269bcf7b2d1017159.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -14,8 +14,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://player/Model_rock_0002_color_1k.jpg"
-dest_files=["res://.godot/imported/Model_rock_0002_color_1k.jpg-33f7a87d442a66b8dbc3484f259a03d3.s3tc.ctex"]
+source_file="res://player/textures/Model_rock_0002_color_1k.jpg"
+dest_files=["res://.godot/imported/Model_rock_0002_color_1k.jpg-a38a1628c164fc5269bcf7b2d1017159.s3tc.ctex"]
 
 [params]
 

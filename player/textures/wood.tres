@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://b8y7qaej1w5w0"]
 
 [ext_resource type="Shader" uid="uid://ctogi4kiro64x" path="res://shaders/retro_models.gdshader" id="1_tudit"]
-[ext_resource type="Texture2D" uid="uid://dnhki7ky2twgx" path="res://player/Model_wood-texture.jpg" id="2_qmjs2"]
+[ext_resource type="Texture2D" uid="uid://dnhki7ky2twgx" path="res://player/textures/Model_wood-texture.jpg" id="2_qmjs2"]
 
 [resource]
 render_priority = 0

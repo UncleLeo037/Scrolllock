@@ -2,17 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://wtdqd4kq1gte"
-path.s3tc="res://.godot/imported/desert panoram.jpg-72f2719a2a0bbbd8494c78feb2733bc2.s3tc.ctex"
+uid="uid://dwwunl3qrye0c"
+path.s3tc="res://.godot/imported/Model_wood-texture.jpg-c023617d39f48cc78cbd60d40dd25050.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={
+"md5": "54060cda10a5404cd36374089770670e"
+}
 
 [deps]
 
-source_file="res://assets/desert panoram.jpg"
-dest_files=["res://.godot/imported/desert panoram.jpg-72f2719a2a0bbbd8494c78feb2733bc2.s3tc.ctex"]
+source_file="res://player/models/Model_wood-texture.jpg"
+dest_files=["res://.godot/imported/Model_wood-texture.jpg-c023617d39f48cc78cbd60d40dd25050.s3tc.ctex"]
 
 [params]
 

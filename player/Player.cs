@@ -19,7 +19,6 @@ public partial class Player : CharacterBody3D
 	private GunSpawner _leftSpawner;
 	private GpuParticles3D _rightFlash;
 	private GpuParticles3D _leftFlash;
-	private AnimationPlayer _anime;
 	private Gun _gun;
 	private Spell _spell;
 	private double _health = MAX_HEALTH;
@@ -28,6 +27,7 @@ public partial class Player : CharacterBody3D
 	//this should be expanded into a list/dict of bools that turn effects on and off
 	public bool HasFriction = true;
 	public bool IsAiming = false;
+	public AnimationPlayer AnimPlayer;
 
 	public override void _EnterTree()
 	{
@@ -36,7 +36,7 @@ public partial class Player : CharacterBody3D
 
 	public override void _Ready()
 	{
-		_anime = GetNode<AnimationPlayer>("AnimationPlayer");
+		AnimPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		_rightFlash = GetNode<GpuParticles3D>("Camera3D/Right/MuzzleFlash");
 		_leftFlash = GetNode<GpuParticles3D>("Camera3D/Left/MuzzleFlash");
 
@@ -109,14 +109,10 @@ public partial class Player : CharacterBody3D
 					IsAiming = false;
 				}
 			}
-			// else if (Input.IsActionJustPressed("reload"))
-			// {
-			// 	//load normal bullets
-			// }
-			// else if (Input.IsActionJustPressed("load"))
-			// {
-			// 	//load active spell
-			// }
+			else if (Input.IsActionJustPressed("reload"))
+			{
+				_gun.Reload();
+			}
 		}
 		if (Input.MouseMode == Input.MouseModeEnum.ConfinedHidden && (Input.IsActionJustPressed("shoot") || Input.IsActionJustPressed("aim")))
 		{
@@ -231,13 +227,13 @@ public partial class Player : CharacterBody3D
 		}
 		if (animation.Contains("Backwards"))
 		{
-			_anime.PlayBackwards(animation.Replace("Backwards", ""));
+			AnimPlayer.PlayBackwards(animation.Replace("Backwards", ""));
 		}
 		else
 		{
-			_anime.Play(animation);
+			AnimPlayer.Play(animation);
 		}
-		if (!animation.Contains("Aim")) _anime.Queue("RESET"); //prevents guns getting stuck
+		if (!animation.Contains("Aim")) AnimPlayer.Queue("RESET"); //prevents guns getting stuck
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]

@@ -4,22 +4,13 @@ using Srolllock.guns;
 public partial class Rifle : Gun, IEquipment
 {
 	public Texture2D Icon { get; set; }
-	private RayCast3D _rayCast = new RayCast3D();
 	private int _piercing = 6;
+	private (float x, float y) _savedSway; 
 	public Rifle(string name = null)
 	{
 		var temp = string.IsNullOrEmpty(name) ? GetType().Name : name;
 		_modelPath = $"{GetType().Name}/{temp}";
 		Icon = GD.Load<Texture2D>($"res://guns/{GetType().Name}/{temp}.png");
-	}
-
-	public override void _Ready()
-	{
-		_rayCast.SetCollisionMaskValue(1, true);
-		_rayCast.SetCollisionMaskValue(2, true);
-		_rayCast.SetCollisionMaskValue(3, true);
-		_rayCast.TargetPosition = new Vector3((float)GD.RandRange(-sway, sway), (float)GD.RandRange(-sway, sway), -100);
-		AddChild(_rayCast);
 	}
 
 	public override void SpawnModel(GunSpawner rightSpawner, GunSpawner leftSpawner)
@@ -32,12 +23,25 @@ public partial class Rifle : Gun, IEquipment
 
 	public override void Shoot()
 	{
+		if (ammo == 0)
+		{
+			Reload();
+			return;
+		}
 		if (timer > 0.0) return;
-		timer = cooldown;
+
 		_playerRef.Rpc("PlayAnim", "ShootRight", -1f);
+
+		timer = cooldown;
+		ammo -= 1;
+
+		_savedSway.x = (float)GD.RandRange(-sway, sway);
+		_savedSway.y = (float)GD.RandRange(-sway, sway);
 
 		for (int i = 0; i < _piercing; i++)
 		{
+			_rayCast.TargetPosition = new Vector3(_savedSway.x, _savedSway.y, -100);
+
 			_rayCast.ForceRaycastUpdate();
 
 			var collider = _rayCast.GetCollider();
@@ -60,9 +64,8 @@ public partial class Rifle : Gun, IEquipment
 				_rayCast.AddExceptionRid(colObj.GetRid());
 			}
 
-			_rayCast.TargetPosition = new Vector3((float)GD.RandRange(-sway, sway), (float)GD.RandRange(-sway, sway), -100);
 			if (collider is StaticBody3D) break;
-			if (collider is CsgBox3D) break; //for demo maps
+			if (collider is CsgShape3D) break; //for demo maps
 		}
 		_spell = string.Empty;
 		_rayCast.ClearExceptions();

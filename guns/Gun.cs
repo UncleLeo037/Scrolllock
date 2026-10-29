@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Bridge;
 using Srolllock.spells;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,21 @@ namespace Srolllock.guns
 		protected Node3D _model;
 		protected string _modelPath;
 		protected RandomNumberGenerator rand = new RandomNumberGenerator();
+		protected RayCast3D _rayCast = new RayCast3D();
 
 		protected double cooldown = 0.6;
-		protected double reload = 1.5;
 		protected double timer = 0.0;
 		protected double sway = 3.0;
+		protected int maxAmmo = 1;
+		protected int ammo = 1;
+
+		public override void _Ready()
+		{
+			_rayCast.SetCollisionMaskValue(1, true);
+			_rayCast.SetCollisionMaskValue(2, true);
+			_rayCast.SetCollisionMaskValue(3, true);
+			AddChild(_rayCast);
+		}
 
 		public override void _PhysicsProcess(double delta)
 		{
@@ -30,7 +41,6 @@ namespace Srolllock.guns
 			camera.AddChild(this);
 		}
 
-		//pistol will have multiple flash nodes so will need to make an override method for this in Pistols.cs
 		public virtual void SpawnModel(GunSpawner spawner, GunSpawner temp)
 		{
 			SetPhysicsProcess(true);
@@ -47,9 +57,17 @@ namespace Srolllock.guns
 			SetPhysicsProcess(false);
 		}
 
-		public void SetSpell(Spell spell)
+		public virtual async void SetSpell(Spell spell)
 		{
-			_spell = spell?.GetType().Name ?? string.Empty;
+			string reloadAnim = "ReloadRight";//$"Reload{GetType().Name}";
+			if (spell == null || spell?.GetType().Name == _spell) return;
+			_playerRef.Rpc("PlayAnim", reloadAnim, 0);
+			Variant[] anim = await ToSignal(_playerRef.AnimPlayer, AnimationPlayer.SignalName.AnimationFinished);
+			if (anim[0].AsString() == reloadAnim)
+			{
+				_spell = spell?.GetType().Name ?? string.Empty;
+				ammo = maxAmmo;
+			}
 		}
 
 		public virtual void Aim()
@@ -61,6 +79,14 @@ namespace Srolllock.guns
 		public virtual async void Shoot()
 		{
 			//do nothing and look pretty
+		}
+
+		public virtual async void Reload() {
+			string reloadAnim = "ReloadRight";//$"Reload{GetType().Name}";
+			if (_playerRef.AnimPlayer.CurrentAnimation == reloadAnim || ammo == maxAmmo) return;
+			_playerRef.Rpc("PlayAnim", reloadAnim, 0);
+			Variant[] anim = await ToSignal(_playerRef.AnimPlayer, AnimationPlayer.SignalName.AnimationFinished);
+			if (anim[0].AsString() == reloadAnim) ammo = maxAmmo;
 		}
 	}
 }

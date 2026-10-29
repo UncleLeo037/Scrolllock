@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://vbahjmxesqjd"]
 
 [ext_resource type="Material" uid="uid://dvm7wt64lkc04" path="res://maps/demo/PanelTexture.tres" id="2_dbuku"]
-[ext_resource type="PackedScene" uid="uid://ioqqcvjdbsve" path="res://enemies/ghost/Ghost.tscn" id="2_fhrwt"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4vbhc"]
 
@@ -228,6 +227,3 @@ metadata/_edit_lock_ = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.05752, -0.61255574, -11.457633)
 size = Vector3(4.4630127, 1, 11.227417)
 metadata/_edit_lock_ = true
-
-[node name="Ghost" parent="." unique_id=1192299923 instance=ExtResource("2_fhrwt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7003546, -8.997627, 11.155667)

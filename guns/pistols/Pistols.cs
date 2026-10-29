@@ -1,15 +1,18 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Godot;
 using Srolllock.guns;
+using Srolllock.spells;
 
 public partial class Pistols : Gun, IEquipment
 {
     public Texture2D Icon { get; set; }
-    private RayCast3D _rayCast = new RayCast3D();
     private Node3D _offhand;
     private string _sideName;
     private double _sideTimer;
+    private string _sideSpell;
+    private int _sideAmmo = 1;
 
     public Pistols(string mainName = null, string sideName = null)
     {
@@ -18,16 +21,6 @@ public partial class Pistols : Gun, IEquipment
         type = string.IsNullOrEmpty(sideName) ? GetType().Name : sideName;
         _sideName = $"{GetType().Name}/{type}";
         Icon = GD.Load<Texture2D>($"res://guns/{GetType().Name}/{mainName}.png");
-        cooldown = 0.6;
-    }
-
-    public override void _Ready()
-    {
-        _rayCast.SetCollisionMaskValue(1, true);
-        _rayCast.SetCollisionMaskValue(2, true);
-        _rayCast.SetCollisionMaskValue(3, true);
-        _rayCast.TargetPosition = new Vector3((float)GD.RandRange(-sway, sway), (float)GD.RandRange(-sway, sway), -75);
-        AddChild(_rayCast);
     }
 
     public override void _PhysicsProcess(double delta)
@@ -52,40 +45,70 @@ public partial class Pistols : Gun, IEquipment
         SetPhysicsProcess(false);
     }
 
+    public override async void SetSpell(Spell spell)
+    {
+        string reloadAnim = "ReloadBoth";//$"Reload{GetType().Name}";
+        if (spell == null || (spell?.GetType().Name == _spell && spell?.GetType().Name == _sideSpell)) return;
+        _playerRef.Rpc("PlayAnim", reloadAnim, 0);
+        Variant[] anim = await ToSignal(_playerRef.AnimPlayer, AnimationPlayer.SignalName.AnimationFinished);
+        if (anim[0].AsString() == reloadAnim)
+        {
+            _spell = _sideSpell = spell?.GetType().Name ?? string.Empty;
+            ammo = _sideAmmo = maxAmmo;
+        }
+    }
+
     public override void Aim()
     {
-        if (timer > 0.0) return;
-        timer = cooldown;
+        if (_sideAmmo == 0)
+        {
+            Reload();
+            return;
+        }
+        if (_sideTimer > 0.0) return;
+        
         _playerRef.Rpc("PlayAnim", "ShootRight", -0.25f);
+
+        _sideTimer = cooldown;
+        _sideAmmo -= 1;
+
+        _rayCast.TargetPosition = new Vector3((float)GD.RandRange(-sway, sway), (float)GD.RandRange(-sway, sway), -75);
 
         var target = _rayCast.GetCollider();
         if (target == null) return;
 
         //should just shoot instead
-        if (!string.IsNullOrEmpty(_spell))
+        if (!string.IsNullOrEmpty(_sideSpell))
         {
             //spells will be called in different ways here in future
             Vector3 point = _rayCast.GetCollisionPoint();
             //only sends signal to host for spawning spells
-            SpellSpawner.instance.RpcId(1, "RequestSpawnSpell", _spell, point, new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0), 1);
-            _spell = string.Empty;
+            SpellSpawner.instance.RpcId(1, "RequestSpawnSpell", _sideSpell, point, new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0), 0.6);
+            _sideSpell = string.Empty;
         }
         else if (target is Player player)
         {
             //send damage signal to all
             player.Rpc("Damage", 25);
         }
-
-        _rayCast.TargetPosition = new Vector3((float)GD.RandRange(-sway, sway), (float)GD.RandRange(-sway, sway), -100);
     }
 
 
     public override void Shoot()
     {
-        if (_sideTimer > 0.0) return;
+        if (ammo == 0)
+        {
+            Reload();
+            return;
+        }
+        if (timer > 0.0) return;
 
-        _sideTimer = cooldown;
         _playerRef.Rpc("PlayAnim", "ShootLeft", -0.25f);
+
+        timer = cooldown;
+        ammo -= 1;
+
+        _rayCast.TargetPosition = new Vector3((float)GD.RandRange(-sway, sway), (float)GD.RandRange(-sway, sway), -75);
 
         var target = _rayCast.GetCollider();
         if (target == null) return;
@@ -96,7 +119,7 @@ public partial class Pistols : Gun, IEquipment
             //spells will be called in different ways here in future
             Vector3 point = _rayCast.GetCollisionPoint();
             //only sends signal to host for spawning spells
-            SpellSpawner.instance.RpcId(1, "RequestSpawnSpell", _spell, point, new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0), 1);
+            SpellSpawner.instance.RpcId(1, "RequestSpawnSpell", _spell, point, new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0), 0.6);
             _spell = string.Empty;
         }
         else if (target is Player player)
@@ -104,7 +127,44 @@ public partial class Pistols : Gun, IEquipment
             //send damage signal to all
             player.Rpc("Damage", 25);
         }
+    }
 
-        _rayCast.TargetPosition = new Vector3((float)GD.RandRange(-sway, sway), (float)GD.RandRange(-sway, sway), -100);
+    public override async void Reload()
+    {
+        if (ammo == maxAmmo && _sideAmmo != maxAmmo)
+        {
+            ReloadRight();
+            return;
+        }
+        else if (ammo != maxAmmo && _sideAmmo == maxAmmo)
+        {
+            ReloadLeft();
+            return;
+        }
+        else if (ammo == maxAmmo && _sideAmmo == maxAmmo) return;
+
+        string reloadAnim = "ReloadBoth";//$"Reload{GetType().Name}";
+        if (_playerRef.AnimPlayer.CurrentAnimation == reloadAnim) return;
+        _playerRef.Rpc("PlayAnim", reloadAnim, 0);
+        Variant[] anim = await ToSignal(_playerRef.AnimPlayer, AnimationPlayer.SignalName.AnimationFinished);
+        if (anim[0].AsString() == reloadAnim) ammo = _sideAmmo = maxAmmo;
+    }
+
+    public async void ReloadLeft()
+    {
+        string reloadAnim = "ReloadLeft";//$"Reload{GetType().Name}";
+        if (_playerRef.AnimPlayer.CurrentAnimation == reloadAnim) return;
+        _playerRef.Rpc("PlayAnim", reloadAnim, 0);
+        Variant[] anim = await ToSignal(_playerRef.AnimPlayer, AnimationPlayer.SignalName.AnimationFinished);
+        if (anim[0].AsString() == reloadAnim) ammo = maxAmmo;
+    }
+
+    public async void ReloadRight()
+    {
+        string reloadAnim = "ReloadRight";//$"Reload{GetType().Name}";
+        if (_playerRef.AnimPlayer.CurrentAnimation == reloadAnim) return;
+        _playerRef.Rpc("PlayAnim", reloadAnim, 0);
+        Variant[] anim = await ToSignal(_playerRef.AnimPlayer, AnimationPlayer.SignalName.AnimationFinished);
+        if (anim[0].AsString() == reloadAnim) _sideAmmo = maxAmmo;
     }
 }

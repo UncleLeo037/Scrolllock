@@ -20,7 +20,7 @@ public partial class Main : Node3D
 	{
 		Spawner = GetNode<MultiplayerSpawner>("MultiplayerSpawner");
 		Spawner.AddSpawnableScene("res://player/Player.tscn");
-		Spawner.AddSpawnableScene("res://maps/hub/Hub.tscn");
+		Spawner.AddSpawnableScene("res://maps/demo/demo_map.tscn");
 
 		Menu = Spawner.GetNode<Control>("Menu");
 		BtnHost = Menu.GetNode<Button>("Host");
@@ -69,7 +69,7 @@ public partial class Main : Node3D
 		Multiplayer.PeerConnected += AddPlayer;
 		Multiplayer.PeerDisconnected += RemovePlayer;
 
-		Spawner.AddChild(GD.Load<PackedScene>("res://maps/hub/Hub.tscn").Instantiate());
+		Spawner.AddChild(GD.Load<PackedScene>("res://maps/demo/demo_map.tscn").Instantiate());
 		Spawner.Call("_add_player", Multiplayer.GetUniqueId());
 	}
 	public void JoinEnet()

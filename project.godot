@@ -33,7 +33,7 @@ project/assembly_name="Srolllock"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/func_godot/plugin.cfg", "res://addons/godotsteam/plugin.cfg")
+enabled=PackedStringArray("res://addons/godotsteam/plugin.cfg")
 
 [input]
 

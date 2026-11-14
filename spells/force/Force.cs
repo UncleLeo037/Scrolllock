@@ -1,7 +1,7 @@
 using Godot;
 using Srolllock.spells;
 
-public partial class Force : Spell
+public partial class Force : AreaSpell
 {
 	private double lifetime = 0.1;
 	

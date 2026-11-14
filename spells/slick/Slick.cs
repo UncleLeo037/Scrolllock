@@ -2,7 +2,7 @@ using Godot;
 using System;
 using Srolllock.spells;
 
-public partial class Slick : Spell
+public partial class Slick : AreaSpell
 {
 	private double lifetime = 5;
 

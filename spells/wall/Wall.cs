@@ -2,7 +2,7 @@ using Godot;
 using Srolllock.spells;
 using System;
 
-public partial class Wall : Spell
+public partial class Wall : AreaSpell
 {
 	double lifetime = 20.0;
 	

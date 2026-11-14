@@ -20,7 +20,7 @@ public partial class Player : CharacterBody3D
 	private GpuParticles3D _rightFlash;
 	private GpuParticles3D _leftFlash;
 	private Gun _gun;
-	private Spell _spell;
+	private AreaSpell _spell;
 	private double _health = MAX_HEALTH;
 
 	public List<string> effects = new List<string>();
@@ -118,7 +118,7 @@ public partial class Player : CharacterBody3D
 		{
 			switch (_hud.CloseRadial())
 			{
-				case Spell spell:
+				case AreaSpell spell:
 					_spell = spell;
 					break;
 				case Gun gun:
@@ -237,7 +237,7 @@ public partial class Player : CharacterBody3D
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
-	public void AddEffect(Spell effect)
+	public void AddEffect(AreaSpell effect)
 	{
 		//GetMultiplayerAuthority();
 		//used to spawn bodyless spell effects that only target one player for tic effects

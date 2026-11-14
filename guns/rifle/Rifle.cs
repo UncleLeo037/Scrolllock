@@ -1,9 +1,8 @@
 using Godot;
 using Srolllock.guns;
 
-public partial class Rifle : Gun, IEquipment
+public partial class Rifle : Gun
 {
-	public Texture2D Icon { get; set; }
 	private int _piercing = 6;
 	private (float x, float y) _savedSway; 
 	public Rifle(string name = null)

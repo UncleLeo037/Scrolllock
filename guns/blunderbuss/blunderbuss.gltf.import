@@ -3,7 +3,7 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://vdw66stui8dm"
+uid="uid://240u3wmh7yha"
 path="res://.godot/imported/blunderbuss.gltf-38737ff479f83c3df2ad219d432a1a24.scn"
 
 [deps]
@@ -16,8 +16,10 @@ dest_files=["res://.godot/imported/blunderbuss.gltf-38737ff479f83c3df2ad219d432a
 nodes/root_type=""
 nodes/root_name=""
 nodes/root_script=null
+mesh_library/use_node_names_as_mesh_names=false
+array_mesh/deduplicate_surfaces=true
 nodes/apply_root_scale=true
-nodes/root_scale=1.0
+nodes/root_scale=0.5
 nodes/import_as_skeleton_bones=false
 nodes/use_name_suffixes=true
 nodes/use_node_type_suffixes=true
@@ -37,6 +39,25 @@ import_script/path=""
 materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
-_subresources={}
+_subresources={
+"materials": {
+"Metal": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://guns/texures/Metal.tres",
+"use_external/path": "uid://dkq5rho6ferv8"
+},
+"Shadow": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://guns/texures/Shadow.tres",
+"use_external/path": "uid://coxx608t6s0fa"
+},
+"Wood": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://guns/texures/Wood.tres",
+"use_external/path": "uid://c2kthf6pjjq72"
+}
+}
+}
 gltf/naming_version=2
 gltf/embedded_image_handling=1
+gltf/texture_map_mode=1

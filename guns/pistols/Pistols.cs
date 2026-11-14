@@ -5,9 +5,8 @@ using Godot;
 using Srolllock.guns;
 using Srolllock.spells;
 
-public partial class Pistols : Gun, IEquipment
+public partial class Pistols : Gun
 {
-    public Texture2D Icon { get; set; }
     private Node3D _offhand;
     private string _sideName;
     private double _sideTimer;
@@ -45,7 +44,7 @@ public partial class Pistols : Gun, IEquipment
         SetPhysicsProcess(false);
     }
 
-    public override async void SetSpell(Spell spell)
+    public override async void SetSpell(AreaSpell spell)
     {
         string reloadAnim = "ReloadBoth";//$"Reload{GetType().Name}";
         if (spell == null || (spell?.GetType().Name == _spell && spell?.GetType().Name == _sideSpell)) return;

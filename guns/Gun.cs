@@ -7,8 +7,10 @@ using System.Linq;
 
 namespace Srolllock.guns
 {
-	public partial class Gun : Node3D
+	public partial class Gun : Node3D, IEquipment
 	{
+		public Texture2D Icon { get; set; }
+		public string HudSlot { get; set; } = "Gun";
 		protected string _spell = string.Empty;
 		protected Player _playerRef;
 		protected Node3D _model;
@@ -57,7 +59,7 @@ namespace Srolllock.guns
 			SetPhysicsProcess(false);
 		}
 
-		public virtual async void SetSpell(Spell spell)
+		public virtual async void SetSpell(AreaSpell spell)
 		{
 			string reloadAnim = "ReloadRight";//$"Reload{GetType().Name}";
 			if (spell == null || spell?.GetType().Name == _spell) return;

@@ -16,7 +16,7 @@ public partial class Hud : Control
 	private Dictionary<string, TextureRect> _icons = new Dictionary<string, TextureRect>()
 	{
 		{"Gun", null},
-		{"Spell", null}
+		{"Ammo", null}
 	};
 
 	public override void _Ready()
@@ -24,7 +24,7 @@ public partial class Hud : Control
 		HealthBar = GetNode<ProgressBar>("ProgressBar");
 		_radial = GetNode<Radial>("Radial");
 		_icons["Gun"] = GetNode<TextureRect>("TextureGun");
-		_icons["Spell"] = GetNode<TextureRect>("TextureSpell");
+		_icons["Ammo"] = GetNode<TextureRect>("TextureSpell");
 		Loadout = new List<object>()
 		{
 			new Pistols("Pistols", "Pistols"),
@@ -46,7 +46,7 @@ public partial class Hud : Control
 		if (equip)
 		{
 			var item = (IEquipment)Loadout[_radial.Select];
-			string type = item.GetType().BaseType.Name;
+			string type = item.HudSlot;
 			_icons[type].Texture = item.Icon;
 			return item;
 		}

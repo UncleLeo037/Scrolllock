@@ -1,7 +1,7 @@
 using Godot;
 using Srolllock.spells;
 
-public partial class Tornado : Spell
+public partial class Tornado : AreaSpell
 {
 	private double lifetime = 3;
 	Area3D area;
@@ -13,7 +13,7 @@ public partial class Tornado : Spell
 		area = GetNode<Area3D>("Area3D");
 		center = GetNode<Node3D>("Center");
 		pull = center.GetNode<Node3D>("Pull");
-		Scale = Scale*(0.5f+(0.5f*Modifier));
+		Scale = Scale * (0.5f + (0.5f * Modifier));
 	}
 
 	public override void _PhysicsProcess(double delta)

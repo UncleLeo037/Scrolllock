@@ -16,7 +16,7 @@ public partial class SpellSpawner : MultiplayerSpawner
 	{
 		Dictionary spell = (Dictionary)detail;
 		PackedScene spellScene = GD.Load<PackedScene>($"res://spells/{spell["name"].ToString().ToLower()}/{spell["name"]}.tscn");
-		Spell spellInstance = spellScene.Instantiate<Spell>();
+		AreaSpell spellInstance = spellScene.Instantiate<AreaSpell>();
 		spellInstance.Modifier = (float)spell["modifier"];
 		spellInstance.Position = (Vector3)spell["position"];
 		spellInstance.Rotation = (Vector3)spell["rotation"];

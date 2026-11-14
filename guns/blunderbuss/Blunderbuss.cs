@@ -3,9 +3,8 @@ using System.Linq;
 using Godot;
 using Srolllock.guns;
 
-public partial class Blunderbuss : Gun, IEquipment
+public partial class Blunderbuss : Gun
 {
-	public Texture2D Icon { get; set; }
 	private int _pellets = 6;
 
 	public Blunderbuss(string name = null)

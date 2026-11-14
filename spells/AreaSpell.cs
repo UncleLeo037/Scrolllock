@@ -7,15 +7,17 @@ using System.Threading.Tasks;
 
 namespace Srolllock.spells
 {
-	public partial class Spell : Node3D, IEquipment
+	public partial class AreaSpell : Node3D, IEquipment, ISpell
 	{
 		public Texture2D Icon { get; set; }
 
-		public double Cooldown;
+        public double Cooldown { get; set; }
 
-		public float Modifier = 1;
+		public float Modifier { get; set; } = 1;
 
-		public Spell()
+		public string HudSlot { get; set; } = "Ammo";
+
+		public AreaSpell()
 		{
 			Icon = GD.Load<Texture2D>($"res://spells/{GetType().Name}/{GetType().Name}.png");
 		}

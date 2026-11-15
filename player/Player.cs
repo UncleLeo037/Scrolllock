@@ -202,7 +202,7 @@ public partial class Player : CharacterBody3D
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
-	public void Damage(int damage)
+	public void Damage(double damage)
 	{
 		_health -= damage;
 		if (_health <= 0)

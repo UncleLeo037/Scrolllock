@@ -33,7 +33,8 @@ public partial class Hud : Control
 			new Tornado(),
 			new Slick(),
 			new Blunderbuss(),
-			new Rifle()
+			new Rifle(),
+			new Fireball()
 		};
 		_radial.Setup(Loadout);
 	}

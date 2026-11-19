@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://wejclekkfyie"]
 
-[ext_resource type="Script" uid="uid://1iqd4w7p73d3" path="res://spells/force/Force.cs" id="1_1xy7k"]
+[ext_resource type="Script" uid="uid://1iqd4w7p73d3" path="res://Spells/Force/Force.cs" id="1_gvkr3"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_1xy7k"]
 
@@ -13,7 +13,7 @@ albedo_color = Color(1, 1, 1, 0.2)
 material = SubResource("StandardMaterial3D_6eahp")
 
 [node name="Force" type="Node3D" unique_id=159027205]
-script = ExtResource("1_1xy7k")
+script = ExtResource("1_gvkr3")
 
 [node name="Area3D" type="Area3D" parent="." unique_id=316522222]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)

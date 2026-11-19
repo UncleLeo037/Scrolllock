@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c5u846xxp6gqh"]
 
-[ext_resource type="Script" uid="uid://bklxfa1p0if18" path="res://spells/fireball/Fireball.cs" id="1_mp3sk"]
+[ext_resource type="Script" uid="uid://bb4lxkdaq1qbr" path="res://Spells/Fireball/Fireball.cs" id="1_p1wab"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_y74d0"]
 
@@ -13,7 +13,7 @@ albedo_color = Color(1, 0.6431373, 0, 0.2)
 material = SubResource("StandardMaterial3D_6eahp")
 
 [node name="Fireball" type="Node3D" unique_id=369153307]
-script = ExtResource("1_mp3sk")
+script = ExtResource("1_p1wab")
 
 [node name="Area3D" type="Area3D" parent="." unique_id=262584365]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)

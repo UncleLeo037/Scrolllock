@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://claemnlqn2fwb"
-path="res://.godot/imported/seal.png-46ec514694f041389e32deaeccfe6dc5.ctex"
+path="res://.godot/imported/seal.png-828f9a541a9afe54098d5f050552bb72.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://player/textures/seal.png"
-dest_files=["res://.godot/imported/seal.png-46ec514694f041389e32deaeccfe6dc5.ctex"]
+source_file="res://Player/textures/seal.png"
+dest_files=["res://.godot/imported/seal.png-828f9a541a9afe54098d5f050552bb72.ctex"]
 
 [params]
 

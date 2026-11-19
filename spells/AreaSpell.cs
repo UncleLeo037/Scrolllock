@@ -19,7 +19,7 @@ namespace Srolllock.spells
 
 		public AreaSpell()
 		{
-			Icon = GD.Load<Texture2D>($"res://spells/{GetType().Name}/{GetType().Name}.png");
+			Icon = GD.Load<Texture2D>($"res://Spells/{GetType().Name}/{GetType().Name}.png");
 		}
 
 		public override void _Process(double delta)

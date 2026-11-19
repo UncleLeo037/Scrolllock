@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://6akyr2n462hx"
-path="res://.godot/imported/force.png-b3e615d93fe44e7fbc561bf31832278f.ctex"
+uid="uid://rot7mg26qdv0"
+path="res://.godot/imported/Force.png-aa54d2c524659b8fd936cd0bf48d74e5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://spells/force/force.png"
-dest_files=["res://.godot/imported/force.png-b3e615d93fe44e7fbc561bf31832278f.ctex"]
+source_file="res://Spells/Force/Force.png"
+dest_files=["res://.godot/imported/Force.png-aa54d2c524659b8fd936cd0bf48d74e5.ctex"]
 
 [params]
 

@@ -10,6 +10,6 @@ public partial class TargetSpell : ISpell, IEquipment
 
 	public TargetSpell()
 	{
-		Icon = GD.Load<Texture2D>($"res://spells/{GetType().Name}/{GetType().Name}.png");
+		Icon = GD.Load<Texture2D>($"res://Spells/{GetType().Name}/{GetType().Name}.png");
 	}
 }

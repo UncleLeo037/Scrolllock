@@ -1,6 +1,6 @@
 extends MultiplayerSpawner
 
-var lobby_id : int = 0
+var self_lobby_id : int = 0
 var peer : SteamMultiplayerPeer
 var is_host : bool = false
 var is_joining : bool = false
@@ -34,7 +34,7 @@ func host_lobby():
 
 func _on_lobby_created(result : int, lobby_id : int):
 	if result == Steam.Result.RESULT_OK:
-		self.lobby_id = lobby_id
+		self_lobby_id = lobby_id
 		display_id.text = str(lobby_id)
 		
 		peer = SteamMultiplayerPeer.new()
@@ -43,7 +43,7 @@ func _on_lobby_created(result : int, lobby_id : int):
 		multiplayer.multiplayer_peer = peer
 		multiplayer.peer_connected.connect(_add_player)
 		multiplayer.peer_disconnected.connect(_remove_player)
-		add_child(preload("res://maps/demo/demo_map.tscn").instantiate())
+		add_child(preload("res://Maps/demo/demo_map.tscn").instantiate())
 		_add_player()
 		
 		print("Lobby created, join code: ", lobby_id)
@@ -55,11 +55,11 @@ func join_lobby(lobby_id : int):
 	is_joining = true
 	Steam.joinLobby(lobby_id)
 	
-func _on_lobby_joined(lobby_id : int, permissions : int, locked : bool, response : int):
+func _on_lobby_joined(lobby_id : int, _permissions : int, _locked : bool, _response : int):
 	if !is_joining:
 		return
 	
-	self.lobby_id = lobby_id
+	self_lobby_id = lobby_id
 	display_id.text = str(lobby_id)
 	peer = SteamMultiplayerPeer.new()
 	peer.server_relay = true
@@ -70,7 +70,7 @@ func _on_lobby_joined(lobby_id : int, permissions : int, locked : bool, response
 	menu.hide()
 
 func _add_player(id : int = 1):
-	var player = preload("res://player/Player.tscn").instantiate()
+	var player = preload("res://Player/Player.tscn").instantiate()
 	player.name = str(id)
 	call_deferred("add_child", player)
 
@@ -100,4 +100,4 @@ func _on_exit_pressed() -> void:
 
 
 func _on_copy_pressed() -> void:
-	DisplayServer.clipboard_set(str(lobby_id))
+	DisplayServer.clipboard_set(str(self_lobby_id))

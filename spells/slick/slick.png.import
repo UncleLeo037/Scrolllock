@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ghhtgxbbvpw7"
-path="res://.godot/imported/slick.png-c57ffd080ccef82770994b2417c21650.ctex"
+uid="uid://cm3tvaassh7q"
+path="res://.godot/imported/Slick.png-c6945e19695da28b97289a7a4fbf131e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://spells/slick/slick.png"
-dest_files=["res://.godot/imported/slick.png-c57ffd080ccef82770994b2417c21650.ctex"]
+source_file="res://Spells/Slick/Slick.png"
+dest_files=["res://.godot/imported/Slick.png-c6945e19695da28b97289a7a4fbf131e.ctex"]
 
 [params]
 

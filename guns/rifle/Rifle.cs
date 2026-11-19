@@ -9,7 +9,7 @@ public partial class Rifle : Gun
 	{
 		var temp = string.IsNullOrEmpty(name) ? GetType().Name : name;
 		_modelPath = $"{GetType().Name}/{temp}";
-		Icon = GD.Load<Texture2D>($"res://guns/{GetType().Name}/{temp}.png");
+		Icon = GD.Load<Texture2D>($"res://Guns/{GetType().Name}/{temp}.png");
 	}
 
 	public override void SpawnModel(GunSpawner rightSpawner, GunSpawner leftSpawner)

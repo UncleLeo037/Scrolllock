@@ -49,7 +49,7 @@ public partial class Player : CharacterBody3D
 		}
 		//loading screen should probably be started by join or host button
 
-		AddChild(GD.Load<PackedScene>($"res://player/Hud.tscn").Instantiate());
+		AddChild(GD.Load<PackedScene>($"res://Player/Hud.tscn").Instantiate());
 		_hud = GetNode<Hud>("Hud");
 		_camera = GetNode<Camera3D>("Camera3D");
 		_body = GetNode<CharacterBody3D>(".");

@@ -1,16 +1,16 @@
 [gd_scene format=4 uid="uid://c3k7om72c5x8"]
 
-[ext_resource type="Script" uid="uid://bvwbn6u58ibla" path="res://player/Player.cs" id="1_aqcbf"]
-[ext_resource type="Script" uid="uid://dk8rpfma2v5hx" path="res://player/GunSpawner.cs" id="4_83hs8"]
-[ext_resource type="Texture2D" uid="uid://dx6dt4sngj2oe" path="res://player/textures/flash.png" id="4_aqcbf"]
-[ext_resource type="Texture2D" uid="uid://bwhh77v4nugi5" path="res://player/textures/Model_rock_0002_color_1k.jpg" id="5_aqcbf"]
-[ext_resource type="Material" uid="uid://b8y7qaej1w5w0" path="res://player/textures/wood.tres" id="6_06mnu"]
-[ext_resource type="Texture2D" uid="uid://deqwjjr3a5hb7" path="res://player/textures/Model_wood-texture.jpg" id="6_gskgj"]
-[ext_resource type="Material" uid="uid://crruvs8261hwn" path="res://player/textures/rock.tres" id="6_mhpjh"]
-[ext_resource type="Shader" uid="uid://ctogi4kiro64x" path="res://shaders/retro_models.gdshader" id="8_5qrx2"]
-[ext_resource type="Texture2D" uid="uid://cglbsp84q24mk" path="res://player/textures/grey.png" id="9_b32pr"]
-[ext_resource type="Texture2D" uid="uid://6qt5lbuhg8yl" path="res://player/textures/black.png" id="10_hbkom"]
-[ext_resource type="Texture2D" uid="uid://du13n866761bb" path="res://player/textures/pink.png" id="11_d4g0h"]
+[ext_resource type="Script" uid="uid://bvwbn6u58ibla" path="res://Player/Player.cs" id="1_v0k0e"]
+[ext_resource type="Script" uid="uid://dk8rpfma2v5hx" path="res://Player/GunSpawner.cs" id="2_5wa8t"]
+[ext_resource type="Texture2D" uid="uid://dx6dt4sngj2oe" path="res://Player/textures/flash.png" id="3_p7tob"]
+[ext_resource type="Texture2D" uid="uid://bwhh77v4nugi5" path="res://Player/textures/Model_rock_0002_color_1k.jpg" id="4_dm7nj"]
+[ext_resource type="Material" uid="uid://crruvs8261hwn" path="res://Player/textures/rock.tres" id="5_3mea3"]
+[ext_resource type="Texture2D" uid="uid://deqwjjr3a5hb7" path="res://Player/textures/Model_wood-texture.jpg" id="6_7v5gs"]
+[ext_resource type="Material" uid="uid://b8y7qaej1w5w0" path="res://Player/textures/wood.tres" id="7_8sa4y"]
+[ext_resource type="Shader" uid="uid://ctogi4kiro64x" path="res://Shaders/retro_models.gdshader" id="8_v0k0e"]
+[ext_resource type="Texture2D" uid="uid://cglbsp84q24mk" path="res://Player/textures/grey.png" id="9_d7xyo"]
+[ext_resource type="Texture2D" uid="uid://6qt5lbuhg8yl" path="res://Player/textures/black.png" id="10_evw08"]
+[ext_resource type="Texture2D" uid="uid://du13n866761bb" path="res://Player/textures/pink.png" id="11_roy6y"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gwnis"]
 radius = 0.2
@@ -23,7 +23,7 @@ gravity = Vector3(0, 0, 0)
 transparency = 1
 shading_mode = 0
 vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("4_aqcbf")
+albedo_texture = ExtResource("3_p7tob")
 billboard_mode = 3
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
@@ -299,7 +299,7 @@ _data = {
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hf8ui"]
 resource_name = "Stone"
 cull_mode = 2
-albedo_texture = ExtResource("5_aqcbf")
+albedo_texture = ExtResource("4_dm7nj")
 roughness = 0.5
 metadata/_gltf_primary_texture_coord = 0
 
@@ -338,7 +338,7 @@ shadow_mesh = SubResource("ArrayMesh_oecm0")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ciubw"]
 resource_name = "Wood"
 cull_mode = 2
-albedo_texture = ExtResource("6_gskgj")
+albedo_texture = ExtResource("6_7v5gs")
 roughness = 0.5
 metadata/_gltf_primary_texture_coord = 0
 
@@ -1281,8 +1281,8 @@ shadow_mesh = SubResource("ArrayMesh_o1t0v")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bx3wa"]
 render_priority = 0
-shader = ExtResource("8_5qrx2")
-shader_parameter/albedo_texture = ExtResource("9_b32pr")
+shader = ExtResource("8_v0k0e")
+shader_parameter/albedo_texture = ExtResource("9_d7xyo")
 shader_parameter/snap_enabled = true
 shader_parameter/snap_resolution = 148.0
 
@@ -1328,8 +1328,8 @@ shadow_mesh = SubResource("ArrayMesh_8d7mh")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x5okp"]
 render_priority = 0
-shader = ExtResource("8_5qrx2")
-shader_parameter/albedo_texture = ExtResource("10_hbkom")
+shader = ExtResource("8_v0k0e")
+shader_parameter/albedo_texture = ExtResource("10_evw08")
 shader_parameter/snap_enabled = true
 shader_parameter/snap_resolution = 148.0
 
@@ -1373,15 +1373,15 @@ shadow_mesh = SubResource("ArrayMesh_oexe5")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5k1r4"]
 render_priority = 0
-shader = ExtResource("8_5qrx2")
-shader_parameter/albedo_texture = ExtResource("11_d4g0h")
+shader = ExtResource("8_v0k0e")
+shader_parameter/albedo_texture = ExtResource("11_roy6y")
 shader_parameter/snap_enabled = true
 shader_parameter/snap_resolution = 148.0
 
 [node name="Player" type="CharacterBody3D" unique_id=1074384815]
 collision_layer = 4
 collision_mask = 3
-script = ExtResource("1_aqcbf")
+script = ExtResource("1_v0k0e")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=661437906]
 shape = SubResource("CapsuleShape3D_gwnis")
@@ -1394,7 +1394,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.3, -0.5)
 
 [node name="GunSpawner" type="MultiplayerSpawner" parent="Camera3D/Right" unique_id=1625035346]
 spawn_path = NodePath("..")
-script = ExtResource("4_83hs8")
+script = ExtResource("2_5wa8t")
 
 [node name="MuzzleFlash" type="GPUParticles3D" parent="Camera3D/Right" unique_id=2120078619]
 emitting = false
@@ -1410,7 +1410,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.3, -0.5)
 
 [node name="GunSpawner" type="MultiplayerSpawner" parent="Camera3D/Left" unique_id=455188321]
 spawn_path = NodePath("..")
-script = ExtResource("4_83hs8")
+script = ExtResource("2_5wa8t")
 
 [node name="MuzzleFlash" type="GPUParticles3D" parent="Camera3D/Left" unique_id=1658290447]
 emitting = false
@@ -1462,147 +1462,147 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0
 [node name="Core" type="MeshInstance3D" parent="Model" unique_id=631435327]
 mesh = SubResource("ArrayMesh_nfl5a")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_mhpjh")
+surface_material_override/0 = ExtResource("5_3mea3")
 
 [node name="Waist" type="MeshInstance3D" parent="Model" unique_id=1815612752]
 mesh = SubResource("ArrayMesh_b1jxq")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_06mnu")
+surface_material_override/0 = ExtResource("7_8sa4y")
 
 [node name="Chest" type="MeshInstance3D" parent="Model" unique_id=2110287792]
 mesh = SubResource("ArrayMesh_jklsn")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_06mnu")
+surface_material_override/0 = ExtResource("7_8sa4y")
 
 [node name="Neck" type="MeshInstance3D" parent="Model" unique_id=1535236190]
 mesh = SubResource("ArrayMesh_kgeww")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_mhpjh")
+surface_material_override/0 = ExtResource("5_3mea3")
 
 [node name="Head" type="MeshInstance3D" parent="Model" unique_id=1656420383]
 mesh = SubResource("ArrayMesh_tnxqb")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_06mnu")
+surface_material_override/0 = ExtResource("7_8sa4y")
 
 [node name="HipL" type="MeshInstance3D" parent="Model" unique_id=1154016226]
 mesh = SubResource("ArrayMesh_pgxvq")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_mhpjh")
+surface_material_override/0 = ExtResource("5_3mea3")
 
 [node name="ThighL" type="MeshInstance3D" parent="Model" unique_id=847771391]
 mesh = SubResource("ArrayMesh_apwyj")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_06mnu")
+surface_material_override/0 = ExtResource("7_8sa4y")
 
 [node name="KneeL" type="MeshInstance3D" parent="Model" unique_id=139123668]
 mesh = SubResource("ArrayMesh_i8oom")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_mhpjh")
+surface_material_override/0 = ExtResource("5_3mea3")
 
 [node name="CalfL" type="MeshInstance3D" parent="Model" unique_id=220929459]
 mesh = SubResource("ArrayMesh_t03nq")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_06mnu")
+surface_material_override/0 = ExtResource("7_8sa4y")
 
 [node name="AnkleL" type="MeshInstance3D" parent="Model" unique_id=473749705]
 mesh = SubResource("ArrayMesh_7nic7")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_mhpjh")
+surface_material_override/0 = ExtResource("5_3mea3")
 
 [node name="FootL" type="MeshInstance3D" parent="Model" unique_id=643415150]
 mesh = SubResource("ArrayMesh_rl6e5")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_06mnu")
+surface_material_override/0 = ExtResource("7_8sa4y")
 
 [node name="HipR" type="MeshInstance3D" parent="Model" unique_id=1605052460]
 mesh = SubResource("ArrayMesh_jg122")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_mhpjh")
+surface_material_override/0 = ExtResource("5_3mea3")
 
 [node name="ThighR" type="MeshInstance3D" parent="Model" unique_id=1236703610]
 mesh = SubResource("ArrayMesh_ch3w5")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_06mnu")
+surface_material_override/0 = ExtResource("7_8sa4y")
 
 [node name="KneeR" type="MeshInstance3D" parent="Model" unique_id=754729163]
 mesh = SubResource("ArrayMesh_evr47")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_mhpjh")
+surface_material_override/0 = ExtResource("5_3mea3")
 
 [node name="CalfR" type="MeshInstance3D" parent="Model" unique_id=3583059]
 mesh = SubResource("ArrayMesh_k1iwo")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_06mnu")
+surface_material_override/0 = ExtResource("7_8sa4y")
 
 [node name="AnkleR" type="MeshInstance3D" parent="Model" unique_id=1706292592]
 mesh = SubResource("ArrayMesh_7ax57")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_mhpjh")
+surface_material_override/0 = ExtResource("5_3mea3")
 
 [node name="FootR" type="MeshInstance3D" parent="Model" unique_id=673490589]
 mesh = SubResource("ArrayMesh_q1g4f")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_06mnu")
+surface_material_override/0 = ExtResource("7_8sa4y")
 
 [node name="ShoulderR" type="MeshInstance3D" parent="Model" unique_id=314516403]
 mesh = SubResource("ArrayMesh_e3531")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_mhpjh")
+surface_material_override/0 = ExtResource("5_3mea3")
 
 [node name="UpperR" type="MeshInstance3D" parent="Model" unique_id=250153586]
 mesh = SubResource("ArrayMesh_ro3xm")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_06mnu")
+surface_material_override/0 = ExtResource("7_8sa4y")
 
 [node name="ElbowR" type="MeshInstance3D" parent="Model" unique_id=1028058553]
 mesh = SubResource("ArrayMesh_oasab")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_mhpjh")
+surface_material_override/0 = ExtResource("5_3mea3")
 
 [node name="ForearmR" type="MeshInstance3D" parent="Model" unique_id=1364565711]
 mesh = SubResource("ArrayMesh_wvjll")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_06mnu")
+surface_material_override/0 = ExtResource("7_8sa4y")
 
 [node name="WristR" type="MeshInstance3D" parent="Model" unique_id=487886450]
 mesh = SubResource("ArrayMesh_eo1sl")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_mhpjh")
+surface_material_override/0 = ExtResource("5_3mea3")
 
 [node name="HandR" type="MeshInstance3D" parent="Model" unique_id=1894274950]
 mesh = SubResource("ArrayMesh_ts2ud")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_06mnu")
+surface_material_override/0 = ExtResource("7_8sa4y")
 
 [node name="ShoulderL" type="MeshInstance3D" parent="Model" unique_id=1005776778]
 mesh = SubResource("ArrayMesh_5yk0t")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_mhpjh")
+surface_material_override/0 = ExtResource("5_3mea3")
 
 [node name="UpperL" type="MeshInstance3D" parent="Model" unique_id=174375839]
 mesh = SubResource("ArrayMesh_nxyqo")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_06mnu")
+surface_material_override/0 = ExtResource("7_8sa4y")
 
 [node name="ElbowL" type="MeshInstance3D" parent="Model" unique_id=820903034]
 mesh = SubResource("ArrayMesh_p8k0k")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_mhpjh")
+surface_material_override/0 = ExtResource("5_3mea3")
 
 [node name="ForearmL" type="MeshInstance3D" parent="Model" unique_id=10918147]
 mesh = SubResource("ArrayMesh_4wcoq")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_06mnu")
+surface_material_override/0 = ExtResource("7_8sa4y")
 
 [node name="WristL" type="MeshInstance3D" parent="Model" unique_id=2062073325]
 mesh = SubResource("ArrayMesh_fiutl")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_mhpjh")
+surface_material_override/0 = ExtResource("5_3mea3")
 
 [node name="HandL" type="MeshInstance3D" parent="Model" unique_id=1065108605]
 mesh = SubResource("ArrayMesh_y2afm")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("6_06mnu")
+surface_material_override/0 = ExtResource("7_8sa4y")
 
 [node name="glasses" type="Node3D" parent="Model" unique_id=2085927256]
 transform = Transform3D(-2.1855695e-09, 0, -0.05, 0, 0.05, 0, 0.05, 0, -2.1855695e-09, 0.112459436, 0.81589186, 4.915758e-09)

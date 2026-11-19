@@ -11,7 +11,7 @@ public partial class Blunderbuss : Gun
 	{
 		var temp = string.IsNullOrEmpty(name) ? GetType().Name : name;
 		_modelPath = $"{GetType().Name}/{temp}";
-		Icon = GD.Load<Texture2D>($"res://guns/{GetType().Name}/{temp}.png");
+		Icon = GD.Load<Texture2D>($"res://Guns/{GetType().Name}/{temp}.png");
 		cooldown = 0.9;
 	}
 

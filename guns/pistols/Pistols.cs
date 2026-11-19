@@ -19,7 +19,7 @@ public partial class Pistols : Gun
         _modelPath = $"{GetType().Name}/{type}";
         type = string.IsNullOrEmpty(sideName) ? GetType().Name : sideName;
         _sideName = $"{GetType().Name}/{type}";
-        Icon = GD.Load<Texture2D>($"res://guns/{GetType().Name}/{mainName}.png");
+        Icon = GD.Load<Texture2D>($"res://Guns/{GetType().Name}/{mainName}.png");
     }
 
     public override void _PhysicsProcess(double delta)

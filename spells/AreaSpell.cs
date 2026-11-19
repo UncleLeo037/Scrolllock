@@ -30,7 +30,7 @@ namespace Srolllock.Spells
 		[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
 		public void Dispel()
 		{
-			this.QueueFree();
+			if (IsMultiplayerAuthority()) QueueFree();
 		}
 	}
 }

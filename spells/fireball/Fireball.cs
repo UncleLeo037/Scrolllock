@@ -18,7 +18,7 @@ public partial class Fireball : AreaSpell
 		lifetime -= delta;
 		if (lifetime <= 0.0)
 		{
-			this.QueueFree();
+			Dispel();
 		}
 	}
 

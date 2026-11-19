@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://ngjd4qlee4r6"]
+
+[ext_resource type="Script" uid="uid://d103ndd1uxbby" path="res://Spells/Heal/Heal.cs" id="1_nry48"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_y74d0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6eahp"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(0, 0.6431373, 0, 0.2)
+
+[sub_resource type="SphereMesh" id="SphereMesh_mp3sk"]
+material = SubResource("StandardMaterial3D_6eahp")
+
+[node name="Heal" type="Node3D" unique_id=369153307]
+script = ExtResource("1_nry48")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=262584365]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=555367293]
+shape = SubResource("SphereShape3D_y74d0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D" unique_id=1199962872]
+mesh = SubResource("SphereMesh_mp3sk")

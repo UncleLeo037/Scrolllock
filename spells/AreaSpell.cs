@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Srolllock.spells
+namespace Srolllock.Spells
 {
 	public partial class AreaSpell : Node3D, IEquipment, ISpell
 	{

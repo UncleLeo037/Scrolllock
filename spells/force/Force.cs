@@ -1,5 +1,5 @@
 using Godot;
-using Srolllock.spells;
+using Srolllock.Spells;
 
 public partial class Force : AreaSpell
 {

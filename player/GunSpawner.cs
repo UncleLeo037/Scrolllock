@@ -1,5 +1,5 @@
 using Godot;
-using Srolllock.guns;
+using Srolllock.Guns;
 
 public partial class GunSpawner : MultiplayerSpawner
 {

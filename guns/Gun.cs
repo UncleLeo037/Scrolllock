@@ -1,11 +1,11 @@
 using Godot;
 using Godot.Bridge;
-using Srolllock.spells;
+using Srolllock.Spells;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Srolllock.guns
+namespace Srolllock.Guns
 {
 	public partial class Gun : Node3D, IEquipment
 	{

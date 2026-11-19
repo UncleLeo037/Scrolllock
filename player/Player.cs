@@ -1,8 +1,8 @@
 using Godot;
-using Srolllock.spells;
+using Srolllock.Spells;
 using System;
 using System.Collections.Generic;
-using Srolllock.guns;
+using Srolllock.Guns;
 
 public partial class Player : CharacterBody3D
 {

@@ -1,6 +1,6 @@
 using Godot;
-using Srolllock.guns;
-using Srolllock.spells;
+using Srolllock.Guns;
+using Srolllock.Spells;
 using System.Collections.Generic;
 
 public partial class Hud : Control

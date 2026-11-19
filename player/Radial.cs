@@ -1,5 +1,5 @@
 using Godot;
-using Srolllock.guns;
+using Srolllock.Guns;
 using System;
 using System.Collections.Generic;
 

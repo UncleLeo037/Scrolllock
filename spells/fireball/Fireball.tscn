@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c5u846xxp6gqh"]
 
-[ext_resource type="Script" uid="uid://bb4lxkdaq1qbr" path="res://Spells/Fireball/Fireball.cs" id="1_p1wab"]
+[ext_resource type="Script" uid="uid://s15g6jqqa8qu" path="res://Spells/Fireball/Fireball.cs" id="1_p1wab"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_y74d0"]
 

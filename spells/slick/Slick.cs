@@ -1,6 +1,6 @@
 using Godot;
 using System;
-using Srolllock.spells;
+using Srolllock.Spells;
 
 public partial class Slick : AreaSpell
 {

@@ -2,8 +2,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Godot;
-using Srolllock.guns;
-using Srolllock.spells;
+using Srolllock.Guns;
+using Srolllock.Spells;
 
 public partial class Pistols : Gun
 {

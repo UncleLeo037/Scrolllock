@@ -1,5 +1,5 @@
 using Godot;
-using Srolllock.spells;
+using Srolllock.Spells;
 using System;
 
 public partial class Wall : AreaSpell

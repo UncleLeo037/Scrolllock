@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ public partial class Pistols : Gun
     private Node3D _offhand;
     private string _sideName;
     private double _sideTimer;
-    private string _sideSpell;
+    protected Action<Vector3, object> _sideAction { get; set; } = null; 
     private int _sideAmmo = 1;
 
     public Pistols(string mainName = null, string sideName = null)
@@ -20,6 +21,7 @@ public partial class Pistols : Gun
         type = string.IsNullOrEmpty(sideName) ? GetType().Name : sideName;
         _sideName = $"{GetType().Name}/{type}";
         Icon = GD.Load<Texture2D>($"res://Guns/{GetType().Name}/{mainName}.png");
+        _modifier = 0.6f;
     }
 
     public override void _PhysicsProcess(double delta)
@@ -44,15 +46,31 @@ public partial class Pistols : Gun
         SetPhysicsProcess(false);
     }
 
-    public override async void SetSpell(AreaSpell spell)
+    public override async void SetSpell(ISpell spell)
     {
         string reloadAnim = "ReloadBoth";//$"Reload{GetType().Name}";
-        if (spell == null || (spell?.GetType().Name == _spell && spell?.GetType().Name == _sideSpell)) return;
+        Action<Vector3, object> method = null;
+        switch (spell)
+        {
+            case TargetSpell targetSpell:
+                targetSpell.Modifier = _modifier;
+                method = (vec, obj) => targetSpell.Activate(obj);
+                break;
+            case AreaSpell areaSpell:
+                method = (vec, obj) => SpellSpawner.instance.RpcId(1, "RequestSpawnSpell", areaSpell.GetType().Name, vec, new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0), _modifier);
+                break;
+            default:
+                //probably do misfire animation for lols
+                break;
+        }
+        
+        if (_action == method && _sideAction == method) return;
         _playerRef.Rpc("PlayAnim", reloadAnim, 0);
         Variant[] anim = await ToSignal(_playerRef.AnimPlayer, AnimationPlayer.SignalName.AnimationFinished);
         if (anim[0].AsString() == reloadAnim)
         {
-            _spell = _sideSpell = spell?.GetType().Name ?? string.Empty;
+            _action = method;
+            _sideAction = method;
             ammo = _sideAmmo = maxAmmo;
         }
     }
@@ -65,7 +83,7 @@ public partial class Pistols : Gun
             return;
         }
         if (_sideTimer > 0.0) return;
-        
+
         _playerRef.Rpc("PlayAnim", "ShootRight", -0.25f);
 
         _sideTimer = cooldown;
@@ -75,21 +93,8 @@ public partial class Pistols : Gun
 
         var target = _rayCast.GetCollider();
         if (target == null) return;
-
-        //should just shoot instead
-        if (!string.IsNullOrEmpty(_sideSpell))
-        {
-            //spells will be called in different ways here in future
-            Vector3 point = _rayCast.GetCollisionPoint();
-            //only sends signal to host for spawning spells
-            SpellSpawner.instance.RpcId(1, "RequestSpawnSpell", _sideSpell, point, new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0), 0.6);
-            _sideSpell = string.Empty;
-        }
-        else if (target is Player player)
-        {
-            //send damage signal to all
-            player.Rpc("Damage", 25);
-        }
+        
+       _sideAction?.Invoke(_rayCast.GetCollisionPoint(), target);
     }
 
 
@@ -112,20 +117,7 @@ public partial class Pistols : Gun
         var target = _rayCast.GetCollider();
         if (target == null) return;
 
-        //should just shoot instead
-        if (!string.IsNullOrEmpty(_spell))
-        {
-            //spells will be called in different ways here in future
-            Vector3 point = _rayCast.GetCollisionPoint();
-            //only sends signal to host for spawning spells
-            SpellSpawner.instance.RpcId(1, "RequestSpawnSpell", _spell, point, new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0), 0.6);
-            _spell = string.Empty;
-        }
-        else if (target is Player player)
-        {
-            //send damage signal to all
-            player.Rpc("Damage", 25);
-        }
+        _action?.Invoke(_rayCast.GetCollisionPoint(), target);
     }
 
     public override async void Reload()

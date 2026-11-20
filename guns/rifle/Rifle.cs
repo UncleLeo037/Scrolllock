@@ -1,5 +1,6 @@
 using Godot;
 using Srolllock.Guns;
+using Srolllock.Spells;
 
 public partial class Rifle : Gun
 {
@@ -46,17 +47,7 @@ public partial class Rifle : Gun
 			var collider = _rayCast.GetCollider();
 			if (collider == null) break;
 
-			if (!string.IsNullOrEmpty(_spell))
-			{
-				Vector3 point = _rayCast.GetCollisionPoint();
-				//only sends signal to host for spawning spells
-				SpellSpawner.instance.RpcId(1, "RequestSpawnSpell", _spell, point, new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0), 1);
-			}
-			else if (collider is Player player)
-			{
-				//send damage signal to all
-				player.Rpc("Damage", 50);
-			}
+			_action?.Invoke(_rayCast.GetCollisionPoint(), collider);
 
 			if (collider is CollisionObject3D colObj)
 			{
@@ -66,7 +57,6 @@ public partial class Rifle : Gun
 			if (collider is StaticBody3D) break;
 			if (collider is CsgShape3D) break; //for demo maps
 		}
-		_spell = string.Empty;
 		_rayCast.ClearExceptions();
 	}
 }

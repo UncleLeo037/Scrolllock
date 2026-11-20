@@ -11,8 +11,9 @@ namespace Srolllock.Guns
 	{
 		public Texture2D Icon { get; set; }
 		public string HudSlot { get; set; } = "Gun";
-		protected string _spell = string.Empty;
+		protected Action<Vector3, object> _action { get; set; } = null; 
 		protected Player _playerRef;
+		protected float _modifier = 1;
 		protected Node3D _model;
 		protected string _modelPath;
 		protected RandomNumberGenerator rand = new RandomNumberGenerator();
@@ -30,6 +31,7 @@ namespace Srolllock.Guns
 			_rayCast.SetCollisionMaskValue(2, true);
 			_rayCast.SetCollisionMaskValue(3, true);
 			AddChild(_rayCast);
+			_action = (vec, obj) => (new Lead()).Activate(obj);
 		}
 
 		public override void _PhysicsProcess(double delta)
@@ -59,15 +61,31 @@ namespace Srolllock.Guns
 			SetPhysicsProcess(false);
 		}
 
-		public virtual async void SetSpell(AreaSpell spell)
+		public virtual async void SetSpell(ISpell spell)
 		{
 			string reloadAnim = "ReloadRight";//$"Reload{GetType().Name}";
-			if (spell == null || spell?.GetType().Name == _spell) return;
+			Action<Vector3, object> method = null;
+			switch (spell)
+			{
+				case TargetSpell targetSpell:
+					targetSpell.Modifier = _modifier;
+					method = (vec, obj) => targetSpell.Activate(obj);
+					break;
+				case AreaSpell areaSpell:
+					method = (vec, obj) => SpellSpawner.instance.RpcId(1, "RequestSpawnSpell", areaSpell.GetType().Name, vec, new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0), _modifier);
+					break;
+				//case TargetSpell selfSpell:
+				//	method = vec => Callable.From(() => targetSpell.Activate(_playerRef)).CallDeferred();
+				//	break;
+				default:
+					return;
+			}
+			if (_action == method) return;
 			_playerRef.Rpc("PlayAnim", reloadAnim, 0);
 			Variant[] anim = await ToSignal(_playerRef.AnimPlayer, AnimationPlayer.SignalName.AnimationFinished);
 			if (anim[0].AsString() == reloadAnim)
 			{
-				_spell = spell?.GetType().Name ?? string.Empty;
+				_action = method;
 				ammo = maxAmmo;
 			}
 		}

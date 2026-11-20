@@ -35,7 +35,8 @@ public partial class Hud : Control
 			new Blunderbuss(),
 			new Rifle(),
 			new Fireball(),
-			new Heal()
+			new Heal(),
+			new Lead()
 		};
 		_radial.Setup(Loadout);
 	}

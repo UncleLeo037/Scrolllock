@@ -20,7 +20,7 @@ public partial class Player : CharacterBody3D
 	private GpuParticles3D _rightFlash;
 	private GpuParticles3D _leftFlash;
 	private Gun _gun;
-	private AreaSpell _spell;
+	private ISpell _spell;
 	private double _health = MAX_HEALTH;
 
 	public List<string> effects = new List<string>();
@@ -118,7 +118,7 @@ public partial class Player : CharacterBody3D
 		{
 			switch (_hud.CloseRadial())
 			{
-				case AreaSpell spell:
+				case ISpell spell:
 					_spell = spell;
 					break;
 				case Gun gun:

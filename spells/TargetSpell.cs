@@ -12,4 +12,9 @@ public partial class TargetSpell : ISpell, IEquipment
 	{
 		Icon = GD.Load<Texture2D>($"res://Spells/{GetType().Name}/{GetType().Name}.png");
 	}
+
+	public virtual void Activate(object target)
+	{
+		//do nothing and look pretty
+	}
 }

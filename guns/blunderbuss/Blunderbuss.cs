@@ -13,6 +13,7 @@ public partial class Blunderbuss : Gun
 		_modelPath = $"{GetType().Name}/{temp}";
 		Icon = GD.Load<Texture2D>($"res://Guns/{GetType().Name}/{temp}.png");
 		cooldown = 0.9;
+		_modifier = 1.2f / _pellets;
 	}
 
 	public override void Shoot()
@@ -38,18 +39,8 @@ public partial class Blunderbuss : Gun
 			var target = _rayCast.GetCollider();
 			if (target != null)
 			{
-				if (!string.IsNullOrEmpty(_spell))
-				{
-					//only sends signal to host for spawning spells
-					SpellSpawner.instance.RpcId(1, "RequestSpawnSpell", _spell, _rayCast.GetCollisionPoint(), new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0), 1.2f / _pellets);
-				}
-				else if (target is Player player)
-				{
-					//send damage signal to all
-					player.Rpc("Damage", 15);
-				}
+				_action?.Invoke(_rayCast.GetCollisionPoint(), target);
 			}
 		}
-		_spell = string.Empty;
 	}
 }

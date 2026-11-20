@@ -4,7 +4,7 @@
 [ext_resource type="Material" uid="uid://drccsornonlun" path="res://assets/textures/devTexture.tres" id="1_ywcfp"]
 [ext_resource type="Texture2D" uid="uid://d2ebtbsr6gytm" path="res://assets/AllSkyFree_Sky_EpicGloriousPink_Equirect.png" id="2_ycays"]
 [ext_resource type="PackedScene" uid="uid://bfteys40meiyv" path="res://Maps/hub/Lift.tscn" id="3_8x6fp"]
-[ext_resource type="PackedScene" uid="uid://ioqqcvjdbsve" path="res://enemies/ghost/Ghost.tscn" id="4_smasd"]
+[ext_resource type="PackedScene" uid="uid://ioqqcvjdbsve" path="res://Enemies/Ghost/Ghost.tscn" id="4_smasd"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_a65qh"]
 panorama = ExtResource("2_ycays")

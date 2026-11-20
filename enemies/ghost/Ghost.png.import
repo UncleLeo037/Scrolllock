@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dhfbgrb3qq1ky"
-path.s3tc="res://.godot/imported/Ghost.png-13345b518a2d9a20235a4e7f034c224e.s3tc.ctex"
+path.s3tc="res://.godot/imported/Ghost.png-d2848ba3505c89a261be60e2d785a635.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://enemies/ghost/Ghost.png"
-dest_files=["res://.godot/imported/Ghost.png-13345b518a2d9a20235a4e7f034c224e.s3tc.ctex"]
+source_file="res://Enemies/Ghost/Ghost.png"
+dest_files=["res://.godot/imported/Ghost.png-d2848ba3505c89a261be60e2d785a635.s3tc.ctex"]
 
 [params]
 

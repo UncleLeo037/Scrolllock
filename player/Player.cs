@@ -20,6 +20,7 @@ public partial class Player : CharacterBody3D
 	private GpuParticles3D _rightFlash;
 	private GpuParticles3D _leftFlash;
 	private Gun _gun;
+	private ISpell _spell;
 	private double _health = MAX_HEALTH;
 
 	public List<string> effects = new List<string>();
@@ -115,10 +116,12 @@ public partial class Player : CharacterBody3D
 			{
 				case ISpell spell:
 					_gun?.SetSpell(spell);
+					_spell = spell;
 					break;
 				case Gun gun:
 					_gun?.Despawn(); //despawn equiped model if exists
 					_gun = gun;
+					_gun?.SetSpell(_spell);
 					_gun.SpawnModel(_rightSpawner, _leftSpawner);
 					break;
 				default:

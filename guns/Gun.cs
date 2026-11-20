@@ -11,6 +11,7 @@ namespace Srolllock.Guns
 	{
 		public Texture2D Icon { get; set; }
 		public string HudSlot { get; set; } = "Gun";
+		protected Action<Vector3, object> _method { get; set; } = null;
 		protected Action<Vector3, object> _action { get; set; } = null; 
 		protected Player _playerRef;
 		protected float _modifier = 1;
@@ -63,30 +64,20 @@ namespace Srolllock.Guns
 
 		public virtual async void SetSpell(ISpell spell)
 		{
-			string reloadAnim = "ReloadRight";//$"Reload{GetType().Name}";
-			Action<Vector3, object> method = null;
 			switch (spell)
 			{
 				case TargetSpell targetSpell:
 					targetSpell.Modifier = _modifier;
-					method = (vec, obj) => targetSpell.Activate(obj);
+					_method = (vec, obj) => targetSpell.Activate(obj);
 					break;
 				case AreaSpell areaSpell:
-					method = (vec, obj) => SpellSpawner.instance.RpcId(1, "RequestSpawnSpell", areaSpell.GetType().Name, vec, new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0), _modifier);
+					_method = (vec, obj) => SpellSpawner.instance.RpcId(1, "RequestSpawnSpell", areaSpell.GetType().Name, vec, new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0), _modifier);
 					break;
 				//case TargetSpell selfSpell:
 				//	method = vec => Callable.From(() => targetSpell.Activate(_playerRef)).CallDeferred();
 				//	break;
 				default:
 					return;
-			}
-			if (_action == method) return;
-			_playerRef.Rpc("PlayAnim", reloadAnim, 0);
-			Variant[] anim = await ToSignal(_playerRef.AnimPlayer, AnimationPlayer.SignalName.AnimationFinished);
-			if (anim[0].AsString() == reloadAnim)
-			{
-				_action = method;
-				ammo = maxAmmo;
 			}
 		}
 
@@ -101,12 +92,23 @@ namespace Srolllock.Guns
 			//do nothing and look pretty
 		}
 
-		public virtual async void Reload() {
+		public virtual async void Reload(bool forceReload = false) {
 			string reloadAnim = "ReloadRight";//$"Reload{GetType().Name}";
-			if (_playerRef.AnimPlayer.CurrentAnimation == reloadAnim || ammo == maxAmmo) return;
+			if (forceReload)
+			{
+				//continue
+			}
+			else if (_playerRef.AnimPlayer.CurrentAnimation == reloadAnim || ammo == maxAmmo)
+			{
+				return;
+			}
 			_playerRef.Rpc("PlayAnim", reloadAnim, 0);
 			Variant[] anim = await ToSignal(_playerRef.AnimPlayer, AnimationPlayer.SignalName.AnimationFinished);
-			if (anim[0].AsString() == reloadAnim) ammo = maxAmmo;
+			if (anim[0].AsString() == reloadAnim)
+			{
+				ammo = maxAmmo;
+				_action = _method;
+			}
 		}
 	}
 }

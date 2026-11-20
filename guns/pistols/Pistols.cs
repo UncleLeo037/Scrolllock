@@ -11,7 +11,7 @@ public partial class Pistols : Gun
     private Node3D _offhand;
     private string _sideName;
     private double _sideTimer;
-    protected Action<Vector3, object> _sideAction { get; set; } = null; 
+    protected Action<Vector3, object> _sideAction { get; set; } = null;
     private int _sideAmmo = 1;
 
     public Pistols(string mainName = null, string sideName = null)
@@ -48,30 +48,18 @@ public partial class Pistols : Gun
 
     public override async void SetSpell(ISpell spell)
     {
-        string reloadAnim = "ReloadBoth";//$"Reload{GetType().Name}";
-        Action<Vector3, object> method = null;
         switch (spell)
         {
             case TargetSpell targetSpell:
                 targetSpell.Modifier = _modifier;
-                method = (vec, obj) => targetSpell.Activate(obj);
+                _method = (vec, obj) => targetSpell.Activate(obj);
                 break;
             case AreaSpell areaSpell:
-                method = (vec, obj) => SpellSpawner.instance.RpcId(1, "RequestSpawnSpell", areaSpell.GetType().Name, vec, new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0), _modifier);
+                _method = (vec, obj) => SpellSpawner.instance.RpcId(1, "RequestSpawnSpell", areaSpell.GetType().Name, vec, new Vector3(this.GlobalRotation.X, this.GlobalRotation.Y, 0), _modifier);
                 break;
             default:
                 //probably do misfire animation for lols
                 break;
-        }
-        
-        if (_action == method && _sideAction == method) return;
-        _playerRef.Rpc("PlayAnim", reloadAnim, 0);
-        Variant[] anim = await ToSignal(_playerRef.AnimPlayer, AnimationPlayer.SignalName.AnimationFinished);
-        if (anim[0].AsString() == reloadAnim)
-        {
-            _action = method;
-            _sideAction = method;
-            ammo = _sideAmmo = maxAmmo;
         }
     }
 
@@ -93,8 +81,8 @@ public partial class Pistols : Gun
 
         var target = _rayCast.GetCollider();
         if (target == null) return;
-        
-       _sideAction?.Invoke(_rayCast.GetCollisionPoint(), target);
+
+        _sideAction?.Invoke(_rayCast.GetCollisionPoint(), target);
     }
 
 
@@ -120,9 +108,13 @@ public partial class Pistols : Gun
         _action?.Invoke(_rayCast.GetCollisionPoint(), target);
     }
 
-    public override async void Reload()
+    public override async void Reload(bool forceReload = false)
     {
-        if (ammo == maxAmmo && _sideAmmo != maxAmmo)
+        if (forceReload)
+        {
+            //continue
+        }
+        else if (ammo == maxAmmo && _sideAmmo != maxAmmo)
         {
             ReloadRight();
             return;
@@ -138,7 +130,12 @@ public partial class Pistols : Gun
         if (_playerRef.AnimPlayer.CurrentAnimation == reloadAnim) return;
         _playerRef.Rpc("PlayAnim", reloadAnim, 0);
         Variant[] anim = await ToSignal(_playerRef.AnimPlayer, AnimationPlayer.SignalName.AnimationFinished);
-        if (anim[0].AsString() == reloadAnim) ammo = _sideAmmo = maxAmmo;
+        if (anim[0].AsString() == reloadAnim)
+        {
+            ammo = _sideAmmo = maxAmmo;
+            _action = _method;
+            _sideAction = _method;
+        }
     }
 
     public async void ReloadLeft()
@@ -147,7 +144,11 @@ public partial class Pistols : Gun
         if (_playerRef.AnimPlayer.CurrentAnimation == reloadAnim) return;
         _playerRef.Rpc("PlayAnim", reloadAnim, 0);
         Variant[] anim = await ToSignal(_playerRef.AnimPlayer, AnimationPlayer.SignalName.AnimationFinished);
-        if (anim[0].AsString() == reloadAnim) ammo = maxAmmo;
+        if (anim[0].AsString() == reloadAnim)
+        {
+            ammo = maxAmmo;
+            _action = _method;
+        }
     }
 
     public async void ReloadRight()
@@ -156,6 +157,10 @@ public partial class Pistols : Gun
         if (_playerRef.AnimPlayer.CurrentAnimation == reloadAnim) return;
         _playerRef.Rpc("PlayAnim", reloadAnim, 0);
         Variant[] anim = await ToSignal(_playerRef.AnimPlayer, AnimationPlayer.SignalName.AnimationFinished);
-        if (anim[0].AsString() == reloadAnim) _sideAmmo = maxAmmo;
+        if (anim[0].AsString() == reloadAnim)
+        {
+            _sideAmmo = maxAmmo;
+            _sideAction = _method;
+        }
     }
 }

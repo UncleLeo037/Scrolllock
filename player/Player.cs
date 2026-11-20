@@ -20,7 +20,6 @@ public partial class Player : CharacterBody3D
 	private GpuParticles3D _rightFlash;
 	private GpuParticles3D _leftFlash;
 	private Gun _gun;
-	private ISpell _spell;
 	private double _health = MAX_HEALTH;
 
 	public List<string> effects = new List<string>();
@@ -92,10 +91,6 @@ public partial class Player : CharacterBody3D
 				_gun?.Shoot();
 				IsAiming = false;
 			}
-			else if (Input.IsActionJustPressed("load"))
-			{
-				_gun?.SetSpell(_spell);
-			}
 			else if (Input.IsActionJustPressed("aim"))
 			{
 				_gun?.Aim();
@@ -111,7 +106,7 @@ public partial class Player : CharacterBody3D
 			}
 			else if (Input.IsActionJustPressed("reload"))
 			{
-				_gun.Reload();
+				_gun.Reload(true);
 			}
 		}
 		if (Input.MouseMode == Input.MouseModeEnum.ConfinedHidden && (Input.IsActionJustPressed("shoot") || Input.IsActionJustPressed("aim")))
@@ -119,7 +114,7 @@ public partial class Player : CharacterBody3D
 			switch (_hud.CloseRadial())
 			{
 				case ISpell spell:
-					_spell = spell;
+					_gun?.SetSpell(spell);
 					break;
 				case Gun gun:
 					_gun?.Despawn(); //despawn equiped model if exists
